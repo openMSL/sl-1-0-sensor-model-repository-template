@@ -1,6 +1,8 @@
 # Model Name
 
-< Github Action Badges of CI Pipeline >
+![Build workflow](actions/workflows/build.yml/badge.svg)
+![SPDX workflow](actions/workflows/spdx.yml/badge.svg)
+< Adapt Github Action Badges of CI Pipeline >
 
 Enter a short description of the model. What is the purpose of the model? What is the general modeling approach? What inputs does the model need and what outputs does it generate?<br><br>
 
