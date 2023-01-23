@@ -8,7 +8,7 @@ name: Super Linter
 
 on:
   push:
-    branches: [ "super-linter" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 jobs:
