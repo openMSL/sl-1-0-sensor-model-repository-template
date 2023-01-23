@@ -1,6 +1,6 @@
 # Model Name
 
-< Github Action Badges of CI Pipeline >
+< GitHub Action Badges of CI Pipeline >
 
 ![Build workflow](../../actions/workflows/build.yml/badge.svg)
 ![SPDX workflow](../../actions/workflows/spdx.yml/badge.svg)
@@ -22,35 +22,35 @@ Each parameter should have a short description as shown in the following example
 
 | Parameter                      | Description                                                         |
 | ------------------------------ | ------------------------------------------------------------------- |
-| no_of_beams_vertical           | Number of beams in vertical direction, e.g. layers, of the lidar    |
-| no_of_beams_horizontal         | Number of beams per layer of the lidar                              |
+| `no_of_beams_vertical`         | Number of beams in vertical direction, e.g. layers, of the lidar    |
+| `no_of_beams_horizontal`       | Number of beams per layer of the lidar                              |
 
 ## Interface
 What interfaces are used as model input and model output? All required field of the interface shall be named in a list as shown in the following example.
 
 ### Input: Required Fields in OSI3::SensorView
-- sensor_view.mounting_position
-- sensor_view.global_ground_truth.timestamp
-- sensor_view.global_ground_truth.host_vehicle_id
-- sensor_view.global_ground_truth.stationary_object.id
-- sensor_view.global_ground_truth.stationary_object.base.position
-- sensor_view.global_ground_truth.stationary_object.base.orientation
-- sensor_view.global_ground_truth.stationary_object.base.dimension
+- `sensor_view.mounting_position`
+- `sensor_view.global_ground_truth.timestamp`
+- `sensor_view.global_ground_truth.host_vehicle_id`
+- `sensor_view.global_ground_truth.stationary_object.id`
+- `sensor_view.global_ground_truth.stationary_object.base.position`
+- `sensor_view.global_ground_truth.stationary_object.base.orientation`
+- `sensor_view.global_ground_truth.stationary_object.base.dimension`
 
 ### Output: Fields in OSI3::SensorData Filled by the Sensor Model
-- sensor_data.timestamp
-- sensor_data.moving_object_header.measurement_time
-- sensor_data.moving_object_header.cycle_counter
-- sensor_data.moving_object_header.data_qualifier
-- sensor_data.moving_object.header.ground_truth_id
-- sensor_data.moving_object.header.tracking_id
-- sensor_data.moving_object.header.age
-- sensor_data.moving_object.base.position
-- sensor_data.moving_object.base.orientation
-- sensor_data.moving_object.base.orientation_rate
-- sensor_data.moving_object.base.velocity
-- sensor_data.moving_object.base.acceleration
-- sensor_data.moving_object.base.dimension
+- `sensor_data.timestamp
+- `sensor_data.moving_object_header.measurement_time
+- `sensor_data.moving_object_header.cycle_counter`
+- `sensor_data.moving_object_header.data_qualifier`
+- `sensor_data.moving_object.header.ground_truth_id`
+- `sensor_data.moving_object.header.tracking_id`
+- `sensor_data.moving_object.header.age`
+- `sensor_data.moving_object.base.position`
+- `sensor_data.moving_object.base.orientation`
+- `sensor_data.moving_object.base.orientation_rate`
+- `sensor_data.moving_object.base.velocity`
+- `sensor_data.moving_object.base.acceleration`
+- `sensor_data.moving_object.base.dimension`
 
 
 ## Build Instructions
@@ -62,15 +62,15 @@ Give step by step build instructions for supported operating systems. The follow
 
 1. Clone this repository <ins>with submodules</ins>:
     ```bash
-    $ git clone https://github.com/openMSL/your-model.git --recurse-submodules
+    git clone https://github.com/openMSL/your-model.git --recurse-submodules
     ```
 2. Build the model by executing in the extracted project root directory:
     ```bash
-    $ mkdir cmake-build
-    $ cd cmake-build
+    mkdir cmake-build
+    cd cmake-build
     # If FMU_INSTALL_DIR is not set, CMAKE_BINARY_DIR is used
-    $ cmake -DCMAKE_BUILD_TYPE=Release -DFMU_INSTALL_DIR:PATH=/tmp ..
-    $ make
+    cmake -DCMAKE_BUILD_TYPE=Release -DFMU_INSTALL_DIR:PATH=/tmp ..
+    make
     ```
 3. Take FMU from `FMU_INSTALL_DIR`
 
