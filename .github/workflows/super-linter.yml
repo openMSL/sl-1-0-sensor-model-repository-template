@@ -28,5 +28,5 @@ jobs:
           DEFAULT_BRANCH: "main"
           VALIDATE_CLANG_FORMAT: false
           VALIDATE_CPP: false
-          FILTER_REGEX_EXCLUDE: ".*workflows/.*|.*lib/.*"
+          FILTER_REGEX_EXCLUDE: ".*github/.*|.*lib/.*"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
