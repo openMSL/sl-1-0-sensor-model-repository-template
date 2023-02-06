@@ -14,6 +14,7 @@ How has it been tested?
 - [ ] My suggestion follows the [governance rules](https://github.com/openMSL/governance-and-documentation).
 - [ ] All commits of this PR are [signed](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits).
 - [ ] My changes generate no errors when passing CI tests. 
+- [ ] I updated all documentation (readmes incl. figures) according to my changes.
 - [ ] I have successfully implemented and tested my fix/feature locally.
 - [ ] Appropriate reviewer(s) are assigned.
 
