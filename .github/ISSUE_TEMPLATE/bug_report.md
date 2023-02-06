@@ -1,12 +1,3 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -24,9 +15,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Describe the setup you are using**
- - OS: [e.g. Windows 11, Ubuntu 22.04]
- - Simulation Framework: [e.g. OpenMCx, Model.CONNECT, FMI Bench, ...]
- - Model Input: [e.g. CarMaker, Carla, dSpace ASM, esmini, ...]
+- OS: [e.g. Windows 11, Ubuntu 22.04]
+- Simulation Framework: [e.g. OpenMCx, Model.CONNECT, FMI Bench, ...]
+- Model Input: [e.g. CarMaker, Carla, dSpace ASM, esmini, ...]
 
 **Additional context**
 Add any other context about the problem here.
