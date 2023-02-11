@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
     - name: Download schema
-      run: git clone git@github.com:PMSFIT/SSPTraceability.git
+      run: git clone https://github.com/PMSFIT/SSPTraceability.git
     - name: Lint SRMD
       uses: ChristophWurst/xmllint-action@v1
       with:
