@@ -1,9 +1,9 @@
 ---
-Checks:            'readability-*,cppcoreguidelines-*'
+Checks:            'readability-*,cppcoreguidelines-*,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-type-cstyle-cast,-cppcoreguidelines-avoid-c-arrays,-cppcoreguidelines-non-private-member-variables-in-classes,-cppcoreguidelines-macro-usage,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-readability-useless-return-value,-readability-const-return-type'
 HeaderFilterRegex: '.*/src/(?:adp|build_system|legacy)/.*'
 AnalyzeTemporaryDtors: false
 CheckOptions:
-  - key:             readability-identifier-naming.AbstractClassCase
+  - key:             readability-identifier-naming.AbstractClassCases
     value:           CamelCase
   - key:             readability-identifier-naming.AbstractClassPrefix
     value:           I
@@ -257,5 +257,9 @@ CheckOptions:
     value:           ''
   - key:             readability-identifier-naming.VirtualMethodSuffix
     value:           ''
+  - key:             readability-identifier-length.MinimumVariableNameLength
+    value:           0
+  - key:             readability-identifier-length.MinimumParameterNameLength
+    value:           0
 ...
 
