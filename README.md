@@ -37,25 +37,20 @@ What interfaces are used as model input and model output? All required field of 
 - `sensor_view.global_ground_truth.stationary_object.base.dimension`
 
 ### Output: Fields in OSI3::SensorData Filled by the Sensor Model
-- `sensor_data.timestamp
-- `sensor_data.moving_object_header.measurement_time
-- `sensor_data.moving_object_header.cycle_counter`
-- `sensor_data.moving_object_header.data_qualifier`
+- `sensor_data.timestamp`
 - `sensor_data.moving_object.header.ground_truth_id`
 - `sensor_data.moving_object.header.tracking_id`
-- `sensor_data.moving_object.header.age`
+- `sensor_data.moving_object.header.existence_probability`
+- `sensor_data.moving_object.header.measurement_state`
+- `sensor_data.moving_object.header.sensor_id`
 - `sensor_data.moving_object.base.position`
-- `sensor_data.moving_object.base.orientation`
-- `sensor_data.moving_object.base.orientation_rate`
-- `sensor_data.moving_object.base.velocity`
-- `sensor_data.moving_object.base.acceleration`
 - `sensor_data.moving_object.base.dimension`
 
 
 ## Build Instructions
 What are the dependencies for building the model?
 
-Give step by step build instructions for supported operating systems. The following is an example for building a model as an FMU in Ubuntu.
+Give step-by-step build instructions for supported operating systems. The following is an example for building a model as an FMU in Ubuntu.
 
 ### Build Model in Ubuntu 18.04 / 20.04
 
