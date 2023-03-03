@@ -3,9 +3,8 @@
 < GitHub Action Badges of CI Pipeline. The pipeline is further described [here](https://github.com/openMSL/sensor_model_testing/blob/main/doc/test_architecture.md)>
 
 ![SPDX workflow](../../actions/workflows/spdx.yml/badge.svg)
-![Super Linter workflow](../../actions/workflows/super-linter.yml/badge.svg)
-![CPP Linter workflow](../../actions/workflows/cpp-linter.yml/badge.svg)
-![Build workflow](../../actions/workflows/build.yml/badge.svg)
+![Credibility Assessment Level 1](../../actions/workflows/cl1.yml/badge.svg)
+![Credibility Assessment Level 2](../../actions/workflows/cl2.yml/badge.svg)
 
 Enter a short description of the model. What is the purpose of the model? What is the general modeling approach? What inputs does the model need and what outputs does it generate?<br><br>
 
