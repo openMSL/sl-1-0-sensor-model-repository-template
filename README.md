@@ -2,9 +2,9 @@
 
 < GitHub Action Badges of CI Pipeline. The pipeline is further described [here](https://github.com/openMSL/sensor_model_testing/blob/main/doc/test_architecture.md)>
 
-![SPDX workflow](../../actions/workflows/spdx.yml/badge.svg)
-![Credibility Assessment Level 1](../../actions/workflows/cl1.yml/badge.svg)
-![Credibility Assessment Level 2](../../actions/workflows/cl2.yml/badge.svg)
+[![SPDX workflow](../../actions/workflows/spdx.yml/badge.svg)](https://github.com/openMSL/sl-1-5-sensor-model-testing/blob/main/doc/test_architecture.md#cl-0-license-check)
+[![Credibility Assessment Level 1](../../actions/workflows/cl1.yml/badge.svg)](https://github.com/openMSL/sl-1-5-sensor-model-testing/blob/main/doc/test_architecture.md#cl-1-code-verification)
+[![Credibility Assessment Level 2](../../actions/workflows/cl2.yml/badge.svg)](https://github.com/openMSL/sl-1-5-sensor-model-testing/blob/main/doc/test_architecture.md#cl-2-qualitative-verification)
 
 Enter a short description of the model. What is the purpose of the model? What is the general modeling approach? What inputs does the model need and what outputs does it generate?<br><br>
 
