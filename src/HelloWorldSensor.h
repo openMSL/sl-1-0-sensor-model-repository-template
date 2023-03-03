@@ -38,7 +38,7 @@
 /* Boolean Variables */
 #define FMI_BOOLEAN_VALID_IDX 0
 #define FMI_BOOLEAN_LAST_IDX FMI_BOOLEAN_VALID_IDX
-#define FMI_BOOLEAN_VARS (FMI_BOOLEAN_LAST_IDX+1)
+#define FMI_BOOLEAN_VARS (FMI_BOOLEAN_LAST_IDX + 1)
 
 /* Integer Variables */
 #define FMI_INTEGER_SENSORVIEW_IN_BASELO_IDX 0
@@ -55,39 +55,51 @@
 #define FMI_INTEGER_SENSORVIEW_CONFIG_SIZE_IDX 11
 #define FMI_INTEGER_COUNT_IDX 12
 #define FMI_INTEGER_LAST_IDX FMI_INTEGER_COUNT_IDX
-#define FMI_INTEGER_VARS (FMI_INTEGER_LAST_IDX+1)
+#define FMI_INTEGER_VARS (FMI_INTEGER_LAST_IDX + 1)
 
 /* Real Variables */
 #define FMI_REAL_NOMINAL_RANGE_IDX 0
 #define FMI_REAL_LAST_IDX FMI_REAL_NOMINAL_RANGE_IDX
-#define FMI_REAL_VARS (FMI_REAL_LAST_IDX+1)
+#define FMI_REAL_VARS (FMI_REAL_LAST_IDX + 1)
 
 /* String Variables */
 #define FMI_STRING_LAST_IDX 0
-#define FMI_STRING_VARS (FMI_STRING_LAST_IDX+1)
+#define FMI_STRING_VARS (FMI_STRING_LAST_IDX + 1)
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include <cstdarg>
+#include <fstream>
+#include <iostream>
 #include <set>
+#include <string>
 
 #undef min
 #undef max
-#include "osi_sensorview.pb.h"
 #include "osi_sensordata.pb.h"
+#include "osi_sensorview.pb.h"
 
 using namespace std;
 
 /* FMU Class */
 class HelloWorldSensor
 {
-public:
+  public:
     /* FMI2 Interface mapped to C++ */
-  HelloWorldSensor(fmi2String theinstance_name, fmi2Type thefmu_type, fmi2String thefmu_guid, fmi2String thefmu_resource_location, const fmi2CallbackFunctions* thefunctions, fmi2Boolean thevisible, fmi2Boolean thelogging_on);
+    HelloWorldSensor(fmi2String theinstance_name,
+                     fmi2Type thefmu_type,
+                     fmi2String thefmu_guid,
+                     fmi2String thefmu_resource_location,
+                     const fmi2CallbackFunctions* thefunctions,
+                     fmi2Boolean thevisible,
+                     fmi2Boolean thelogging_on);
     ~HelloWorldSensor();
-    fmi2Status SetDebugLogging(fmi2Boolean thelogging_on,size_t n_categories, const fmi2String categories[]);
-    static fmi2Component Instantiate(fmi2String instance_name, fmi2Type fmu_type, fmi2String fmu_guid, fmi2String fmu_resource_location, const fmi2CallbackFunctions* functions, fmi2Boolean visible, fmi2Boolean logging_on);
+    fmi2Status SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories, const fmi2String categories[]);
+    static fmi2Component Instantiate(fmi2String instance_name,
+                                     fmi2Type fmu_type,
+                                     fmi2String fmu_guid,
+                                     fmi2String fmu_resource_location,
+                                     const fmi2CallbackFunctions* functions,
+                                     fmi2Boolean visible,
+                                     fmi2Boolean logging_on);
     fmi2Status SetupExperiment(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time);
     fmi2Status EnterInitializationMode();
     fmi2Status ExitInitializationMode();
@@ -104,7 +116,7 @@ public:
     fmi2Status SetBoolean(const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[]);
     fmi2Status SetString(const fmi2ValueReference vr[], size_t nvr, const fmi2String value[]);
 
-protected:
+  protected:
     /* Internal Implementation */
     fmi2Status DoInit();
     fmi2Status DoStart(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time);
@@ -119,7 +131,8 @@ protected:
     static ofstream private_log_file;
 #endif
 
-    static void FmiVerboseLogGlobal(const char* format, ...) {
+    static void FmiVerboseLogGlobal(const char* format, ...)
+    {
 #ifdef VERBOSE_FMI_LOGGING
 #ifdef PRIVATE_LOG_PATH
         va_list ap;
@@ -127,13 +140,15 @@ protected:
         char buffer[1024];
         if (!private_log_file.is_open())
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
-        if (private_log_file.is_open()) {
+        if (private_log_file.is_open())
+        {
 #ifdef _WIN32
             vsnprintf_s(buffer, 1024, format, ap);
 #else
             vsnprintf(buffer, 1024, format, ap);
 #endif
-            private_log_file << "OSMPDummySensor" << "::Global:FMI: " << buffer << endl;
+            private_log_file << "OSMPDummySensor"
+                             << "::Global:FMI: " << buffer << endl;
             private_log_file.flush();
         }
 #endif
@@ -152,33 +167,37 @@ protected:
 #ifdef PRIVATE_LOG_PATH
         if (!private_log_file.is_open())
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
-        if (private_log_file.is_open()) {
-            private_log_file << "OSMPDummySensor" << "::" << instanceName << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
+        if (private_log_file.is_open())
+        {
+            private_log_file << "OSMPDummySensor"
+                             << "::" << instanceName << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
 #endif
 #ifdef PUBLIC_LOGGING
         if (loggingOn && loggingCategories.count(category))
-            functions.logger(functions.componentEnvironment,instanceName.c_str(),fmi2OK,category,buffer);
+            functions.logger(functions.componentEnvironment, instanceName.c_str(), fmi2OK, category, buffer);
 #endif
 #endif
     }
 
-    void FmiVerboseLog(const char* format, ...) {
-#if  defined(VERBOSE_FMI_LOGGING) && (defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING))
+    void FmiVerboseLog(const char* format, ...)
+    {
+#if defined(VERBOSE_FMI_LOGGING) && (defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING))
         va_list ap;
         va_start(ap, format);
-        internal_log("FMI",format,ap);
+        internal_log("FMI", format, ap);
         va_end(ap);
 #endif
     }
 
     /* Normal Logging */
-    void NormalLog(const char* category, const char* format, ...) {
+    void NormalLog(const char* category, const char* format, ...)
+    {
 #if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
         va_list ap;
         va_start(ap, format);
-        internal_log(category,format,ap);
+        internal_log(category, format, ap);
         va_end(ap);
 #endif
     }
@@ -204,14 +223,31 @@ protected:
     string* last_config_request_buffer_;
 
     /* Simple Accessors */
-    fmi2Boolean FmiValid() { return boolean_vars_[FMI_BOOLEAN_VALID_IDX]; }
-    void SetFmiValid(fmi2Boolean value) { boolean_vars_[FMI_BOOLEAN_VALID_IDX]=value; }
-    fmi2Integer FmiCount() { return integer_vars_[FMI_INTEGER_COUNT_IDX]; }
-    void SetFmiCount(fmi2Integer value) { integer_vars_[FMI_INTEGER_COUNT_IDX]=value; }
-    fmi2Real FmiNominalRange() { return real_vars_[FMI_REAL_NOMINAL_RANGE_IDX]; }
-    void SetFmiNominalRange(fmi2Real value) { real_vars_[FMI_REAL_NOMINAL_RANGE_IDX]=value; }
+    fmi2Boolean FmiValid()
+    {
+        return boolean_vars_[FMI_BOOLEAN_VALID_IDX];
+    }
+    void SetFmiValid(fmi2Boolean value)
+    {
+        boolean_vars_[FMI_BOOLEAN_VALID_IDX] = value;
+    }
+    fmi2Integer FmiCount()
+    {
+        return integer_vars_[FMI_INTEGER_COUNT_IDX];
+    }
+    void SetFmiCount(fmi2Integer value)
+    {
+        integer_vars_[FMI_INTEGER_COUNT_IDX] = value;
+    }
+    fmi2Real FmiNominalRange()
+    {
+        return real_vars_[FMI_REAL_NOMINAL_RANGE_IDX];
+    }
+    void SetFmiNominalRange(fmi2Real value)
+    {
+        real_vars_[FMI_REAL_NOMINAL_RANGE_IDX] = value;
+    }
 
-    
     /* Protocol Buffer Accessors */
     bool GetFmiSensorViewConfig(osi3::SensorViewConfiguration& data);
     void SetFmiSensorViewConfigRequest(const osi3::SensorViewConfiguration& data);
