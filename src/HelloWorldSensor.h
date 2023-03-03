@@ -91,7 +91,6 @@ class HelloWorldSensor
                      const fmi2CallbackFunctions* thefunctions,
                      fmi2Boolean thevisible,
                      fmi2Boolean thelogging_on);
-    ~HelloWorldSensor();
     fmi2Status SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories, const fmi2String categories[]);
     static fmi2Component Instantiate(fmi2String instance_name,
                                      fmi2Type fmu_type,

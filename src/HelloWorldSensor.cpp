@@ -42,7 +42,6 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
-#include <iostream>
 #include <string>
 
 using namespace std;
@@ -177,15 +176,18 @@ void HelloWorldSensor::RefreshFmiSensorViewConfigRequest()
     {
         config.Clear();
         config.mutable_version()->CopyFrom(osi3::InterfaceVersion::descriptor()->file()->options().GetExtension(osi3::current_interface_version));
-        config.set_field_of_view_horizontal(3.14);
-        config.set_field_of_view_vertical(3.14);
-        config.set_range(FmiNominalRange() * 1.1);
+        const double field_of_view = 3.14;
+        const double range_factor = 1.1;
+        const uint32_t update_nanos = 20000000;
+        config.set_field_of_view_horizontal(field_of_view);
+        config.set_field_of_view_vertical(field_of_view);
+        config.set_range(FmiNominalRange() * range_factor);
         config.mutable_update_cycle_time()->set_seconds(0);
-        config.mutable_update_cycle_time()->set_nanos(20000000);
+        config.mutable_update_cycle_time()->set_nanos(update_nanos);
         config.mutable_update_cycle_offset()->Clear();
         osi3::GenericSensorViewConfiguration* generic = config.add_generic_sensor_view_configuration();
-        generic->set_field_of_view_horizontal(3.14);
-        generic->set_field_of_view_vertical(3.14);
+        generic->set_field_of_view_horizontal(field_of_view);
+        generic->set_field_of_view_vertical(field_of_view);
         SetFmiSensorViewConfigRequest(config);
     }
 }
@@ -196,7 +198,7 @@ void HelloWorldSensor::RefreshFmiSensorViewConfigRequest()
 
 fmi2Status HelloWorldSensor::DoInit()
 {
-    DEBUGBREAK();
+
 
     /* Booleans */
     for (int& boolean_var : boolean_vars_)
@@ -222,28 +224,23 @@ fmi2Status HelloWorldSensor::DoInit()
         string_var = "";
     }
 
-    SetFmiNominalRange(135.0);
+    const double nominal_range = 135.0;
+    SetFmiNominalRange(nominal_range);
     return fmi2OK;
 }
 
 fmi2Status HelloWorldSensor::DoStart(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time)
 {
-    DEBUGBREAK();
-
     return fmi2OK;
 }
 
 fmi2Status HelloWorldSensor::DoEnterInitializationMode()
 {
-    DEBUGBREAK();
-
     return fmi2OK;
 }
 
 fmi2Status HelloWorldSensor::DoExitInitializationMode()
 {
-    DEBUGBREAK();
-
     osi3::SensorViewConfiguration config;
     if (!GetFmiSensorViewConfig(config))
     {
@@ -295,7 +292,7 @@ void RotatePoint(double x, double y, double z, double yaw, double pitch, double 
 
 fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
 {
-    DEBUGBREAK();
+
 
     osi3::SensorView current_in;
     osi3::SensorData current_out;
@@ -327,12 +324,14 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
         current_out.mutable_version()->CopyFrom(osi3::InterfaceVersion::descriptor()->file()->options().GetExtension(osi3::current_interface_version));
         /* Adjust Timestamps and Ids */
         current_out.mutable_timestamp()->set_seconds((long long int)floor(time));
-        current_out.mutable_timestamp()->set_nanos((int)((time - floor(time)) * 1000000000.0));
+        const double nano_seconds = 1000000000.0;
+        current_out.mutable_timestamp()->set_nanos((int)((time - floor(time)) * nano_seconds));
         /* Copy of SensorView */
         current_out.add_sensor_view()->CopyFrom(current_in);
 
         int i = 0;
-        double actual_range = FmiNominalRange() * 1.1;
+        const double range_factor = 1.1;
+        double actual_range = FmiNominalRange() * range_factor;
         for_each(current_in.global_ground_truth().moving_object().begin(),
                  current_in.global_ground_truth().moving_object().end(),
                  [this, &i, &current_in, &current_out, ego_id, ego_x, ego_y, ego_z, actual_range](const osi3::MovingObject& veh) {
@@ -430,14 +429,12 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
 
 fmi2Status HelloWorldSensor::DoTerm()
 {
-    DEBUGBREAK();
-
     return fmi2OK;
 }
 
 void HelloWorldSensor::DoFree()
 {
-    DEBUGBREAK();
+
 }
 
 /*
@@ -458,24 +455,16 @@ HelloWorldSensor::HelloWorldSensor(fmi2String theinstance_name,
       functions_(*thefunctions),
       visible_(thevisible != 0),
       logging_on_(thelogging_on != 0),
-      simulation_started_(false)
+      simulation_started_(false),
+      current_output_buffer_(new string()),
+      last_output_buffer_(new string()),
+      current_config_request_buffer_(new string()),
+      last_config_request_buffer_(new string())
 {
-    current_output_buffer_ = new string();
-    last_output_buffer_ = new string();
-    current_config_request_buffer_ = new string();
-    last_config_request_buffer_ = new string();
     logging_categories_.clear();
     logging_categories_.insert("FMI");
     logging_categories_.insert("OSMP");
     logging_categories_.insert("OSI");
-}
-
-HelloWorldSensor::~HelloWorldSensor()
-{
-    delete current_output_buffer_;
-    delete last_output_buffer_;
-    delete current_config_request_buffer_;
-    delete last_config_request_buffer_;
 }
 
 fmi2Status HelloWorldSensor::SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories, const fmi2String categories[])
