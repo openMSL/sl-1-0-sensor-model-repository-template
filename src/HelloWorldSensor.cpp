@@ -199,7 +199,6 @@ void HelloWorldSensor::RefreshFmiSensorViewConfigRequest()
 fmi2Status HelloWorldSensor::DoInit()
 {
 
-
     /* Booleans */
     for (int& boolean_var : boolean_vars_)
     {
@@ -292,7 +291,6 @@ void RotatePoint(double x, double y, double z, double yaw, double pitch, double 
 
 fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
 {
-
 
     osi3::SensorView current_in;
     osi3::SensorData current_out;
@@ -432,10 +430,7 @@ fmi2Status HelloWorldSensor::DoTerm()
     return fmi2OK;
 }
 
-void HelloWorldSensor::DoFree()
-{
-
-}
+void HelloWorldSensor::DoFree() {}
 
 /*
  * Generic C++ Wrapper Code
