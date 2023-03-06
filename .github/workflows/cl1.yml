@@ -9,8 +9,8 @@ on:
 jobs:
   build_model:
     name: Build Model
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/build.yml@minimal_sensor_model
+    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/build.yml@main
 
   cpp-linter:
     name: C++ Linter
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/cpp-linter.yml@minimal_sensor_model
+    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/cpp-linter.yml@main
