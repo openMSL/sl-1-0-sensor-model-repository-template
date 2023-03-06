@@ -1,10 +1,7 @@
 name: C++ Linter
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   cpp-linter:
@@ -58,7 +55,7 @@ jobs:
         files-changed-only: true
         thread-comments: true
         database: 'build/'
-        ignore: 'build | protobuf-21.12 | .github'
+        ignore: 'build | protobuf-21.12 | .github | src/osmp | src/model/strategies/front-end-strategy/include/frontendstrategy/concaveman.h | src/model/strategies/front-end-strategy/include/frontendstrategy/concaveman.cpp | src/model/strategies/front-end-strategy/include/frontendstrategy/clipper.hpp | src/model/strategies/front-end-strategy/include/frontendstrategy/clipper.cpp'
         extra-args: '-I ./build/lib/open-simulation-interface'
         
     - name: Fail fast?!
