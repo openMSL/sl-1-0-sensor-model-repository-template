@@ -10,5 +10,7 @@ jobs:
   markdown-lint:
     runs-on: ubuntu-latest
     steps:
+    - name: checkout
+      uses: actions/checkout@v3
     - name: markdown-lint
       uses: articulate/actions-markdownlint@v1
