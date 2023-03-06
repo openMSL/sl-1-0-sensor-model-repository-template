@@ -1,4 +1,4 @@
-# Model Name
+# SL-1-0 Sensor Model Repository Template
 
 < GitHub Action Badges of CI Pipeline. The pipeline is further described [here](https://github.com/openMSL/sensor_model_testing/blob/main/doc/test_architecture.md)>
 

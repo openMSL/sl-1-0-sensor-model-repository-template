@@ -34,3 +34,9 @@
 # Build folder
 /build*
 /cmake-build*
+
+# IDE configs
+.idea/
+.vs/
+.vscode/
+.editorconfig
