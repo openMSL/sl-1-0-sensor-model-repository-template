@@ -14,5 +14,8 @@ jobs:
       uses: actions/checkout@master
     - name: Download schema
       run: git clone https://github.com/PMSFIT/SSPTraceability.git
-    - name: Lint SRMD
-      uses: pipeline-components/xmllint:latest
+    - name: Validate SRMD
+      uses: cardinalby/schema-validator-action@v1
+      with:
+        file: '*.srmd'
+        schema: './SSPTraceability/SRMD.xsd'
