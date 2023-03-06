@@ -15,7 +15,4 @@ jobs:
     - name: Download schema
       run: git clone https://github.com/PMSFIT/SSPTraceability.git
     - name: Lint SRMD
-      uses: ChristophWurst/xmllint-action@v1
-      with:
-        xml-file: ./sl-1-0-sensor-model-repository-template.srmd
-        xml-schema-file: ./SSPTraceability/SRMD.xsd
+      uses: pipeline-components/xmllint:latest
