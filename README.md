@@ -17,7 +17,11 @@ What inputs does the model need and what outputs does it generate?
 
 ## Modeling Approach
 
-Put details about the inner workings of the model here. Describe the modeling approach in detail. What is the structure of the model? What modules is it comprised of? What sensor effects are represented in the model and how are they modeled?
+Put details about the inner workings of the model here.
+Describe the modeling approach in detail.
+What is the structure of the model?
+What modules is it comprised of?
+What sensor effects are represented in the model and how are they modeled?
 
 ## Parameterization
 
@@ -98,6 +102,14 @@ Then add the full list of authors, title and journal or conference in this secti
 The IEEE citation style [[2](#IEEEStyle)</sup>] should be used.
 Here is the bibliography from the example above.
 
-<a name="Rosenberger2020">[1]</a> P. Rosenberger, M. F. Holder, N. Cianciaruso, P. Aust, J. F. Tamm-Morschel, C. Linnhoff, and H. Winner, “Sequential lidar sensor system simulation: A modular approach for simulation-based safety validation of automated driving,” Automotive and Engine Technology, vol. 5, no. 3-4, pp. 187–197, Dec. 2020.
+<a name="Rosenberger2020">[1]</a>
+P. Rosenberger, M. F. Holder, N. Cianciaruso, P. Aust, J. F. Tamm-Morschel, C. Linnhoff, and H. Winner,
+“Sequential lidar sensor system simulation: A modular approach for simulation-based safety validation of automated driving,”
+Automotive and Engine Technology, vol. 5, no. 3-4, pp. 187–197, Dec. 2020.
 
-<a name="IEEEStyle">[2]</a> IEEEDataPort, "How to Cite References: IEEE Documentation Style," [Online]. Available: [https://ieee-dataport.org/sites/default/files/analysis/27/IEEE%20Citation%20Guidelines.pdf](https://ieee-dataport.org/sites/default/files/analysis/27/IEEE%20Citation%20Guidelines.pdf). [Accessed Jan. 09, 2023]
+<a name="IEEEStyle">[2]</a>
+IEEEDataPort,
+"How to Cite References: IEEE Documentation Style,"
+[Online]. Available:
+[https://ieee-dataport.org/sites/default/files/analysis/27/IEEE%20Citation%20Guidelines.pdf](https://ieee-dataport.org/sites/default/files/analysis/27/IEEE%20Citation%20Guidelines.pdf).
+[Accessed Jan. 09, 2023]
