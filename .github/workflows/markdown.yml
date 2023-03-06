@@ -1,0 +1,14 @@
+name: Markdown Linter
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: markdown-lint
+      uses: articulate/actions-markdownlint@v1
