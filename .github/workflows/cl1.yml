@@ -14,3 +14,7 @@ jobs:
   cpp-linter:
     name: C++ Linter
     uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/cpp-linter.yml@main
+
+  markdown-linter:
+    name: Markdown Linter
+    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/markdown.yml@markdown-lint
