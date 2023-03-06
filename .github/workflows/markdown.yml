@@ -14,3 +14,5 @@ jobs:
       uses: actions/checkout@v3
     - name: markdown-lint
       uses: articulate/actions-markdownlint@v1
+      with:
+        config: .github/workflows/markdownlint.json

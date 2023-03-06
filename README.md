@@ -65,7 +65,7 @@ The following is an example for building a model as an FMU in Ubuntu.
 
 ### Build Model in Ubuntu 18.04 / 20.04
 
-1. Clone this repository <ins>with submodules</ins>:
+1. Clone this repository **with submodules**:
 
     ```bash
     git clone https://github.com/openMSL/your-model.git --recurse-submodules
