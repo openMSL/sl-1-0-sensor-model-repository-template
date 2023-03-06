@@ -52,7 +52,7 @@ All required field of the interface shall be named in a list as shown in the fol
 * `sensor_data.moving_object.header.tracking_id`
 * `sensor_data.moving_object.header.existence_probability`
 * `sensor_data.moving_object.header.measurement_state`
-*  `sensor_data.moving_object.header.sensor_id`
+* `sensor_data.moving_object.header.sensor_id`
 * `sensor_data.moving_object.base.position`
 * `sensor_data.moving_object.base.dimension`
 
@@ -70,7 +70,7 @@ The following is an example for building a model as an FMU in Ubuntu.
     ```bash
     git clone https://github.com/openMSL/your-model.git --recurse-submodules
     ```
-   
+
 2. Build the model by executing in the extracted project root directory:
 
     ```bash
@@ -80,7 +80,7 @@ The following is an example for building a model as an FMU in Ubuntu.
     cmake -DCMAKE_BUILD_TYPE=Release -DFMU_INSTALL_DIR:PATH=/tmp ..
     make
     ```
-   
+
 3. Take FMU from `FMU_INSTALL_DIR`
 
 ## Credits
@@ -97,7 +97,6 @@ For longer papers or book sections, please also give the page number, as shown i
 Then add the full list of authors, title and journal or conference in this section.
 The IEEE citation style [[2](#IEEEStyle)</sup>] should be used.
 Here is the bibliography from the example above.
-
 
 <a name="Rosenberger2020">[1]</a> P. Rosenberger, M. F. Holder, N. Cianciaruso, P. Aust, J. F. Tamm-Morschel, C. Linnhoff, and H. Winner, “Sequential lidar sensor system simulation: A modular approach for simulation-based safety validation of automated driving,” Automotive and Engine Technology, vol. 5, no. 3-4, pp. 187–197, Dec. 2020.
 
