@@ -17,4 +17,4 @@ jobs:
 
   markdown-linter:
     name: Markdown Linter
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/markdown.yml@markdown-lint
+    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/markdown.yml@main
