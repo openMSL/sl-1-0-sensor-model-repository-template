@@ -4,3 +4,6 @@
 [submodule "lib/open-simulation-interface"]
 	path = lib/open-simulation-interface
 	url = https://github.com/OpenSimulationInterface/open-simulation-interface.git
+[submodule "test/lib"]
+	path = test/lib
+	url = https://github.com/google/googletest
