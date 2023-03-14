@@ -264,7 +264,7 @@ fmi2Status HelloWorldSensor::DoExitInitializationMode()
     return fmi2OK;
 }
 
-void RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz)
+void HelloWorldSensor::RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz)
 {
     double matrix[3][3];
     double cos_yaw = cos(yaw);
@@ -344,8 +344,9 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
                          double rel_x = NAN;
                          double rel_y = NAN;
                          double rel_z = NAN;
-                         RotatePoint(
-                             trans_x, trans_y, trans_z, veh.base().orientation().yaw(), veh.base().orientation().pitch(), veh.base().orientation().roll(), rel_x, rel_y, rel_z);
+                         RotatePoint(trans_x, trans_y, trans_z,
+                                     veh.base().orientation().yaw(), veh.base().orientation().pitch(), veh.base().orientation().roll(),     //todo: why not use ego orientation?
+                                     rel_x, rel_y, rel_z);
                          double distance = sqrt(rel_x * rel_x + rel_y * rel_y + rel_z * rel_z);
                          if ((distance <= actual_range) && (rel_x / distance > 0.866025))
                          {
