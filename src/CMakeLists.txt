@@ -9,7 +9,7 @@ string(MD5 FMUGUID modelDescription.in.xml)
 configure_file(modelDescription.in.xml modelDescription.xml @ONLY)
 
 find_package(Protobuf 2.6.1 REQUIRED)
-add_library(HelloWorldSensor SHARED HelloWorldSensor.cpp)
+add_library(HelloWorldSensor SHARED HelloWorldSensor.cpp HelloWorldSensor.h)
 set_target_properties(HelloWorldSensor PROPERTIES PREFIX "")
 target_compile_definitions(HelloWorldSensor PRIVATE "FMU_SHARED_OBJECT")
 if(LINK_WITH_SHARED_OSI)

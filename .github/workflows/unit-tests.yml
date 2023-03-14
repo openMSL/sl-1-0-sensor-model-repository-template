@@ -1,4 +1,4 @@
-name: C++ Linter
+name: Unit Tests
 
 on:
   workflow_call:
@@ -43,23 +43,5 @@ jobs:
       working-directory: build
       run: cmake --build .
 
-    - name: Lint CPP
-      uses: cpp-linter/cpp-linter-action@v2
-      id: linter
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        style: file
-        tidy-checks: ''
-        version: '14'
-        files-changed-only: true
-        thread-comments: true
-        database: 'build/'
-        ignore: 'build | protobuf-21.12 | .github | test'
-        extra-args: '-I ./build/lib/open-simulation-interface'
-        
-    - name: Fail fast?!
-      if: steps.linter.outputs.checks-failed > 0
-      run: echo "Some files failed the linting checks!"
-      # for actual deployment
-      # run: exit 1
+    - name: Run Unit Tests
+      run: build/test/Google_Tests_run

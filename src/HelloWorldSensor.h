@@ -115,6 +115,8 @@ class HelloWorldSensor
     fmi2Status SetBoolean(const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[]);
     fmi2Status SetString(const fmi2ValueReference vr[], size_t nvr, const fmi2String value[]);
 
+    static void RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz);
+
   protected:
     /* Internal Implementation */
     fmi2Status DoInit();

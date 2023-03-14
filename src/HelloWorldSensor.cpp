@@ -264,7 +264,18 @@ fmi2Status HelloWorldSensor::DoExitInitializationMode()
     return fmi2OK;
 }
 
-void RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz)
+void TransposeRotationMatrix(double matrix_in[3][3], double matrix_trans[3][3])
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix_trans[j][i] = matrix_in[i][j];
+        }
+    }
+}
+
+void HelloWorldSensor::RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz)
 {
     double matrix[3][3];
     double cos_yaw = cos(yaw);
@@ -284,9 +295,12 @@ void RotatePoint(double x, double y, double z, double yaw, double pitch, double 
     matrix[2][1] = cos_pitch * sin_roll;
     matrix[2][2] = cos_pitch * cos_roll;
 
-    rx = matrix[0][0] * x + matrix[0][1] * y + matrix[0][2] * z;
-    ry = matrix[1][0] * x + matrix[1][1] * y + matrix[1][2] * z;
-    rz = matrix[2][0] * x + matrix[2][1] * y + matrix[2][2] * z;
+    double matrix_trans[3][3];
+    TransposeRotationMatrix(matrix, matrix_trans);
+
+    rx = matrix_trans[0][0] * x + matrix_trans[0][1] * y + matrix_trans[0][2] * z;
+    ry = matrix_trans[1][0] * x + matrix_trans[1][1] * y + matrix_trans[1][2] * z;
+    rz = matrix_trans[2][0] * x + matrix_trans[2][1] * y + matrix_trans[2][2] * z;
 }
 
 fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
@@ -301,11 +315,14 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
         double ego_x = 0;
         double ego_y = 0;
         double ego_z = 0;
+        double ego_yaw = 0;
+        double ego_pitch = 0;
+        double ego_roll = 0;
         osi3::Identifier ego_id = current_in.global_ground_truth().host_vehicle_id();
         NormalLog("OSI", "Looking for EgoVehicle with ID: %llu", ego_id.value());
         for_each(current_in.global_ground_truth().moving_object().begin(),
                  current_in.global_ground_truth().moving_object().end(),
-                 [this, ego_id, &ego_x, &ego_y, &ego_z](const osi3::MovingObject& obj) {
+                 [this, ego_id, &ego_x, &ego_y, &ego_z, &ego_yaw, &ego_pitch, &ego_roll](const osi3::MovingObject& obj) {
                      NormalLog("OSI", "MovingObject with ID %llu is EgoVehicle: %d", obj.id().value(), static_cast<int>(obj.id().value() == ego_id.value()));
                      if (obj.id().value() == ego_id.value())
                      {
@@ -313,6 +330,9 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
                          ego_x = obj.base().position().x();
                          ego_y = obj.base().position().y();
                          ego_z = obj.base().position().z();
+                         ego_yaw = obj.base().orientation().yaw();
+                         ego_pitch = obj.base().orientation().pitch();
+                         ego_roll = obj.base().orientation().roll();
                      }
                  });
         NormalLog("OSI", "Current Ego Position: %f,%f,%f", ego_x, ego_y, ego_z);
@@ -332,7 +352,7 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
         double actual_range = FmiNominalRange() * range_factor;
         for_each(current_in.global_ground_truth().moving_object().begin(),
                  current_in.global_ground_truth().moving_object().end(),
-                 [this, &i, &current_in, &current_out, ego_id, ego_x, ego_y, ego_z, actual_range](const osi3::MovingObject& veh) {
+                 [this, &i, &current_in, &current_out, ego_id, ego_x, ego_y, ego_z, ego_yaw, ego_pitch, ego_roll, actual_range](const osi3::MovingObject& veh) {
                      if (veh.id().value() != ego_id.value())
                      {
                          // NOTE: We currently do not take sensor mounting position into account,
@@ -344,8 +364,7 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
                          double rel_x = NAN;
                          double rel_y = NAN;
                          double rel_z = NAN;
-                         RotatePoint(
-                             trans_x, trans_y, trans_z, veh.base().orientation().yaw(), veh.base().orientation().pitch(), veh.base().orientation().roll(), rel_x, rel_y, rel_z);
+                         RotatePoint(trans_x, trans_y, trans_z, ego_yaw, ego_pitch, ego_roll, rel_x, rel_y, rel_z);
                          double distance = sqrt(rel_x * rel_x + rel_y * rel_y + rel_z * rel_z);
                          if ((distance <= actual_range) && (rel_x / distance > 0.866025))
                          {
