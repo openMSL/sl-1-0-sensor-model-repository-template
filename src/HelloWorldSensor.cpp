@@ -264,8 +264,9 @@ fmi2Status HelloWorldSensor::DoExitInitializationMode()
     return fmi2OK;
 }
 
-void TransposeRotationMatrix(double matrix_in[3][3], double matrix_trans[3][3]) {
-    for(int i=0; i < 3; i++)
+void TransposeRotationMatrix(double matrix_in[3][3], double matrix_trans[3][3])
+{
+    for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
@@ -314,9 +315,9 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
         double ego_x = 0;
         double ego_y = 0;
         double ego_z = 0;
-        double ego_yaw=0;
-        double ego_pitch=0;
-        double ego_roll=0;
+        double ego_yaw = 0;
+        double ego_pitch = 0;
+        double ego_roll = 0;
         osi3::Identifier ego_id = current_in.global_ground_truth().host_vehicle_id();
         NormalLog("OSI", "Looking for EgoVehicle with ID: %llu", ego_id.value());
         for_each(current_in.global_ground_truth().moving_object().begin(),
@@ -363,9 +364,7 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
                          double rel_x = NAN;
                          double rel_y = NAN;
                          double rel_z = NAN;
-                         RotatePoint(trans_x, trans_y, trans_z,
-                                     ego_yaw, ego_pitch, ego_roll,
-                                     rel_x, rel_y, rel_z);
+                         RotatePoint(trans_x, trans_y, trans_z, ego_yaw, ego_pitch, ego_roll, rel_x, rel_y, rel_z);
                          double distance = sqrt(rel_x * rel_x + rel_y * rel_y + rel_z * rel_z);
                          if ((distance <= actual_range) && (rel_x / distance > 0.866025))
                          {

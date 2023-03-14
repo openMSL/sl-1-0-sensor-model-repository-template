@@ -3,15 +3,17 @@
 // SPDX-License-Identifier: MPL-2.0
 //
 
-#include "gtest/gtest.h"
-#include "../src/HelloWorldSensor.h"
 #include <cmath>
 
-class ISensorModelTest : public ::testing::Test {
+#include "../src/HelloWorldSensor.h"
+#include "gtest/gtest.h"
 
+class ISensorModelTest : public ::testing::Test
+{
 };
 
-TEST_F(ISensorModelTest, YawRotation){
+TEST_F(ISensorModelTest, YawRotation)
+{
 
     const double x = 5.0;
     const double y = 3.0;
@@ -26,8 +28,7 @@ TEST_F(ISensorModelTest, YawRotation){
 
     HelloWorldSensor::RotatePoint(x, y, z, yaw, pitch, roll, rx, ry, rz);
 
-    EXPECT_NEAR(rx,3.0,0.000001);
-    EXPECT_NEAR(ry,-5.0,0.000001);
-    EXPECT_NEAR(rz,0.0,0.000001);
-
+    EXPECT_NEAR(rx, 3.0, 0.000001);
+    EXPECT_NEAR(ry, -5.0, 0.000001);
+    EXPECT_NEAR(rz, 0.0, 0.000001);
 }
