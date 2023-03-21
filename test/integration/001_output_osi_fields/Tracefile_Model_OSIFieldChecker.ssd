@@ -107,7 +107,11 @@
                     <ssd:ParameterBinding>
                         <ssd:ParameterValues>
                             <ssv:ParameterSet version="1.0" name="Internal Parameter-Set">
-                                <ssv:Parameters/>
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="check_file">
+                                        <ssv:String value="./test/integration/001_output_osi_fields/osi_check.txt"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
                             </ssv:ParameterSet>
                         </ssd:ParameterValues>
                     </ssd:ParameterBinding>
