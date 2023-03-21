@@ -160,6 +160,8 @@ jobs:
         working-directory: test/integration
         run: |
           echo "matrix=$(ls -l | grep '^d' | awk -F ' ' '{print $9}' | grep -Po '\d{3}.*' | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
 
   run_integration_test:
     needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generate_test_paths]
@@ -168,15 +170,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path: ${{ fromJson(generate_test_paths.outputs.matrix) }}
+        path: ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
 
     steps:
       - name: Print matrix
         id: 1
-        run: echo ${generate_test_paths.outputs.matrix}
+        run: echo ${needs.generate_test_paths.outputs.matrix}
       - name: Print path for Debug
         id: 2
-        run: echo ${{ fromJson(generate_test_paths.outputs.matrix) }}
+        run: echo ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
       - name: Print matrix path
         id: 3
         run: echo ${{ github.workspace }}/${{ matrix.path }}
