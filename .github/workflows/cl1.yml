@@ -21,4 +21,4 @@ jobs:
 
   unit-tests:
     name: Unit Tests
-    uses: ${{github.repository}}/.github/workflows/unit-tests.yml@main
+    uses: ./.github/workflows/unit-tests.yml@main
