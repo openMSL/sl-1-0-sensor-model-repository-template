@@ -149,11 +149,26 @@ jobs:
         working-directory: openmcx
         run: ./build.sh
 
+  generateInputPaths:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate matrix with all integration tests
+        id: set-matrix
+        directory: test/integration
+        run: |
+          echo "::set-output name=matrix::$(ls -l | grep '^d' | awk -F ' ' '{print $9}' | grep -Po '\d{3}.*' | jq -R -s -c 'split("\n") | map(select(length > 0))')"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
   run_osi_field_check:
-    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu]
+    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generateInputPaths]
     name: Run Model FMU
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ${{ fromJson(needs.generateInputPaths.outputs.matrix) }}
     steps:
       - name: Checkout Model
         uses: actions/checkout@v3
@@ -193,7 +208,7 @@ jobs:
 
       - name: Run OpenMCx
         id: cosimulation
-        run: ./openmcx/install/openmcx ./test/integration/001_output_osi_fields/Tracefile_Model_OSIFieldChecker.ssd
+        run: ./openmcx/install/openmcx ${{ github.workspace }}/${{ matrix.inputPath }}/SystemStructure.ssd
 
       - name: Failed?
         if: steps.cosimulation.outputs.pass == 0
