@@ -155,7 +155,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Generate matrix with all integration tests
         id: set-matrix
-        directory: test/integration
+        working-directory: test/integration
         run: |
           echo "::set-output name=matrix::$(ls -l | grep '^d' | awk -F ' ' '{print $9}' | grep -Po '\d{3}.*' | jq -R -s -c 'split("\n") | map(select(length > 0))')"
     outputs:
