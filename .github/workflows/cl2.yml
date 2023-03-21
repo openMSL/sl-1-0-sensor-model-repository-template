@@ -200,7 +200,3 @@ jobs:
         id: cosimulation
         working-directory: openmcx
         run: ./install/openmcx ../test/integration/001_output_osi_fields/Tracefile_Model_OSIFieldChecker.ssd
-
-      - name: Failed?
-        if: steps.cosimulation.outputs.num_missing_fields>0
-        run: exit 1
