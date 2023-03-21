@@ -151,7 +151,7 @@ jobs:
 
   generate_test_paths:
     runs-on: ubuntu-latest
-    name: Generate Test Paths
+    name: Generate Integration Test Paths
 
     steps:
       - uses: actions/checkout@v3
@@ -173,10 +173,6 @@ jobs:
         path: ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
 
     steps:
-      - name: Print matrix
-        run: echo ${needs.generate_test_paths.outputs.matrix}
-      - name: Print path for Debug
-        run: echo ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
       - name: Print matrix path
         run: echo ${{ github.workspace }}/${{ matrix.path }}
 
