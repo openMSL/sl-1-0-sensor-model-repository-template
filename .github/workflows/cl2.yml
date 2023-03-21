@@ -214,7 +214,7 @@ jobs:
 
       - name: Run OpenMCx
         id: cosimulation
-        run: ./openmcx/install/openmcx ${{ github.workspace }}/${{ matrix.path }}/SystemStructure.ssd
+        run: ./openmcx/install/openmcx ./test/integration/${{ matrix.path }}/SystemStructure.ssd
 
       - name: Failed?
         if: steps.cosimulation.outputs.pass == 0
