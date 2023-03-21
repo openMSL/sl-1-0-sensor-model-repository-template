@@ -21,4 +21,4 @@ jobs:
 
   unit-tests:
     name: Unit Tests
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/unit-tests.yml@main
+    uses: ${{github.repository}}/.github/workflows/unit-tests.yml@main
