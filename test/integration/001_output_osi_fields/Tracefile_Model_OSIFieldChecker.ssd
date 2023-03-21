@@ -31,7 +31,11 @@
                     <ssd:ParameterBinding>
                         <ssd:ParameterValues>
                             <ssv:ParameterSet version="1.0" name="Internal Parameter-Set">
-                                <ssv:Parameters/>
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="trace_path">
+                                        <ssv:String value="./test/integration/001_output_osi_fields/"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
                             </ssv:ParameterSet>
                         </ssd:ParameterValues>
                     </ssd:ParameterBinding>

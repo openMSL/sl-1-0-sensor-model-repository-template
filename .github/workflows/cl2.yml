@@ -191,15 +191,6 @@ jobs:
       - name: Install dependencies
         run: sudo apt install -y libxml2-dev zlib1g-dev libzip-dev
 
-      - name: Create Tracefile Directory
-        run: mkdir /tmp/osi
-
-      - name: Copy Tracefile
-        run: cp test/integration/001_output_osi_fields/20230221T153730Z_sv_340_300_0000_protoBin.osi /tmp/osi/20230221T153730Z_sv_340_300_0000_protoBin.osi
-
-      - name: Copy OSI Check File
-        run: cp test/integration/001_output_osi_fields/osi_check.txt /tmp/osi_check.txt
-
       - name: Run OpenMCx
         id: cosimulation
         run: ./openmcx/install/openmcx ./test/integration/001_output_osi_fields/Tracefile_Model_OSIFieldChecker.ssd
