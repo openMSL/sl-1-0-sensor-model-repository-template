@@ -79,56 +79,11 @@
                     </ssd:ParameterBinding>
                 </ssd:ParameterBindings>
             </ssd:Component>
-            <ssd:Component type="application/x-fmu-sharedlibrary" source="/tmp/osi-field-checker/OSIFieldChecker.fmu" implementation="CoSimulation" name="OSIFieldChecker" description="Check filled fields in received SensorData">
-                <ssd:Connectors>
-                    <ssd:Connector name="OSMPSensorDataIn.base.lo" kind="input">
-                        <ssc:Integer/>
-                        <ssd:ConnectorGeometry x="0.0" y="0.75"/>
-                    </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorDataIn.base.hi" kind="input">
-                        <ssc:Integer/>
-                        <ssd:ConnectorGeometry x="0.0" y="0.5"/>
-                    </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorDataOut.size" kind="output">
-                        <ssc:Integer/>
-                        <ssd:ConnectorGeometry x="1.0" y="0.25"/>
-                    </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorDataOut.base.lo" kind="output">
-                        <ssc:Integer/>
-                        <ssd:ConnectorGeometry x="1.0" y="0.75"/>
-                    </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorDataIn.size" kind="input">
-                        <ssc:Integer/>
-                        <ssd:ConnectorGeometry x="0.0" y="0.25"/>
-                    </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorDataOut.base.hi" kind="output">
-                        <ssc:Integer/>
-                        <ssd:ConnectorGeometry x="1.0" y="0.5"/>
-                    </ssd:Connector>
-                </ssd:Connectors>
-                <ssd:ElementGeometry x1="1247.5" y1="-350.5" x2="1649.5" y2="-73.5"/>
-                <ssd:ParameterBindings>
-                    <ssd:ParameterBinding>
-                        <ssd:ParameterValues>
-                            <ssv:ParameterSet version="1.0" name="Internal Parameter-Set">
-                                <ssv:Parameters>
-                                    <ssv:Parameter name="check_file">
-                                        <ssv:String value="./test/integration/001_smoke_test/osi_check.txt"/>
-                                    </ssv:Parameter>
-                                </ssv:Parameters>
-                            </ssv:ParameterSet>
-                        </ssd:ParameterValues>
-                    </ssd:ParameterBinding>
-                </ssd:ParameterBindings>
-            </ssd:Component>
         </ssd:Elements>
         <ssd:Connections>
             <ssd:Connection startElement="OSMPTraceFilePlayer" startConnector="OSMPSensorViewOut.base.hi" endElement="HelloWorldSensor" endConnector="OSMPSensorViewIn.base.hi" suppressUnitConversion="false"/>
             <ssd:Connection startElement="OSMPTraceFilePlayer" startConnector="OSMPSensorViewOut.size" endElement="HelloWorldSensor" endConnector="OSMPSensorViewIn.size" suppressUnitConversion="false"/>
             <ssd:Connection startElement="OSMPTraceFilePlayer" startConnector="OSMPSensorViewOut.base.lo" endElement="HelloWorldSensor" endConnector="OSMPSensorViewIn.base.lo" suppressUnitConversion="false"/>
-            <ssd:Connection startElement="HelloWorldSensor" startConnector="OSMPSensorDataOut.base.hi" endElement="OSIFieldChecker" endConnector="OSMPSensorDataIn.base.hi" suppressUnitConversion="false"/>
-            <ssd:Connection startElement="HelloWorldSensor" startConnector="OSMPSensorDataOut.size" endElement="OSIFieldChecker" endConnector="OSMPSensorDataIn.size" suppressUnitConversion="false"/>
-            <ssd:Connection startElement="HelloWorldSensor" startConnector="OSMPSensorDataOut.base.lo" endElement="OSIFieldChecker" endConnector="OSMPSensorDataIn.base.lo" suppressUnitConversion="false"/>
         </ssd:Connections>
         <ssd:SystemGeometry x1="-619.0" y1="-666.5" x2="1849.5" y2="126.5"/>
     </ssd:System>

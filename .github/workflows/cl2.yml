@@ -149,10 +149,12 @@ jobs:
         working-directory: openmcx
         run: ./build.sh
 
-  generateInputPaths:
+  generate_test_paths:
     runs-on: ubuntu-latest
+    name: Generate Test Paths
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Generate matrix with all integration tests
         id: set-matrix
         working-directory: test/integration
@@ -161,14 +163,15 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
-  run_osi_field_check:
-    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generateInputPaths]
-    name: Run Model FMU
+  run_integration_test:
+    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generate_test_paths]
+    name: Run Integration Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        path: ${{ fromJson(needs.generateInputPaths.outputs.matrix) }}
+        path: ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
+
     steps:
       - name: Checkout Model
         uses: actions/checkout@v3
