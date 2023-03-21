@@ -174,13 +174,10 @@ jobs:
 
     steps:
       - name: Print matrix
-        id: 1
         run: echo ${needs.generate_test_paths.outputs.matrix}
       - name: Print path for Debug
-        id: 2
         run: echo ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
       - name: Print matrix path
-        id: 3
         run: echo ${{ github.workspace }}/${{ matrix.path }}
 
       - name: Checkout Model
