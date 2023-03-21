@@ -168,14 +168,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path: ${{ fromJson(steps.generate_test_paths.outputs.matrix) }}
+        path: ${{ fromJson(generate_test_paths.outputs.matrix) }}
 
     steps:
       - name: Print matrix
+        id: 1
         run: echo ${steps.generate_test_paths.outputs.matrix}
       - name: Print path for Debug
+        id: 2
         run: echo ${{ fromJson(steps.generate_test_paths.outputs.matrix) }}
       - name: Print matrix path
+        id: 3
         run: echo ${{ github.workspace }}/${{ matrix.path }}
 
       - name: Checkout Model
