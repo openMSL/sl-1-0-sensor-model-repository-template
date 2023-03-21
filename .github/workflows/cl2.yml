@@ -171,6 +171,13 @@ jobs:
         path: ${{ fromJson(steps.generate_test_paths.outputs.matrix) }}
 
     steps:
+      - name: Print matrix
+        run: echo ${steps.generate_test_paths.outputs.matrix}
+      - name: Print path for Debug
+        run: echo ${{ fromJson(steps.generate_test_paths.outputs.matrix) }}
+      - name: Print matrix path
+        run: echo ${{ github.workspace }}/${{ matrix.path }}
+
       - name: Checkout Model
         uses: actions/checkout@v3
         with:
@@ -209,7 +216,7 @@ jobs:
 
       - name: Run OpenMCx
         id: cosimulation
-        run: ./openmcx/install/openmcx ${{ github.workspace }}/${{ matrix.inputPath }}/SystemStructure.ssd
+        run: ./openmcx/install/openmcx ${{ github.workspace }}/${{ matrix.path }}/SystemStructure.ssd
 
       - name: Failed?
         if: steps.cosimulation.outputs.pass == 0
