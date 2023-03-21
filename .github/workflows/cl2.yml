@@ -9,7 +9,7 @@ on:
 jobs:
   build_model:
     name: Build Model
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
 
   build_tracefile_player:
     name: Build Tracefile Player FMU
@@ -191,15 +191,15 @@ jobs:
         run: mkdir /tmp/osi
 
       - name: Copy Tracefile
-        run: cp test/integration/1_output_osi_fields/20230221T153730Z_sv_340_300_0000_protoBin.osi /tmp/osi/20230221T153730Z_sv_340_300_0000_protoBin.osi
+        run: cp test/integration/001_output_osi_fields/20230221T153730Z_sv_340_300_0000_protoBin.osi /tmp/osi/20230221T153730Z_sv_340_300_0000_protoBin.osi
 
       - name: Copy OSI Check File
-        run: cp test/integration/1_output_osi_fields/osi_check.txt /tmp/osi_check.txt
+        run: cp test/integration/001_output_osi_fields/osi_check.txt /tmp/osi_check.txt
 
       - name: Run OpenMCx
         id: cosimulation
         working-directory: openmcx
-        run: ./install/openmcx ../test/integration/1_output_osi_fields/Tracefile_Model_OSIFieldChecker.ssd
+        run: ./install/openmcx ../test/integration/001_output_osi_fields/Tracefile_Model_OSIFieldChecker.ssd
 
       - name: Failed?
         if: steps.cosimulation.outputs.num_missing_fields>0
