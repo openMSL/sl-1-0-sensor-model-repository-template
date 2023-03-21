@@ -148,6 +148,8 @@ jobs:
   run_osi_field_check:
     needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu]
     name: Run Model FMU
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout Model
         uses: actions/checkout@v3
