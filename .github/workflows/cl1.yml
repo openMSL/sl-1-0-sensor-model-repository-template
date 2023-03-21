@@ -9,15 +9,15 @@ on:
 jobs:
   build_model:
     name: Build Model
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/build.yml@main
+    uses: .github/workflows/build.yml
 
   cpp-linter:
     name: C++ Linter
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/cpp-linter.yml@main
+    uses: ./.github/workflows/cpp-linter.yml
 
   markdown-linter:
     name: Markdown Linter
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/markdown.yml@main
+    uses: ./.github/workflows/markdown.yml
 
   unit-tests:
     name: Unit Tests
