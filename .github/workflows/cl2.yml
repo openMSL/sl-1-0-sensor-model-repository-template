@@ -217,5 +217,5 @@ jobs:
         run: ./openmcx/install/openmcx ./test/integration/${{ matrix.path }}/SystemStructure.ssd
 
       - name: Failed?
-        if: steps.cosimulation.outputs.pass == 0
+        if: steps.cosimulation.outputs.failed == 1
         run: exit 1
