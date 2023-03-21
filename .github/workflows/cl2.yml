@@ -94,6 +94,10 @@ jobs:
       - name: Clone OpenMSL Sensor Model Testing
         run: git clone https://github.com/openMSL/sl-1-5-sensor-model-testing.git
 
+      - name: Checkout Branch
+        working-directory: sl-1-5-sensor-model-testing
+        run: git checkout add-pass-output
+
       - name: Prepare C++ Build
         working-directory: sl-1-5-sensor-model-testing
         run: git submodule update --init && mkdir build
@@ -200,3 +204,7 @@ jobs:
         id: cosimulation
         working-directory: openmcx
         run: ./install/openmcx ../test/integration/001_output_osi_fields/Tracefile_Model_OSIFieldChecker.ssd
+
+      - name: Failed?
+        if: steps.cosimulation.outputs.pass == 0
+        run: exit 1
