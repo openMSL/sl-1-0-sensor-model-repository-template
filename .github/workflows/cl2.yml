@@ -159,9 +159,7 @@ jobs:
         id: set-matrix
         working-directory: test/integration
         run: |
-          echo "::set-output name=matrix::$(ls -l | grep '^d' | awk -F ' ' '{print $9}' | grep -Po '\d{3}.*' | jq -R -s -c 'split("\n") | map(select(length > 0))')"
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+          echo "matrix=$(ls -l | grep '^d' | awk -F ' ' '{print $9}' | grep -Po '\d{3}.*' | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
   run_integration_test:
     needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generate_test_paths]
@@ -170,7 +168,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path: ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
+        path: ${{ fromJson(steps.generate_test_paths.outputs.matrix) }}
 
     steps:
       - name: Checkout Model
