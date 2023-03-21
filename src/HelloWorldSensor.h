@@ -115,7 +115,18 @@ class HelloWorldSensor
     fmi2Status SetBoolean(const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[]);
     fmi2Status SetString(const fmi2ValueReference vr[], size_t nvr, const fmi2String value[]);
 
-    static void RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz);
+    static void rotatePointXYZ(double x, double y, double z,
+                               double yaw, double pitch, double roll,
+                               double &rx, double &ry, double &rz);
+
+    static void transformCoordinateGlobalToVehicle(double &rx, double &ry, double &rz,
+                                                   double ego_x, double ego_y, double ego_z,
+                                                   double ego_yaw, double ego_pitch, double ego_roll,
+                                                   double ego_bbcenter_to_rear_x, double ego_bbcenter_to_rear_y, double ego_bbcenter_to_rear_z);
+
+    static void transformCoordinateVehicleToSensor(double &rx, double &ry, double &rz,
+                                                   double mounting_position_x, double mounting_position_y, double mounting_position_z,
+                                                   double mounting_position_yaw, double mounting_position_pitch, double mounting_position_roll);
 
   protected:
     /* Internal Implementation */
