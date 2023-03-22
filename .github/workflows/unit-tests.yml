@@ -44,4 +44,4 @@ jobs:
       run: cmake --build .
 
     - name: Run Unit Tests
-      run: build/test/Google_Tests_run
+      run: build/test/unit/Google_Tests_run
