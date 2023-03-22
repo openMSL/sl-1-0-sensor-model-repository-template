@@ -1,11 +1,11 @@
-name: Build
+name: Build Tracefile Player
 
 on:
   workflow_call:
 
 jobs:
-  build:
-    name: Build FMU
+  build_tracefile_player:
+    name: Build Tracefile Player FMU
     runs-on: ubuntu-latest
 
     steps:
