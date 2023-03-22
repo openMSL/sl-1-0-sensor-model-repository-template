@@ -56,9 +56,11 @@ jobs:
         run: cmake --build .
 
       - name: Create FMU Directory
+        if: steps.cache-tracefile-fmu.outputs.cache-hit != 'true'
         working-directory: osi-trace-file-player/build
         run: mkdir /tmp/tracefile_fmu
 
       - name: Copy Tracefile FMU
+        if: steps.cache-tracefile-fmu.outputs.cache-hit != 'true'
         working-directory: osi-trace-file-player/build
         run: cp src/OSMPTraceFilePlayer.fmu /tmp/tracefile_fmu/OSMPTraceFilePlayer.fmu
