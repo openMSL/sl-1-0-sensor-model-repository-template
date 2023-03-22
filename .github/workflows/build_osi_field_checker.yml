@@ -40,11 +40,6 @@ jobs:
         if: steps.cache-osi-field-checker.outputs.cache-hit != 'true'
         run: git clone https://github.com/openMSL/sl-1-5-sensor-model-testing.git
 
-      - name: Checkout Branch
-        if: steps.cache-osi-field-checker.outputs.cache-hit != 'true'
-        working-directory: sl-1-5-sensor-model-testing
-        run: git checkout check-file-fmi-parameter
-
       - name: Prepare C++ Build
         if: steps.cache-osi-field-checker.outputs.cache-hit != 'true'
         working-directory: sl-1-5-sensor-model-testing
