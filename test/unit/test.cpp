@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-#include "../src/HelloWorldSensor.h"
+#include "../../src/HelloWorldSensor.h"
 #include "gtest/gtest.h"
 
 class ISensorModelTest : public ::testing::Test
