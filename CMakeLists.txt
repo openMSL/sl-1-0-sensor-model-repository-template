@@ -15,4 +15,4 @@ set(FMU_INSTALL_DIR "${CMAKE_BINARY_DIR}" CACHE PATH "Target directory for gener
 
 add_subdirectory(src/)
 
-add_subdirectory(test/)
+add_subdirectory(test/unit/)
