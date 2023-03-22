@@ -23,7 +23,7 @@ jobs:
     name: Build OpenMCx
     uses: ./.github/workflows/build_openmcx.yml
 
-  generate_test_paths:
+  generate_integration_test_paths:
     runs-on: ubuntu-latest
     name: Generate Integration Test Paths
 
@@ -38,13 +38,13 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
   run_integration_test:
-    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generate_test_paths]
-    name: Run Integration Test
+    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, generate_integration_test_paths]
+    name: Integration Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        path: ${{ fromJson(needs.generate_test_paths.outputs.matrix) }}
+        path: ${{ fromJson(needs.generate_integration_test_paths.outputs.matrix) }}
 
     steps:
       - name: Print matrix path
