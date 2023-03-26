@@ -3,6 +3,9 @@ name: Build
 on:
   workflow_call:
 
+env:
+  FMU_FILE_NAME: HelloWorldSensor.fmu #TODO: Adjust to file name of your FMU
+
 jobs:
   build:
     name: Build FMU
@@ -51,7 +54,7 @@ jobs:
 
     - name: Copy Model FMU
       working-directory: build
-      run: cp HelloWorldSensor.fmu /tmp/model_fmu/HelloWorldSensor.fmu
+      run: cp $FMU_FILE_NAME /tmp/model_fmu/SensorModel.fmu
 
     - name: Cache Model FMU
       id: cache-model-fmu
