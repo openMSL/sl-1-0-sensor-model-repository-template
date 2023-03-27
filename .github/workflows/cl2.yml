@@ -7,9 +7,9 @@ on:
     branches: [ "main" ]
 
 jobs:
-  #build_model:
-  #  name: Build Model
-  #  uses: ./.github/workflows/build.yml
+  build_model:
+    name: Build Model
+    uses: ./.github/workflows/build.yml
 
   build_tracefile_player:
     name: Build Tracefile Player FMU
@@ -42,8 +42,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
   run_integration_test:
-    #needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, build_esmini, generate_integration_test_paths]
-    needs: [build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, build_esmini, generate_integration_test_paths]
+    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, build_esmini, generate_integration_test_paths]
     name: Integration Test
     runs-on: ubuntu-latest
     strategy:
