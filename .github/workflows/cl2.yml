@@ -88,10 +88,6 @@ jobs:
           path: esmini/bin
           key: ${{ runner.os }}-esmini-lib
 
-      - name: Check esmini-lib
-        working-directory: esmini/bin
-        run: ls -al
-
       - name: Create OSMP_FMU folder
         working-directory: esmini
         run: mkdir OSMP_FMU
