@@ -89,7 +89,7 @@ jobs:
 
       - name: Check esmini-lib
         working-directory: esmini/bin
-        run: ll
+        run: ls -al
 
       - name: Cache OSI Field Checker
         id: cache-osi-field-checker
