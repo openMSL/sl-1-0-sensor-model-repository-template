@@ -35,6 +35,9 @@
                                     <ssv:Parameter name="xosc_path">
                                         <ssv:String value="./test/integration/002_smoke_test_scenario/cut-in_simple.xosc"/>
                                     </ssv:Parameter>
+                                    <ssv:Parameter name="use_viewer">
+                                        <ssv:Boolean value="false"/>
+                                    </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
                         </ssd:ParameterValues>

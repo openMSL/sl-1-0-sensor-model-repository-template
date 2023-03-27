@@ -33,7 +33,7 @@
                             <ssv:ParameterSet version="1.0" name="Internal Parameter-Set">
                                 <ssv:Parameters>
                                     <ssv:Parameter name="trace_path">
-                                        <ssv:String value="./test/integration/002_output_osi_fields/"/>
+                                        <ssv:String value="./test/integration/003_output_osi_fields/"/>
                                     </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
@@ -113,7 +113,7 @@
                             <ssv:ParameterSet version="1.0" name="Internal Parameter-Set">
                                 <ssv:Parameters>
                                     <ssv:Parameter name="check_file">
-                                        <ssv:String value="./test/integration/002_output_osi_fields/osi_check.txt"/>
+                                        <ssv:String value="./test/integration/003_output_osi_fields/osi_check.txt"/>
                                     </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
