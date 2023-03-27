@@ -33,7 +33,7 @@
                             <ssv:ParameterSet version="1.0" name="Internal Parameter-Set">
                                 <ssv:Parameters>
                                     <ssv:Parameter name="trace_path">
-                                        <ssv:String value="./test/integration/001_smoke_test/"/>
+                                        <ssv:String value="./test/integration/001_smoke_test_tracefile/"/>
                                     </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
