@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Cache esmini FMU
-        id: cache-esmini
+        id: cache-esmini-fmu
         uses: actions/cache@v3
         with:
           path: /tmp/esmini_fmu
@@ -53,6 +53,14 @@ jobs:
           cd build
           cmake ..
           cmake --build .
+
+      - name: Cache esmini FMU
+        if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
+        id: cache-esmini-lib
+        uses: actions/cache@v3
+        with:
+          path: esmini/bin
+          key: ${{ runner.os }}-esmini-lib
 
       - name: Create esmini FMU Directory
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
