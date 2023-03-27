@@ -14,7 +14,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/esmini_fmu
-          key: ${{ runner.os }}-esmini
+          key: ${{ runner.os }}-esmini-fmu
 
       - name: Get esmini
         if: steps.cache-esmini.outputs.cache-hit != 'true'
