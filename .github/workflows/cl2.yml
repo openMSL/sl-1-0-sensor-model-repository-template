@@ -87,6 +87,10 @@ jobs:
           path: esmini/bin
           key: ${{ runner.os }}-esmini-lib
 
+      - name: Check esmini-lib
+        working-directory: esmini/bin
+        run: ll
+
       - name: Cache OSI Field Checker
         id: cache-osi-field-checker
         uses: actions/cache@v3
