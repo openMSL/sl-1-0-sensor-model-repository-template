@@ -92,6 +92,10 @@ jobs:
         working-directory: esmini/bin
         run: ls -al
 
+      - name: Create OSMP_FMU folder
+        working-directory: esmini
+        run: mkdir OSMP_FMU
+
       - name: Cache OSI Field Checker
         id: cache-osi-field-checker
         uses: actions/cache@v3
