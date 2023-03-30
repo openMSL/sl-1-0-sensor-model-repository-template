@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 - 2022, esmini team and the esmini contributors -->
+<!-- SPDX-License-Identifier: MPL-2.0 -->
 <!-- Another cut-in variant on a simple straight road. In this -->
 <!-- case specifying rate of the lane change lateral movement  -->
 <OpenSCENARIO>
