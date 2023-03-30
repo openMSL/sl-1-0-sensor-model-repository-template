@@ -45,9 +45,19 @@ jobs:
           cmake ..
           cmake --build . --config Release --target install
 
-      - name: Check OSI headers
+      - name: Check esmini/externals
+        if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
+        working-directory: esmini/externals
+        run: ls -l
+
+      - name: Check esmini/externals/osi
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
         working-directory: esmini/externals/osi
+        run: ls -l
+
+      - name: Check esmini/externals/osi/linux
+        if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
+        working-directory: esmini/externals/osi/linux
         run: ls -l
 
       - name: Build esmini FMU
