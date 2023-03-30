@@ -52,7 +52,7 @@ jobs:
           mkdir build
           cd build
           cmake ..
-          cmake --build .
+          cmake --build . --config Release
 
       #- name: Cache esmini Lib
       #  if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
