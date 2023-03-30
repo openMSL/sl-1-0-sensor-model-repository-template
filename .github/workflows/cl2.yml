@@ -80,17 +80,6 @@ jobs:
           path: /tmp/esmini_fmu
           key: ${{ runner.os }}-esmini-fmu
 
-      #- name: Cache esmini Lib
-      #  id: cache-esmini-lib
-      #  uses: actions/cache@v3
-      #  with:
-      #    path: esmini/bin
-      #    key: ${{ runner.os }}-esmini-lib
-
-      #- name: Create OSMP_FMU folder
-      #  working-directory: esmini
-      #  run: mkdir OSMP_FMU
-
       - name: Cache OSI Field Checker
         id: cache-osi-field-checker
         uses: actions/cache@v3
