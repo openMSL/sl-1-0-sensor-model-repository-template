@@ -23,7 +23,7 @@ jobs:
       - name: Checkout dev Branch
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
         working-directory: esmini
-        run: git checkout dev
+        run: git checkout add_link_option
 
       - name: Update Submodules
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
@@ -54,13 +54,13 @@ jobs:
           cmake ..
           cmake --build .
 
-      - name: Cache esmini FMU
-        if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
-        id: cache-esmini-lib
-        uses: actions/cache@v3
-        with:
-          path: esmini/bin
-          key: ${{ runner.os }}-esmini-lib
+      #- name: Cache esmini Lib
+      #  if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
+      #  id: cache-esmini-lib
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: esmini/bin
+      #    key: ${{ runner.os }}-esmini-lib
 
       - name: Create esmini FMU Directory
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
