@@ -23,7 +23,7 @@ jobs:
       - name: Checkout dev Branch
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
         working-directory: esmini
-        run: git checkout add_link_option
+        run: git checkout feature/add_link_option
 
       - name: Update Submodules
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
