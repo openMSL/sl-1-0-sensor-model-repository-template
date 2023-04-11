@@ -21,6 +21,9 @@ jobs:
       working-directory: sl-1-5-sensor-model-testing
       run: git submodule update --init --recursive
 
+    - name: Install Dependencies
+      run: pip3 install xmlschema
+
     - name: Validate SRMD
       working-directory: sl-1-5-sensor-model-testing/src/srmd-validator
       run: python3 srmd-validator.py
