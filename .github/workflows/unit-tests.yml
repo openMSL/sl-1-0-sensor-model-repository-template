@@ -1,16 +1,11 @@
-name: Build
+name: Unit Tests
 
 on:
   workflow_call:
 
-env:
-  FMU_FILE_NAME: HelloWorldSensor.fmu #TODO: Adjust to file name of your FMU
-
 jobs:
-  build:
-    name: Build FMU
+  unit-tests:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Model
       uses: actions/checkout@v3
@@ -31,7 +26,7 @@ jobs:
     - name: Build ProtoBuf
       if: steps.cache-protobuf.outputs.cache-hit != 'true'
       working-directory: protobuf-21.12
-      run: ./configure DIST_LANG=cpp --disable-shared CXXFLAGS="-fPIC" && make
+      run: ./configure DIST_LANG=cpp --prefix=/usr && make
 
     - name: Install ProtoBuf
       working-directory: protobuf-21.12
@@ -42,23 +37,11 @@ jobs:
 
     - name: Configure CMake
       working-directory: build
-      run: cmake -DCMAKE_PREFIX_PATH:PATH=${DEPS_DIR}/protobuf/install ..
-
+      run: cmake -DCMAKE_PREFIX_PATH:PATH=${DEPS_DIR}/protobuf/install -DCMAKE_EXPORT_COMPILE_COMMANDS=on ..
+      
     - name: Build C++
       working-directory: build
       run: cmake --build .
 
-    - name: Create FMU Directory
-      working-directory: build
-      run: mkdir /tmp/model_fmu
-
-    - name: Copy Model FMU
-      working-directory: build
-      run: cp $FMU_FILE_NAME /tmp/model_fmu/SensorModel.fmu
-
-    - name: Cache Model FMU
-      id: cache-model-fmu
-      uses: actions/cache@v3
-      with:
-        path: /tmp/model_fmu
-        key: ${{ runner.os }}-model-fmu
+    - name: Run Unit Tests
+      run: build/test/unit/Google_Tests_run

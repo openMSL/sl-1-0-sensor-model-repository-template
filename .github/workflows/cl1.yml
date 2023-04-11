@@ -1,0 +1,24 @@
+name: Credibility Assessment Level 1
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_model:
+    name: Build Model
+    uses: ./.github/workflows/build.yml
+
+  cpp-linter:
+    name: C++ Linter
+    uses: ./.github/workflows/cpp-linter.yml
+
+  markdown-linter:
+    name: Markdown Linter
+    uses: ./.github/workflows/markdown.yml
+
+  unit-tests:
+    name: Unit Tests
+    uses: ./.github/workflows/unit-tests.yml

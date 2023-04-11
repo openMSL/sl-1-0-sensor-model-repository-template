@@ -1,0 +1,4 @@
+moving_object
+moving_object.base
+moving_object.base.position
+moving_object.base.dimension

@@ -1,0 +1,106 @@
+name: Credibility Assessment Level 2
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_model:
+    name: Build Model
+    uses: ./.github/workflows/build.yml
+
+  build_tracefile_player:
+    name: Build Tracefile Player FMU
+    uses: ./.github/workflows/build_tracefile_player.yml
+
+  build_esmini:
+    name: Build esmini FMU
+    uses: ./.github/workflows/build_esmini.yml
+
+  build_osi_field_checker_fmu:
+    name: Build OSI Field Checker FMU
+    uses: ./.github/workflows/build_osi_field_checker.yml
+
+  build_openmcx:
+    name: Build OpenMCx
+    uses: ./.github/workflows/build_openmcx.yml
+
+  generate_integration_test_paths:
+    runs-on: ubuntu-latest
+    name: Generate Integration Test Paths
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate matrix with all integration tests
+        id: set-matrix
+        working-directory: test/integration
+        run: |
+          echo "matrix=$(ls -l | grep '^d' | awk -F ' ' '{print $9}' | grep -Po '\d{3}.*' | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  run_integration_test:
+    needs: [build_model, build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, build_esmini, generate_integration_test_paths]
+    name: Integration Test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ${{ fromJson(needs.generate_integration_test_paths.outputs.matrix) }}
+
+    steps:
+      - name: Print matrix path
+        run: echo ${{ github.workspace }}/${{ matrix.path }}
+
+      - name: Checkout Model
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Cache Model FMU
+        id: cache-model-fmu
+        uses: actions/cache@v3
+        with:
+          path: /tmp/model_fmu
+          key: ${{ runner.os }}-model-fmu
+
+      - name: Cache Tracefile FMU
+        id: cache-tracefile-fmu
+        uses: actions/cache@v3
+        with:
+          path: /tmp/tracefile_fmu
+          key: ${{ runner.os }}-tracefile-fmu
+
+      - name: Cache esmini FMU
+        id: cache-esmini-fmu
+        uses: actions/cache@v3
+        with:
+          path: /tmp/esmini_fmu
+          key: ${{ runner.os }}-esmini-fmu
+
+      - name: Cache OSI Field Checker
+        id: cache-osi-field-checker
+        uses: actions/cache@v3
+        with:
+          path: /tmp/osi-field-checker
+          key: ${{ runner.os }}-osi-field-checker
+
+      - name: Cache OpenMCx
+        id: cache-openmcx
+        uses: actions/cache@v3
+        with:
+          path: openmcx
+          key: ${{ runner.os }}-openmcx
+
+      - name: Install dependencies
+        run: sudo apt install -y libxml2-dev zlib1g-dev libzip-dev
+
+      - name: Run OpenMCx
+        id: cosimulation
+        run: ./openmcx/install/openmcx ./test/integration/${{ matrix.path }}/SystemStructure.ssd
+
+      - name: Failed?
+        if: steps.cosimulation.outputs.failed == 1
+        run: exit 1
