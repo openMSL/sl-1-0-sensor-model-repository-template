@@ -9,13 +9,13 @@ string(MD5 FMUGUID modelDescription.in.xml)
 configure_file(modelDescription.in.xml modelDescription.xml @ONLY)
 
 find_package(Protobuf 2.6.1 REQUIRED)
-add_library(HelloWorldSensor SHARED HelloWorldSensor.cpp HelloWorldSensor.h)
-set_target_properties(HelloWorldSensor PROPERTIES PREFIX "")
-target_compile_definitions(HelloWorldSensor PRIVATE "FMU_SHARED_OBJECT")
+add_library(sl-1-0-sensor-model-repository-template SHARED HelloWorldSensor.cpp HelloWorldSensor.h)
+set_target_properties(sl-1-0-sensor-model-repository-template PROPERTIES PREFIX "")
+target_compile_definitions(sl-1-0-sensor-model-repository-template PRIVATE "FMU_SHARED_OBJECT")
 if(LINK_WITH_SHARED_OSI)
-	target_link_libraries(HelloWorldSensor open_simulation_interface)
+	target_link_libraries(sl-1-0-sensor-model-repository-template open_simulation_interface)
 else()
-	target_link_libraries(HelloWorldSensor open_simulation_interface_pic)
+	target_link_libraries(sl-1-0-sensor-model-repository-template open_simulation_interface_pic)
 endif()
 
 if(WIN32)
@@ -38,7 +38,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	endif()
 endif()
 
-add_custom_command(TARGET HelloWorldSensor
+add_custom_command(TARGET sl-1-0-sensor-model-repository-template
 		POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/buildfmu"
 		COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources"
@@ -46,5 +46,5 @@ add_custom_command(TARGET HelloWorldSensor
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/modelDescription.xml" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/HelloWorldSensor.cpp" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/HelloWorldSensor.h" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
-		COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:HelloWorldSensor> $<$<PLATFORM_ID:Windows>:$<$<CONFIG:Debug>:$<TARGET_PDB_FILE:HelloWorldSensor>>> "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/binaries/${FMI_BINARIES_PLATFORM}"
+		COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sl-1-0-sensor-model-repository-template> $<$<PLATFORM_ID:Windows>:$<$<CONFIG:Debug>:$<TARGET_PDB_FILE:sl-1-0-sensor-model-repository-template>>> "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/binaries/${FMI_BINARIES_PLATFORM}"
 		COMMAND ${CMAKE_COMMAND} -E chdir "${CMAKE_CURRENT_BINARY_DIR}/buildfmu" ${CMAKE_COMMAND} -E tar "cfv" "${FMU_INSTALL_DIR}/sl-1-0-sensor-model-repository-template.fmu" --format=zip "modelDescription.xml" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/binaries/${FMI_BINARIES_PLATFORM}")
