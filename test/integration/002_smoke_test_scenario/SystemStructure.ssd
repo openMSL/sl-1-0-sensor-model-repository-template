@@ -44,7 +44,7 @@
                     </ssd:ParameterBinding>
                 </ssd:ParameterBindings>
             </ssd:Component>
-            <ssd:Component type="application/x-fmu-sharedlibrary" source="/tmp/model_fmu/SensorModel.fmu" implementation="CoSimulation" name="SensorModel" description="">
+            <ssd:Component type="application/x-fmu-sharedlibrary" source="/tmp/model_fmu/sl-1-0-sensor-model-repository-template.fmu" implementation="CoSimulation" name="SensorModel" description="">
                 <ssd:Connectors>
                     <ssd:Connector name="OSMPSensorDataOut.base.hi" kind="output">
                         <ssc:Integer/>

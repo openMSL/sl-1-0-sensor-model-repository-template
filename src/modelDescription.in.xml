@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fmiModelDescription
   fmiVersion="2.0"
-  modelName="Hello World Sensor"
+  modelName="sl-1-0-sensor-model-repository-template"
   guid="@FMUGUID@"
   description="Demonstration C++ Sensor FMU for OSI Sensor Model Packaging within OpenMSL"
   author="Persival GmbH"
@@ -10,7 +10,7 @@
   generationDateAndTime="@FMUTIMESTAMP@"
   variableNamingConvention="structured">
   <CoSimulation
-    modelIdentifier="HelloWorldSensor"
+    modelIdentifier="sl-1-0-sensor-model-repository-template"
     canHandleVariableCommunicationStepSize="true"
     canNotUseMemoryManagementFunctions="true">
     <SourceFiles>
