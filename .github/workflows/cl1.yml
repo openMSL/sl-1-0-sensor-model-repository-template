@@ -11,6 +11,10 @@ jobs:
     name: Build Model
     uses: ./.github/workflows/build.yml
 
+  fmu-artifact:
+    name: Build Model
+    uses: ./.github/workflows/fmu_artifact.yml
+
   cpp-linter:
     name: C++ Linter
     uses: ./.github/workflows/cpp-linter.yml
