@@ -12,10 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: Try get name of repo
-      run: echo "${{ github.event.repository.name }}"
-
     - name: Checkout Model
       uses: actions/checkout@v3
       with:
