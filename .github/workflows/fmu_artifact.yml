@@ -16,11 +16,8 @@ jobs:
         path: /tmp/model_fmu
         key: ${{ runner.os }}-model-fmu
 
-    - name: Rename FMU
-      run: cp /tmp/model_fmu/SensorModel.fmu /tmp/${{ github.event.repository.name }}.fmu
-
     - name: Archive built FMU
       uses: actions/upload-artifact@v3
       with:
         name: ${{ github.event.repository.name }}
-        path: /tmp/${{ github.event.repository.name }}.fmu
+        path: /tmp/model_fmu/${{ github.event.repository.name }}.fmu
