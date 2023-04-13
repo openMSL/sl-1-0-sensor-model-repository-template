@@ -24,6 +24,10 @@ jobs:
     name: Markdown Linter
     uses: ./.github/workflows/markdown.yml
 
+  srmd-validator:
+    name: SRMD Validator
+    uses: ./.github/workflows/srmd-validator.yml
+
   unit-tests:
     name: Unit Tests
     uses: ./.github/workflows/unit-tests.yml
