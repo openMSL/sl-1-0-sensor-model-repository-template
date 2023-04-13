@@ -1,8 +1,7 @@
 # SL-1-0 Sensor Model Repository Template
 
 < GitHub Action Badges of CI Pipeline.
-The pipeline is further described [here](https://github.com/openMSL/sensor_model_testing/blob/main/doc/test_architecture.md)
-To use the CI pipeline after copying this template, you just have to change the file name of your model FMU (env: FMU_FILE_NAME) in [build.yml](.github/workflows/build.yml)>
+The pipeline is further described [here](https://github.com/openMSL/sensor_model_testing/blob/main/doc/test_architecture.md)>
 
 [![Credibility Assessment Level 0](../../actions/workflows/cl0.yml/badge.svg)](https://github.com/openMSL/sl-1-5-sensor-model-testing/blob/main/doc/test_architecture.md#cl-0-license-check)
 [![Credibility Assessment Level 1](../../actions/workflows/cl1.yml/badge.svg)](https://github.com/openMSL/sl-1-5-sensor-model-testing/blob/main/doc/test_architecture.md#cl-1-code-verification)
@@ -88,6 +87,8 @@ The following is an example for building a model as an FMU in Ubuntu.
     ```
 
 3. Take FMU from `FMU_INSTALL_DIR`
+
+< The final FMU has to be named according to the repository name. In this example sl-1-0-sensor-model-repository-template.fmu >
 
 ## Credits
 
