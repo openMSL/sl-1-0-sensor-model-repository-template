@@ -5,6 +5,7 @@ on:
 
 jobs:
   srmd-validator:
+    name: SRMD Validator
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
