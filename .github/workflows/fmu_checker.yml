@@ -26,12 +26,7 @@ jobs:
     - name: Get FMUComplianceChecker
       if: steps.cache-fmu-checker.outputs.cache-hit != 'true'
       working-directory: /tmp
-      run: git clone https://github.com/Persival-GmbH/FMUComplianceChecker.git
-
-    - name: Get FMUComplianceChecker
-      if: steps.cache-fmu-checker.outputs.cache-hit != 'true'
-      working-directory: /tmp/FMUComplianceChecker
-      run: git checkout github-action-output
+      run: git clone https://github.com/modelica-tools/FMUComplianceChecker.git
 
     - name: Build FMUComplianceChecker
       if: steps.cache-fmu-checker.outputs.cache-hit != 'true'
