@@ -16,6 +16,11 @@ jobs:
     name: FMU Artifact
     uses: ./.github/workflows/fmu_artifact.yml
 
+  fmu-checker:
+    needs: build_model
+    name: FMU Compliance Checker
+    uses: ./.github/workflows/fmu_checker.yml
+
   cpp-linter:
     name: C++ Linter
     uses: ./.github/workflows/cpp-linter.yml
