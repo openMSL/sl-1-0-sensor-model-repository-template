@@ -5,6 +5,7 @@ on:
 
 jobs:
   unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Model
