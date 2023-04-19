@@ -39,4 +39,4 @@ jobs:
 
     - name: Run FMUComplianceChecker
       working-directory: /tmp/FMUComplianceChecker/build
-      run: ./fmuCheck.linux64 ${{ github.event.repository.name }}.fmu
+      run: ./fmuCheck.linux64 /tmp/model_fmu/${{ github.event.repository.name }}.fmu
