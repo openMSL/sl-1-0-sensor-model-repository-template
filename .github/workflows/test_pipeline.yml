@@ -8,14 +8,14 @@ on:
 
 jobs:
   cl0:
-    name: Credibility Assessment Level 0
+    name: CL 0
     uses: ./.github/workflows/cl0.yml
 
   cl1:
-    name: Credibility Assessment Level 1
+    name: CL 1
     uses: ./.github/workflows/cl1.yml
 
   cl2:
-    name: Credibility Assessment Level 2
+    name: CL 2
     needs: cl1
     uses: ./.github/workflows/cl2.yml

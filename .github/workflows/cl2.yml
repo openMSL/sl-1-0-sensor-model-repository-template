@@ -1,4 +1,4 @@
-name: CL 2
+name: Credibility Assessment Level 2
 
 on:
   workflow_call:

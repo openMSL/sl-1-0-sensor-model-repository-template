@@ -1,4 +1,4 @@
-name: CL 0
+name: Credibility Assessment Level 0
 
 on:
   workflow_call:
