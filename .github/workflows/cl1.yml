@@ -1,11 +1,11 @@
-name: Credibility Assessment Level 1
+name: CL 1
 
 on:
   workflow_call:
 
 jobs:
   build_model:
-    name: Build Model
+    #name: Build Model
     uses: ./.github/workflows/build.yml
 
   fmu-artifact:
