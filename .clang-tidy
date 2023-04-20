@@ -1,5 +1,5 @@
 ---
-Checks:            'readability-*,cppcoreguidelines-*,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-type-cstyle-cast,-cppcoreguidelines-avoid-c-arrays,-cppcoreguidelines-non-private-member-variables-in-classes,-cppcoreguidelines-macro-usage,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-readability-useless-return-value,-readability-const-return-type'
+Checks:            'readability-*,cppcoreguidelines-*,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-type-cstyle-cast,-cppcoreguidelines-avoid-c-arrays,-cppcoreguidelines-non-private-member-variables-in-classes,-cppcoreguidelines-macro-usage,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-owning-memory,-readability-useless-return-value,-readability-const-return-type'
 HeaderFilterRegex: '.*/src/(?:adp|build_system|legacy)/.*'
 AnalyzeTemporaryDtors: false
 CheckOptions:
