@@ -304,12 +304,12 @@ void OSMP::DoFree() {}
  */
 
 OSMP::OSMP(fmi2String theinstance_name,
-                                   fmi2Type thefmu_type,
-                                   fmi2String thefmu_guid,
-                                   fmi2String thefmu_resource_location,
-                                   const fmi2CallbackFunctions* thefunctions,
-                                   fmi2Boolean thevisible,
-                                   fmi2Boolean thelogging_on)
+           fmi2Type thefmu_type,
+           fmi2String thefmu_guid,
+           fmi2String thefmu_resource_location,
+           const fmi2CallbackFunctions* thefunctions,
+           fmi2Boolean thevisible,
+           fmi2Boolean thelogging_on)
     : instance_name_(theinstance_name),
       fmu_type_(thefmu_type),
       fmu_guid_(thefmu_guid),
@@ -363,12 +363,12 @@ fmi2Status OSMP::SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories,
 }
 
 fmi2Component OSMP::Instantiate(fmi2String instance_name,
-                                            fmi2Type fmu_type,
-                                            fmi2String fmu_guid,
-                                            fmi2String fmu_resource_location,
-                                            const fmi2CallbackFunctions* functions,
-                                            fmi2Boolean visible,
-                                            fmi2Boolean logging_on)
+                                fmi2Type fmu_type,
+                                fmi2String fmu_guid,
+                                fmi2String fmu_resource_location,
+                                const fmi2CallbackFunctions* functions,
+                                fmi2Boolean visible,
+                                fmi2Boolean logging_on)
 {
     auto* myc = new OSMP(instance_name, fmu_type, fmu_guid, fmu_resource_location, functions, visible, logging_on);
 

@@ -9,7 +9,8 @@
 
 #include "osi_sensordata.pb.h"
 
-class MySensorModel {
+class MySensorModel
+{
   public:
     void Init(double nominal_range_in);
     osi3::SensorData Step(osi3::SensorView current_in, double time);
@@ -21,15 +22,15 @@ class MySensorModel {
 
     static void TransposeRotationMatrix(double matrix_in[3][3], double matrix_trans[3][3]);
 
-/* Private File-based Logging just for Debugging */
-    #ifdef PRIVATE_LOG_PATH
+    /* Private File-based Logging just for Debugging */
+#ifdef PRIVATE_LOG_PATH
     static ofstream private_log_file;
-    #endif
+#endif
 
     static void FmiVerboseLogGlobal(const char* format, ...)
     {
-    #ifdef VERBOSE_FMI_LOGGING
-    #ifdef PRIVATE_LOG_PATH
+#ifdef VERBOSE_FMI_LOGGING
+#ifdef PRIVATE_LOG_PATH
         va_list ap;
         va_start(ap, format);
         char buffer[1024];
@@ -37,29 +38,29 @@ class MySensorModel {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
         if (private_log_file.is_open())
         {
-    #ifdef _WIN32
+#ifdef _WIN32
             vsnprintf_s(buffer, 1024, format, ap);
-    #else
+#else
             vsnprintf(buffer, 1024, format, ap);
-    #endif
+#endif
             private_log_file << "OSMPDummySensor"
                              << "::Global:FMI: " << buffer << endl;
             private_log_file.flush();
         }
-    #endif
-    #endif
+#endif
+#endif
     }
 
     void InternalLog(const char* category, const char* format, va_list arg)
     {
-    #if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
+#if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
         char buffer[1024];
-    #ifdef _WIN32
+#ifdef _WIN32
         vsnprintf_s(buffer, 1024, format, arg);
-    #else
+#else
         vsnprintf(buffer, 1024, format, arg);
-    #endif
-    #ifdef PRIVATE_LOG_PATH
+#endif
+#ifdef PRIVATE_LOG_PATH
         if (!private_log_file.is_open())
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
         if (private_log_file.is_open())
@@ -68,32 +69,32 @@ class MySensorModel {
                              << "::" << instanceName << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
-    #endif
-    #ifdef PUBLIC_LOGGING
+#endif
+#ifdef PUBLIC_LOGGING
         if (loggingOn && loggingCategories.count(category))
             functions.logger(functions.componentEnvironment, instanceName.c_str(), fmi2OK, category, buffer);
-    #endif
-    #endif
+#endif
+#endif
     }
 
     void FmiVerboseLog(const char* format, ...)
     {
-    #if defined(VERBOSE_FMI_LOGGING) && (defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING))
+#if defined(VERBOSE_FMI_LOGGING) && (defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING))
         va_list ap;
         va_start(ap, format);
         internal_log("FMI", format, ap);
         va_end(ap);
-    #endif
+#endif
     }
 
     /* Normal Logging */
     void NormalLog(const char* category, const char* format, ...)
     {
-    #if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
+#if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
         va_list ap;
         va_start(ap, format);
         internal_log(category, format, ap);
         va_end(ap);
-    #endif
+#endif
     }
 };

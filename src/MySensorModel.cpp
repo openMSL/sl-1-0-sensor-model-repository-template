@@ -13,7 +13,8 @@
 #include "osi_sensordata.pb.h"
 #include "osi_sensorview.pb.h"
 
-void MySensorModel::Init(double nominal_range_in) {
+void MySensorModel::Init(double nominal_range_in)
+{
     nominal_range_ = nominal_range_in;
 }
 
@@ -30,20 +31,20 @@ osi3::SensorData MySensorModel::Step(osi3::SensorView current_in, double time)
     osi3::Identifier ego_id = current_in.global_ground_truth().host_vehicle_id();
     NormalLog("OSI", "Looking for EgoVehicle with ID: %llu", ego_id.value());
     std::for_each(current_in.global_ground_truth().moving_object().begin(),
-             current_in.global_ground_truth().moving_object().end(),
-             [this, ego_id, &ego_x, &ego_y, &ego_z, &ego_yaw, &ego_pitch, &ego_roll](const osi3::MovingObject& obj) {
-                 NormalLog("OSI", "MovingObject with ID %llu is EgoVehicle: %d", obj.id().value(), static_cast<int>(obj.id().value() == ego_id.value()));
-                 if (obj.id().value() == ego_id.value())
-                 {
-                     NormalLog("OSI", "Found EgoVehicle with ID: %llu", obj.id().value());
-                     ego_x = obj.base().position().x();
-                     ego_y = obj.base().position().y();
-                     ego_z = obj.base().position().z();
-                     ego_yaw = obj.base().orientation().yaw();
-                     ego_pitch = obj.base().orientation().pitch();
-                     ego_roll = obj.base().orientation().roll();
-                 }
-             });
+                  current_in.global_ground_truth().moving_object().end(),
+                  [this, ego_id, &ego_x, &ego_y, &ego_z, &ego_yaw, &ego_pitch, &ego_roll](const osi3::MovingObject& obj) {
+                      NormalLog("OSI", "MovingObject with ID %llu is EgoVehicle: %d", obj.id().value(), static_cast<int>(obj.id().value() == ego_id.value()));
+                      if (obj.id().value() == ego_id.value())
+                      {
+                          NormalLog("OSI", "Found EgoVehicle with ID: %llu", obj.id().value());
+                          ego_x = obj.base().position().x();
+                          ego_y = obj.base().position().y();
+                          ego_z = obj.base().position().z();
+                          ego_yaw = obj.base().orientation().yaw();
+                          ego_pitch = obj.base().orientation().pitch();
+                          ego_roll = obj.base().orientation().roll();
+                      }
+                  });
     NormalLog("OSI", "Current Ego Position: %f,%f,%f", ego_x, ego_y, ego_z);
 
     /* Clear Output */
@@ -60,83 +61,83 @@ osi3::SensorData MySensorModel::Step(osi3::SensorView current_in, double time)
     const double range_factor = 1.1;
     double actual_range = nominal_range_ * range_factor;
     std::for_each(current_in.global_ground_truth().moving_object().begin(),
-             current_in.global_ground_truth().moving_object().end(),
-             [this, &i, &current_in, &current_out, ego_id, ego_x, ego_y, ego_z, ego_yaw, ego_pitch, ego_roll, actual_range](const osi3::MovingObject& veh) {
-                 if (veh.id().value() != ego_id.value())
-                 {
-                     // NOTE: We currently do not take sensor mounting position into account,
-                     // i.e. sensor-relative coordinates are relative to center of bounding box
-                     // of ego vehicle currently.
-                     double trans_x = veh.base().position().x() - ego_x;
-                     double trans_y = veh.base().position().y() - ego_y;
-                     double trans_z = veh.base().position().z() - ego_z;
-                     double rel_x = NAN;
-                     double rel_y = NAN;
-                     double rel_z = NAN;
-                     RotatePoint(trans_x, trans_y, trans_z, ego_yaw, ego_pitch, ego_roll, rel_x, rel_y, rel_z);
-                     double distance = sqrt(rel_x * rel_x + rel_y * rel_y + rel_z * rel_z);
-                     const double azimuth_fov = 0.866025;
-                     if ((distance <= actual_range) && (rel_x / distance > azimuth_fov))
-                     {
-                         osi3::DetectedMovingObject* obj = current_out.mutable_moving_object()->Add();
-                         obj->mutable_header()->add_ground_truth_id()->CopyFrom(veh.id());
-                         obj->mutable_header()->mutable_tracking_id()->set_value(i);
-                         obj->mutable_header()->set_existence_probability(cos((2.0 * distance - actual_range) / actual_range));
-                         obj->mutable_header()->set_measurement_state(osi3::DetectedItemHeader_MeasurementState_MEASUREMENT_STATE_MEASURED);
-                         obj->mutable_header()->add_sensor_id()->CopyFrom(current_in.sensor_id());
-                         obj->mutable_base()->mutable_position()->set_x(rel_x);
-                         obj->mutable_base()->mutable_position()->set_y(rel_y);
-                         obj->mutable_base()->mutable_position()->set_z(rel_z);
-                         obj->mutable_base()->mutable_dimension()->set_length(veh.base().dimension().length());
-                         obj->mutable_base()->mutable_dimension()->set_width(veh.base().dimension().width());
-                         obj->mutable_base()->mutable_dimension()->set_height(veh.base().dimension().height());
+                  current_in.global_ground_truth().moving_object().end(),
+                  [this, &i, &current_in, &current_out, ego_id, ego_x, ego_y, ego_z, ego_yaw, ego_pitch, ego_roll, actual_range](const osi3::MovingObject& veh) {
+                      if (veh.id().value() != ego_id.value())
+                      {
+                          // NOTE: We currently do not take sensor mounting position into account,
+                          // i.e. sensor-relative coordinates are relative to center of bounding box
+                          // of ego vehicle currently.
+                          double trans_x = veh.base().position().x() - ego_x;
+                          double trans_y = veh.base().position().y() - ego_y;
+                          double trans_z = veh.base().position().z() - ego_z;
+                          double rel_x = NAN;
+                          double rel_y = NAN;
+                          double rel_z = NAN;
+                          RotatePoint(trans_x, trans_y, trans_z, ego_yaw, ego_pitch, ego_roll, rel_x, rel_y, rel_z);
+                          double distance = sqrt(rel_x * rel_x + rel_y * rel_y + rel_z * rel_z);
+                          const double azimuth_fov = 0.866025;
+                          if ((distance <= actual_range) && (rel_x / distance > azimuth_fov))
+                          {
+                              osi3::DetectedMovingObject* obj = current_out.mutable_moving_object()->Add();
+                              obj->mutable_header()->add_ground_truth_id()->CopyFrom(veh.id());
+                              obj->mutable_header()->mutable_tracking_id()->set_value(i);
+                              obj->mutable_header()->set_existence_probability(cos((2.0 * distance - actual_range) / actual_range));
+                              obj->mutable_header()->set_measurement_state(osi3::DetectedItemHeader_MeasurementState_MEASUREMENT_STATE_MEASURED);
+                              obj->mutable_header()->add_sensor_id()->CopyFrom(current_in.sensor_id());
+                              obj->mutable_base()->mutable_position()->set_x(rel_x);
+                              obj->mutable_base()->mutable_position()->set_y(rel_y);
+                              obj->mutable_base()->mutable_position()->set_z(rel_z);
+                              obj->mutable_base()->mutable_dimension()->set_length(veh.base().dimension().length());
+                              obj->mutable_base()->mutable_dimension()->set_width(veh.base().dimension().width());
+                              obj->mutable_base()->mutable_dimension()->set_height(veh.base().dimension().height());
 
-                         osi3::DetectedMovingObject::CandidateMovingObject* candidate = obj->add_candidate();
-                         candidate->set_type(veh.type());
-                         candidate->mutable_vehicle_classification()->CopyFrom(veh.vehicle_classification());
-                         candidate->set_probability(1);
+                              osi3::DetectedMovingObject::CandidateMovingObject* candidate = obj->add_candidate();
+                              candidate->set_type(veh.type());
+                              candidate->mutable_vehicle_classification()->CopyFrom(veh.vehicle_classification());
+                              candidate->set_probability(1);
 
-                         NormalLog("OSI",
-                                   "Output Vehicle %d[%llu] Probability %f Relative Position: %f,%f,%f (%f,%f,%f)",
-                                   i,
-                                   veh.id().value(),
-                                   obj->header().existence_probability(),
-                                   rel_x,
-                                   rel_y,
-                                   rel_z,
-                                   obj->base().position().x(),
-                                   obj->base().position().y(),
-                                   obj->base().position().z());
-                         i++;
-                     }
-                     else
-                     {
-                         NormalLog("OSI",
-                                   "Ignoring Vehicle %d[%llu] Outside Sensor Scope Relative Position: %f,%f,%f (%f,%f,%f)",
-                                   i,
-                                   veh.id().value(),
-                                   veh.base().position().x() - ego_x,
-                                   veh.base().position().y() - ego_y,
-                                   veh.base().position().z() - ego_z,
-                                   veh.base().position().x(),
-                                   veh.base().position().y(),
-                                   veh.base().position().z());
-                     }
-                 }
-                 else
-                 {
-                     NormalLog("OSI",
-                               "Ignoring EGO Vehicle %d[%llu] Relative Position: %f,%f,%f (%f,%f,%f)",
-                               i,
-                               veh.id().value(),
-                               veh.base().position().x() - ego_x,
-                               veh.base().position().y() - ego_y,
-                               veh.base().position().z() - ego_z,
-                               veh.base().position().x(),
-                               veh.base().position().y(),
-                               veh.base().position().z());
-                 }
-             });
+                              NormalLog("OSI",
+                                        "Output Vehicle %d[%llu] Probability %f Relative Position: %f,%f,%f (%f,%f,%f)",
+                                        i,
+                                        veh.id().value(),
+                                        obj->header().existence_probability(),
+                                        rel_x,
+                                        rel_y,
+                                        rel_z,
+                                        obj->base().position().x(),
+                                        obj->base().position().y(),
+                                        obj->base().position().z());
+                              i++;
+                          }
+                          else
+                          {
+                              NormalLog("OSI",
+                                        "Ignoring Vehicle %d[%llu] Outside Sensor Scope Relative Position: %f,%f,%f (%f,%f,%f)",
+                                        i,
+                                        veh.id().value(),
+                                        veh.base().position().x() - ego_x,
+                                        veh.base().position().y() - ego_y,
+                                        veh.base().position().z() - ego_z,
+                                        veh.base().position().x(),
+                                        veh.base().position().y(),
+                                        veh.base().position().z());
+                          }
+                      }
+                      else
+                      {
+                          NormalLog("OSI",
+                                    "Ignoring EGO Vehicle %d[%llu] Relative Position: %f,%f,%f (%f,%f,%f)",
+                                    i,
+                                    veh.id().value(),
+                                    veh.base().position().x() - ego_x,
+                                    veh.base().position().y() - ego_y,
+                                    veh.base().position().z() - ego_z,
+                                    veh.base().position().x(),
+                                    veh.base().position().y(),
+                                    veh.base().position().z());
+                      }
+                  });
     NormalLog("OSI", "Mapped %d vehicles to output", i);
     return current_out;
 }
