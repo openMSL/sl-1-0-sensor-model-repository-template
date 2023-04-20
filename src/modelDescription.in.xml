@@ -14,7 +14,7 @@
     canHandleVariableCommunicationStepSize="true"
     canNotUseMemoryManagementFunctions="true">
     <SourceFiles>
-      <File name="HelloWorldSensor.cpp"/>
+      <File name="OSMP.cpp"/>
     </SourceFiles>
   </CoSimulation>
   <LogCategories>

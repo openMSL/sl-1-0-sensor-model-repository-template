@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-#include "../../src/HelloWorldSensor.h"
+#include "../../src/MySensorModel.h"
 #include "gtest/gtest.h"
 
 class ISensorModelTest : public ::testing::Test
@@ -26,7 +26,7 @@ TEST_F(ISensorModelTest, YawRotation)
     double ry = 0.0;
     double rz = 0.0;
 
-    HelloWorldSensor::RotatePoint(x, y, z, yaw, pitch, roll, rx, ry, rz);
+    MySensorModel::RotatePoint(x, y, z, yaw, pitch, roll, rx, ry, rz);
 
     EXPECT_NEAR(rx, 3.0, 0.000001);
     EXPECT_NEAR(ry, -5.0, 0.000001);
