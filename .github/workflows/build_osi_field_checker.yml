@@ -61,7 +61,7 @@ jobs:
         run: mkdir /tmp/osi-field-checker
 
       - name: Copy Commit ID to Cache
-        if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
+        if: steps.cache-osi-field-checker.outputs.cache-hit != 'true'
         working-directory: sl-1-5-sensor-model-testing
         run: |
           git rev-parse --short HEAD > commit-id.txt
