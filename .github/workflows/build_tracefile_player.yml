@@ -1,7 +1,10 @@
 name: Build Tracefile Player
 
 on:
-  workflow_call:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build_tracefile_player:

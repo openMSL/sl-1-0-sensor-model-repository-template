@@ -1,7 +1,10 @@
 name: Markdown Linter
 
 on:
-  workflow_call:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   markdown-lint:
