@@ -6,30 +6,30 @@ on:
 jobs:
   build_model:
     name: Build Model
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/jobs/build.yml
 
   fmu-artifact:
     needs: build_model
     name: FMU Artifact
-    uses: ./.github/workflows/fmu_artifact.yml
+    uses: ./.github/workflows/jobs/fmu_artifact.yml
 
   fmu-checker:
     needs: build_model
     name: FMU Compliance Checker
-    uses: ./.github/workflows/fmu_checker.yml
+    uses: ./.github/workflows/jobs/fmu_checker.yml
 
   cpp-linter:
     name: C++ Linter
-    uses: ./.github/workflows/cpp-linter.yml
+    uses: ./.github/workflows/jobs/cpp-linter.yml
 
   markdown-linter:
     name: Markdown Linter
-    uses: ./.github/workflows/markdown.yml
+    uses: ./.github/workflows/jobs/markdown.yml
 
   srmd-validator:
     name: SRMD Validator
-    uses: ./.github/workflows/srmd-validator.yml
+    uses: ./.github/workflows/jobs/srmd-validator.yml
 
   unit-tests:
     name: Unit Tests
-    uses: ./.github/workflows/unit-tests.yml
+    uses: ./.github/workflows/jobs/unit-tests.yml
