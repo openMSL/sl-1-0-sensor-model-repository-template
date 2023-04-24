@@ -72,6 +72,8 @@ jobs:
         working-directory: sl-1-5-sensor-model-testing/build
         run: cp OSIFieldChecker.fmu /tmp/osi-field-checker/OSIFieldChecker.fmu
 
-      - name: esmini Commit ID
+      - name: Commit ID
         working-directory: /tmp/osi-field-checker
-        run: echo $(cat commit-id.txt)
+        run: |
+          echo "Commit ID: "
+          echo $(cat commit-id.txt)
