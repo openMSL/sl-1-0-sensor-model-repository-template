@@ -1,10 +1,7 @@
 name: Build esmini FMU
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   build_esmini:

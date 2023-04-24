@@ -1,10 +1,7 @@
 name: FMU Compliance Checker
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   fmu-artifact:
