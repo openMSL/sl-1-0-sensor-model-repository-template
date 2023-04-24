@@ -1,10 +1,7 @@
 name: Archive built FMU as artifact
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   fmu-artifact:
