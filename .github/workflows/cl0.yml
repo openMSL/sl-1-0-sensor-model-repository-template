@@ -1,5 +1,3 @@
-name: Credibility Assessment Level 0
-
 on:
   workflow_call:
 

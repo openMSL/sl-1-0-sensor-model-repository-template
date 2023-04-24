@@ -6,19 +6,19 @@ on:
 jobs:
   build_tracefile_player:
     name: Build Tracefile Player FMU
-    uses: ./.github/workflows/jobs/build_tracefile_player.yml
+    uses: ./.github/workflows/build_tracefile_player.yml
 
   build_esmini:
     name: Build esmini FMU
-    uses: ./.github/workflows/jobs/build_esmini.yml
+    uses: ./.github/workflows/build_esmini.yml
 
   build_osi_field_checker_fmu:
     name: Build OSI Field Checker FMU
-    uses: ./.github/workflows/jobs/build_osi_field_checker.yml
+    uses: ./.github/workflows/build_osi_field_checker.yml
 
   build_openmcx:
     name: Build OpenMCx
-    uses: ./.github/workflows/jobs/build_openmcx.yml
+    uses: ./.github/workflows/build_openmcx.yml
 
   generate_integration_test_paths:
     runs-on: ubuntu-latest

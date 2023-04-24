@@ -9,13 +9,13 @@ on:
 jobs:
   cl0:
     name: CL 0
-    uses: ./.github/workflows/jobs/cl0.yml
+    uses: ./.github/workflows/cl0.yml
 
   cl1:
     name: CL 1
-    uses: ./.github/workflows/jobs/cl1.yml
+    uses: ./.github/workflows/cl1.yml
 
   cl2:
     name: CL 2
     needs: cl1
-    uses: ./.github/workflows/jobs/cl2.yml
+    uses: ./.github/workflows/cl2.yml
