@@ -59,4 +59,3 @@ jobs:
       - name: Run FMPy Validate
         working-directory: /tmp/model_fmu
         run: fmpy validate ${{ github.event.repository.name }}.fmu
-        
