@@ -1,6 +1,6 @@
 # SL-1-0 Sensor Model Repository Template
 
-[![Test Pipeline](https://github.com/openMSL/sl-1-0-sensor-model-repository-template/actions/workflows/test_pipeline.yml/badge.svg)](https://github.com/openMSL/sl-1-0-sensor-model-repository-template/actions/workflows/test_pipeline.yml)
+[![Credibility Assessment](https://github.com/openMSL/sl-1-0-sensor-model-repository-template/actions/workflows/credibility_assessment.yml/badge.svg)](https://github.com/openMSL/sl-1-0-sensor-model-repository-template/actions/workflows/test_pipeline.yml)
 
 Enter a short description of the model.
 What is the purpose of the model?

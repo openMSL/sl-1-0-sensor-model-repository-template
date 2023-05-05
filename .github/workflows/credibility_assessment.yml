@@ -1,4 +1,4 @@
-name: Test Pipeline
+name: Credibility Assessment
 
 on:
   push:
