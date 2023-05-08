@@ -11,13 +11,12 @@
       <ParameterDeclaration name="TargetVehicle" parameterType="string" value="car_red"/>
    </ParameterDeclarations>
    <RoadNetwork>
-      <LogicFile filepath="../xodr/straight_500m.xodr"/>
-      <SceneGraphFile filepath="../models/straight_500m.osgb"/>
+      <LogicFile filepath="./straight_500m.xodr"/>
    </RoadNetwork>
    <CatalogLocations>
       <RouteCatalog/>
       <VehicleCatalog>
-         <Directory path="../xosc/Catalogs/Vehicles"/>
+         <Directory path="./Catalogs/Vehicles"/>
       </VehicleCatalog>
    </CatalogLocations>
    <Entities>
