@@ -101,9 +101,26 @@ jobs:
       - name: Install dependencies
         run: sudo apt install -y libxml2-dev zlib1g-dev libzip-dev
 
+      - name: Create Output Folder
+        working-directory: ./test/integration/${{ matrix.path }}
+        run: mkdir output
+
       - name: Run OpenMCx
         id: cosimulation
         run: ./openmcx/install/openmcx ./test/integration/${{ matrix.path }}/SystemStructure.ssd
+
+      - name: Check For Trace Files
+        working-directory: ./test/integration/${{ matrix.path }}/output
+        run: |
+          ( count=`ls -1 *.osi 2>/dev/null | wc -l`
+          if [ $count == 0 ]; then
+          echo No trace file found.
+          elif [ $count == 1 ]; then
+          ls -1 *.osi
+          else
+          echo More than one trace file.
+          fi
+          )
 
       - name: Failed?
         if: steps.cosimulation.outputs.failed == 1

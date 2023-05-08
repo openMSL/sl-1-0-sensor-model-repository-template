@@ -105,7 +105,7 @@
                             <ssv:ParameterSet version="1.0" name="Parameter-Set">
                                 <ssv:Parameters>
                                     <ssv:Parameter name="trace_path" description="">
-                                        <ssv:String value="./test/integration/004_tracefile_analysis/"/>
+                                        <ssv:String value="./test/integration/004_tracefile_analysis/output/"/>
                                     </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
