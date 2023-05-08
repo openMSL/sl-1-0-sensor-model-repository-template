@@ -8,6 +8,10 @@ jobs:
     name: Build Tracefile Player FMU
     uses: ./.github/workflows/build_tracefile_player.yml
 
+  build_tracefile_writer:
+    name: Build Tracefile Writer FMU
+    uses: ./.github/workflows/build_tracefile_writer.yml
+
   build_esmini:
     name: Build esmini FMU
     uses: ./.github/workflows/build_esmini.yml
@@ -59,12 +63,19 @@ jobs:
           path: /tmp/model_fmu
           key: ${{ runner.os }}-model-fmu
 
-      - name: Cache Tracefile FMU
-        id: cache-tracefile-fmu
+      - name: Cache Tracefile Player FMU
+        id: cache-tracefile-player-fmu
         uses: actions/cache@v3
         with:
-          path: /tmp/tracefile_fmu
-          key: ${{ runner.os }}-tracefile-fmu
+          path: /tmp/tracefile_player_fmu
+          key: ${{ runner.os }}-tracefile-player-fmu
+
+      - name: Cache Tracefile Writer FMU
+        id: cache-tracefile-writer-fmu
+        uses: actions/cache@v3
+        with:
+          path: /tmp/tracefile_writer_fmu
+          key: ${{ runner.os }}-tracefile-writer-fmu
 
       - name: Cache esmini FMU
         id: cache-esmini-fmu
