@@ -110,6 +110,7 @@ jobs:
         run: ./openmcx/install/openmcx ./test/integration/${{ matrix.path }}/SystemStructure.ssd
 
       - name: Check For Trace Files
+        id: check-for-trace-files
         working-directory: ./test/integration/${{ matrix.path }}/output
         run: |
           ( count=`ls -1 *.osi 2>/dev/null | wc -l`
