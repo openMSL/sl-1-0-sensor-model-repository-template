@@ -117,7 +117,7 @@ jobs:
           echo No trace file found.
           echo "found_trace=0 >> $GITHUB_OUTPUT
           elif [ $count == 1 ]; then
-          echo "found_trace=1 >> $GITHUB_OUTPUT
+          echo "found_trace=1" >> $GITHUB_OUTPUT
           echo "trace_file_name=$(ls -1 *.osi)" >> $GITHUB_OUTPUT
           else
           echo More than one trace file.
