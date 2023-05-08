@@ -115,16 +115,18 @@ jobs:
           ( count=`ls -1 *.osi 2>/dev/null | wc -l`
           if [ $count == 0 ]; then
           echo No trace file found.
+          echo "found_trace=0 >> $GITHUB_OUTPUT
           elif [ $count == 1 ]; then
-          echo "::set-output name=found_trace::'true'"
-          echo "::set-output name=trace_file_name::$(ls -1 *.osi)"
+          echo "found_trace=1 >> $GITHUB_OUTPUT
+          echo "trace_file_name=$(ls -1 *.osi)" >> $GITHUB_OUTPUT
           else
           echo More than one trace file.
+          echo "found_trace=0 >> $GITHUB_OUTPUT
           fi
           )
 
       - name: Archive Trace File
-        if: steps.check-for-trace-files.outputs.found_trace == 'true'
+        if: steps.check-for-trace-files.outputs.found_trace == 1
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.check-for-trace-files.outputs.trace_file_name }}
