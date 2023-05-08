@@ -36,7 +36,7 @@
                                         <ssv:String value="./test/integration/004_tracefile_analysis/straight_500m.xosc"/>
                                     </ssv:Parameter>
                                     <ssv:Parameter name="use_viewer" description="">
-                                        <ssv:Boolean value="true"/>
+                                        <ssv:Boolean value="false"/>
                                     </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
