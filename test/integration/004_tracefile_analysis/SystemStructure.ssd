@@ -107,6 +107,12 @@
                                     <ssv:Parameter name="trace_path" description="">
                                         <ssv:String value="./test/integration/004_tracefile_analysis/output/"/>
                                     </ssv:Parameter>
+                                    <ssv:Parameter name="protobuf_version" description="">
+                                        <ssv:String value="2112"/>
+                                    </ssv:Parameter>
+                                    <ssv:Parameter name="custom_name" description="">
+                                        <ssv:String value="004_tracefile_analysis"/>
+                                    </ssv:Parameter>
                                 </ssv:Parameters>
                             </ssv:ParameterSet>
                         </ssd:ParameterValues>
