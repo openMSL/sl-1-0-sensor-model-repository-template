@@ -39,7 +39,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
   run_integration_test:
-    needs: [build_tracefile_player, build_openmcx, build_osi_field_checker_fmu, build_esmini, generate_integration_test_paths]
+    needs: [build_tracefile_player, build_tracefile_writer, build_openmcx, build_osi_field_checker_fmu, build_esmini, generate_integration_test_paths]
     name: Integration Test
     runs-on: ubuntu-latest
     strategy:
