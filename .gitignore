@@ -40,3 +40,4 @@
 .vs/
 .vscode/
 .editorconfig
+__pycache__
