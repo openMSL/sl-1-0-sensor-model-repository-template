@@ -42,7 +42,7 @@ jobs:
       
     - name: Build C++
       working-directory: build
-      run: cmake --build .
+      run: cmake --build . -j4
 
     - name: Lint CPP
       uses: cpp-linter/cpp-linter-action@v2
