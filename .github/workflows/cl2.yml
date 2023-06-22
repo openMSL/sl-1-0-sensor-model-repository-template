@@ -133,6 +133,33 @@ jobs:
         with:
           name: ${{ steps.check-for-trace-files.outputs.trace_file_name }}
           path: ./test/integration/${{ matrix.path }}/output/${{ steps.check-for-trace-files.outputs.trace_file_name }}
+          
+      - name: Check For Python Scripts
+        id: check-for-python-scripts
+        working-directory: ./test/integration/${{ matrix.path }}
+        run: |
+          ( count=`ls -1 *.py 2>/dev/null | wc -l`
+          if [ $count == 0 ]; then
+          echo No python script found.
+          echo "found_script=0" >> $GITHUB_OUTPUT
+          elif [ $count == 1 ]; then
+          echo "found_script=1" >> $GITHUB_OUTPUT
+          filename=$(ls -1 *.py)
+          echo "python_file_name=${filename}" >> $GITHUB_OUTPUT
+          else
+          echo More than one trace file.
+          echo "found_script=0" >> $GITHUB_OUTPUT
+          fi
+          )
+          
+      - name: Install Analysis Dependencies
+        if: steps.check-for-python-scripts.outputs.found_script == 1
+        working-directory: ./lib/open-simulation-interface
+        run: python3 -m pip install .
+          
+      - name: Run Trace File Analysis
+        if: steps.check-for-python-scripts.outputs.found_script == 1
+        run: python3 ${{ steps.check-for-python-scripts.outputs.python_file_name }} ${{ steps.check-for-trace-files.outputs.trace_file_name }}
 
       - name: Failed?
         if: steps.cosimulation.outputs.failed == 1
