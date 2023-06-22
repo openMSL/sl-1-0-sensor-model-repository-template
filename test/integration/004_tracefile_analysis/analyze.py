@@ -1,3 +1,6 @@
+# Copyright 2023 BMW AG
+# SPDX-License-Identifier: MPL-2.0
+
 import sys
 from lib.osi_trace import OSITrace
 
