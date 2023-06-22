@@ -173,7 +173,7 @@ jobs:
       - name: Run Trace File Analysis
         if: steps.check-for-python-scripts.outputs.found_script == 1
         working-directory: ./test/integration/${{ matrix.path }}
-        run: python3 ${{ steps.check-for-python-scripts.outputs.python_file_name }} ${{ steps.check-for-trace-files.outputs.trace_file_name }}
+        run: python3 ${{ steps.check-for-python-scripts.outputs.python_file_name }} output/${{ steps.check-for-trace-files.outputs.trace_file_name }}
 
       - name: Failed?
         if: steps.cosimulation.outputs.failed == 1
