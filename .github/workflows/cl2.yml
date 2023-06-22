@@ -56,6 +56,13 @@ jobs:
         with:
           submodules: true
 
+      - name: Cache Protobuf
+        id: cache-protobuf
+        uses: actions/cache@v3
+        with:
+          path: protobuf-21.12
+          key: ${{ runner.os }}-protobuf
+
       - name: Cache Model FMU
         id: cache-model-fmu
         uses: actions/cache@v3
@@ -151,7 +158,11 @@ jobs:
           echo "found_script=0" >> $GITHUB_OUTPUT
           fi
           )
-          
+
+      - name: Install ProtoBuf
+        working-directory: protobuf-21.12
+        run: sudo make install && sudo ldconfig
+        
       - name: Install Analysis Dependencies
         if: steps.check-for-python-scripts.outputs.found_script == 1
         working-directory: ./lib/open-simulation-interface
