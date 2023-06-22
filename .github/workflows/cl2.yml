@@ -155,7 +155,9 @@ jobs:
       - name: Install Analysis Dependencies
         if: steps.check-for-python-scripts.outputs.found_script == 1
         working-directory: ./lib/open-simulation-interface
-        run: python3 -m pip install .
+        run: |
+          python3 -m pip install protobuf==4.21.12
+          python3 -m pip install .
           
       - name: Run Trace File Analysis
         if: steps.check-for-python-scripts.outputs.found_script == 1
