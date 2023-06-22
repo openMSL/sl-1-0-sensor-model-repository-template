@@ -4,6 +4,7 @@
 import sys
 from lib.osi_trace import OSITrace
 
+
 def main():
     if len(sys.argv) == 2:
         trace_file_name = str(sys.argv[1])
@@ -33,12 +34,13 @@ def main():
     # Calculate parameter to check
     avg_number_of_detected_objects = avg_number_of_detected_objects / trace_file.timestep_count
 
+    trace_file.trace_file.close()
+
     # Check parameter against expectation value
     if avg_number_of_detected_objects != exp_number_of_detected_objects:
-        print("Error: Average number of detected moving objects is " + str(avg_number_of_detected_objects) +
+        print("::error title=TraceFileAnalysis::Average number of detected moving objects is " + str(avg_number_of_detected_objects) +
               ", expected value is " + str(exp_number_of_detected_objects))
-
-    trace_file.trace_file.close()
+        exit(1)
 
 
 if __name__ == "__main__":
