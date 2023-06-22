@@ -20,7 +20,7 @@ def main():
     # Parameter to check
     avg_number_of_detected_objects = 0
     # Expectation value
-    exp_number_of_detected_objects = 0
+    exp_number_of_detected_objects = 1
 
     # Iterate over all time steps
     for current_time_step in range(0, trace_file.timestep_count):
