@@ -104,12 +104,13 @@ osi3::SensorData MySensorModel::Step(osi3::SensorView current_in, double time)
                                                    current_out.mounting_position().orientation().pitch(),
                                                    current_out.mounting_position().orientation().roll());
                 double distance = sqrt(rel_x * rel_x + rel_y * rel_y + rel_z * rel_z);
-                if ((distance <= actual_range) && (rel_x / distance > 0.866025))
+                const double fov_thres = 0.866025;
+                if ((distance <= actual_range) && (rel_x / distance > fov_thres))
                 {
                     osi3::DetectedMovingObject* obj = current_out.mutable_moving_object()->Add();
                     obj->mutable_header()->add_ground_truth_id()->CopyFrom(veh.id());
                     obj->mutable_header()->mutable_tracking_id()->set_value(i);
-                    obj->mutable_header()->set_existence_probability(cos((2.0 * distance - actual_range) / actual_range));
+                    obj->mutable_header()->set_existence_probability(cos((2 * distance - actual_range) / actual_range));
                     obj->mutable_header()->set_measurement_state(osi3::DetectedItemHeader_MeasurementState_MEASUREMENT_STATE_MEASURED);
                     obj->mutable_header()->add_sensor_id()->CopyFrom(current_in.sensor_id());
                     obj->mutable_base()->mutable_position()->set_x(rel_x);
