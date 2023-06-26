@@ -4,7 +4,8 @@ This test checks if an object inside the field of view of the sensor is detected
 
 ## Scenario
 
-One object is placed in front of  the sensor. The x-coordinates of the objects in this scenario are:
+One object is placed in front of the sensor.
+The x-coordinates of the objects in this scenario are:
 
 - ego: 10 m
 - ego bbcenter2rear: -1.146 m
