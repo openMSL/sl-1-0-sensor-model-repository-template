@@ -15,12 +15,32 @@ class MySensorModel
     void Init(double nominal_range_in);
     osi3::SensorData Step(osi3::SensorView current_in, double time);
 
-    static void RotatePoint(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz);
+    static void RotatePointXYZ(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz);
+    static void TransformCoordinateGlobalToVehicle(double& rx,
+                                                   double& ry,
+                                                   double& rz,
+                                                   double ego_x,
+                                                   double ego_y,
+                                                   double ego_z,
+                                                   double ego_yaw,
+                                                   double ego_pitch,
+                                                   double ego_roll,
+                                                   double ego_bbcenter_to_rear_x,
+                                                   double ego_bbcenter_to_rear_y,
+                                                   double ego_bbcenter_to_rear_z);
+
+    static void TransformCoordinateVehicleToSensor(double& rx,
+                                                   double& ry,
+                                                   double& rz,
+                                                   double mounting_position_x,
+                                                   double mounting_position_y,
+                                                   double mounting_position_z,
+                                                   double mounting_position_yaw,
+                                                   double mounting_position_pitch,
+                                                   double mounting_position_roll);
 
   private:
     double nominal_range_;
-
-    static void TransposeRotationMatrix(double matrix_in[3][3], double matrix_trans[3][3]);
 
     /* Private File-based Logging just for Debugging */
 #ifdef PRIVATE_LOG_PATH
