@@ -4,6 +4,8 @@
 // SPDX-License-Identifier: MPL-2.0
 //
 
+#pragma once
+
 #ifndef FMU_SHARED_OBJECT
 #define FMI2_FUNCTION_PREFIX OSMPDummySensor_
 #endif
@@ -74,23 +76,24 @@
 
 #undef min
 #undef max
+#include "MySensorModel.h"
 #include "osi_sensordata.pb.h"
 #include "osi_sensorview.pb.h"
 
 using namespace std;
 
 /* FMU Class */
-class HelloWorldSensor
+class OSMP
 {
   public:
     /* FMI2 Interface mapped to C++ */
-    HelloWorldSensor(fmi2String theinstance_name,
-                     fmi2Type thefmu_type,
-                     fmi2String thefmu_guid,
-                     fmi2String thefmu_resource_location,
-                     const fmi2CallbackFunctions* thefunctions,
-                     fmi2Boolean thevisible,
-                     fmi2Boolean thelogging_on);
+    OSMP(fmi2String theinstance_name,
+         fmi2Type thefmu_type,
+         fmi2String thefmu_guid,
+         fmi2String thefmu_resource_location,
+         const fmi2CallbackFunctions* thefunctions,
+         fmi2Boolean thevisible,
+         fmi2Boolean thelogging_on);
     fmi2Status SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories, const fmi2String categories[]);
     static fmi2Component Instantiate(fmi2String instance_name,
                                      fmi2Type fmu_type,
@@ -114,19 +117,6 @@ class HelloWorldSensor
     fmi2Status SetInteger(const fmi2ValueReference vr[], size_t nvr, const fmi2Integer value[]);
     fmi2Status SetBoolean(const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[]);
     fmi2Status SetString(const fmi2ValueReference vr[], size_t nvr, const fmi2String value[]);
-
-    static void rotatePointXYZ(double x, double y, double z,
-                               double yaw, double pitch, double roll,
-                               double &rx, double &ry, double &rz);
-
-    static void transformCoordinateGlobalToVehicle(double &rx, double &ry, double &rz,
-                                                   double ego_x, double ego_y, double ego_z,
-                                                   double ego_yaw, double ego_pitch, double ego_roll,
-                                                   double ego_bbcenter_to_rear_x, double ego_bbcenter_to_rear_y, double ego_bbcenter_to_rear_z);
-
-    static void transformCoordinateVehicleToSensor(double &rx, double &ry, double &rz,
-                                                   double mounting_position_x, double mounting_position_y, double mounting_position_z,
-                                                   double mounting_position_yaw, double mounting_position_pitch, double mounting_position_roll);
 
   protected:
     /* Internal Implementation */
@@ -233,6 +223,8 @@ class HelloWorldSensor
     string* last_output_buffer_;
     string* current_config_request_buffer_;
     string* last_config_request_buffer_;
+
+    MySensorModel my_sensor_model_;
 
     /* Simple Accessors */
     fmi2Boolean FmiValid()

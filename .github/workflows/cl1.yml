@@ -1,24 +1,35 @@
 name: Credibility Assessment Level 1
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_call:
 
 jobs:
   build_model:
     name: Build Model
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
+
+  fmu-artifact:
+    needs: build_model
+    name: FMU Artifact
+    uses: ./.github/workflows/fmu_artifact.yml
+
+  fmu-checker:
+    needs: build_model
+    name: FMU Compliance Checker
+    uses: ./.github/workflows/fmu_checker.yml
 
   cpp-linter:
     name: C++ Linter
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/cpp-linter.yml@unit-test
+    uses: ./.github/workflows/cpp-linter.yml
 
   markdown-linter:
     name: Markdown Linter
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/markdown.yml@main
+    uses: ./.github/workflows/markdown.yml
+
+  srmd-validator:
+    name: SRMD Validator
+    uses: ./.github/workflows/srmd-validator.yml
 
   unit-tests:
     name: Unit Tests
-    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/unit-tests.yml@unit-test
+    uses: ./.github/workflows/unit-tests.yml

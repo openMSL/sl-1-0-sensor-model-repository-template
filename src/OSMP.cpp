@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: MPL-2.0
 //
 
-#include "HelloWorldSensor.h"
+#include "OSMP.h"
 
 /*
  * Debug Breaks
@@ -99,7 +99,7 @@ void EncodePointerToInteger(const void* ptr, fmi2Integer& hi, fmi2Integer& lo)
 #endif
 }
 
-bool HelloWorldSensor::GetFmiSensorViewConfig(osi3::SensorViewConfiguration& data)
+bool OSMP::GetFmiSensorViewConfig(osi3::SensorViewConfiguration& data)
 {
     if (integer_vars_[FMI_INTEGER_SENSORVIEW_CONFIG_SIZE_IDX] > 0)
     {
@@ -112,7 +112,7 @@ bool HelloWorldSensor::GetFmiSensorViewConfig(osi3::SensorViewConfiguration& dat
     return false;
 }
 
-void HelloWorldSensor::SetFmiSensorViewConfigRequest(const osi3::SensorViewConfiguration& data)
+void OSMP::SetFmiSensorViewConfigRequest(const osi3::SensorViewConfiguration& data)
 {
     data.SerializeToString(current_config_request_buffer_);
     EncodePointerToInteger(
@@ -126,14 +126,14 @@ void HelloWorldSensor::SetFmiSensorViewConfigRequest(const osi3::SensorViewConfi
     swap(current_config_request_buffer_, last_config_request_buffer_);
 }
 
-void HelloWorldSensor::ResetFmiSensorViewConfigRequest()
+void OSMP::ResetFmiSensorViewConfigRequest()
 {
     integer_vars_[FMI_INTEGER_SENSORVIEW_CONFIG_REQUEST_SIZE_IDX] = 0;
     integer_vars_[FMI_INTEGER_SENSORVIEW_CONFIG_REQUEST_BASEHI_IDX] = 0;
     integer_vars_[FMI_INTEGER_SENSORVIEW_CONFIG_REQUEST_BASELO_IDX] = 0;
 }
 
-bool HelloWorldSensor::GetFmiSensorViewIn(osi3::SensorView& data)
+bool OSMP::GetFmiSensorViewIn(osi3::SensorView& data)
 {
     if (integer_vars_[FMI_INTEGER_SENSORVIEW_IN_SIZE_IDX] > 0)
     {
@@ -145,7 +145,7 @@ bool HelloWorldSensor::GetFmiSensorViewIn(osi3::SensorView& data)
     return false;
 }
 
-void HelloWorldSensor::SetFmiSensorDataOut(const osi3::SensorData& data)
+void OSMP::SetFmiSensorDataOut(const osi3::SensorData& data)
 {
     data.SerializeToString(current_output_buffer_);
     EncodePointerToInteger(current_output_buffer_->data(), integer_vars_[FMI_INTEGER_SENSORDATA_OUT_BASEHI_IDX], integer_vars_[FMI_INTEGER_SENSORDATA_OUT_BASELO_IDX]);
@@ -158,14 +158,14 @@ void HelloWorldSensor::SetFmiSensorDataOut(const osi3::SensorData& data)
     swap(current_output_buffer_, last_output_buffer_);
 }
 
-void HelloWorldSensor::ResetFmiSensorDataOut()
+void OSMP::ResetFmiSensorDataOut()
 {
     integer_vars_[FMI_INTEGER_SENSORDATA_OUT_SIZE_IDX] = 0;
     integer_vars_[FMI_INTEGER_SENSORDATA_OUT_BASEHI_IDX] = 0;
     integer_vars_[FMI_INTEGER_SENSORDATA_OUT_BASELO_IDX] = 0;
 }
 
-void HelloWorldSensor::RefreshFmiSensorViewConfigRequest()
+void OSMP::RefreshFmiSensorViewConfigRequest()
 {
     osi3::SensorViewConfiguration config;
     if (GetFmiSensorViewConfig(config))
@@ -196,7 +196,7 @@ void HelloWorldSensor::RefreshFmiSensorViewConfigRequest()
  * Actual Core Content
  */
 
-fmi2Status HelloWorldSensor::DoInit()
+fmi2Status OSMP::DoInit()
 {
 
     /* Booleans */
@@ -228,17 +228,17 @@ fmi2Status HelloWorldSensor::DoInit()
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::DoStart(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time)
+fmi2Status OSMP::DoStart(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time)
 {
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::DoEnterInitializationMode()
+fmi2Status OSMP::DoEnterInitializationMode()
 {
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::DoExitInitializationMode()
+fmi2Status OSMP::DoExitInitializationMode()
 {
     osi3::SensorViewConfiguration config;
     if (!GetFmiSensorViewConfig(config))
@@ -261,179 +261,21 @@ fmi2Status HelloWorldSensor::DoExitInitializationMode()
                   config.mounting_position().orientation().yaw());
     }
 
+    // initialize sensor model
+    my_sensor_model_.Init(FmiNominalRange());
+
     return fmi2OK;
 }
 
-void HelloWorldSensor::rotatePointXYZ(double x, double y, double z,
-                    double yaw, double pitch, double roll,
-                    double &rx, double &ry, double &rz)
-{
-    double matrix[3][3];
-    double cos_yaw = cos(yaw);
-    double cos_pitch = cos(pitch);
-    double cos_roll = cos(roll);
-    double sin_yaw = sin(yaw);
-    double sin_pitch = sin(pitch);
-    double sin_roll = sin(roll);
-
-    /* order of rotation: roll (x-axis), pitch (y-axis), yaw (z-axis) */
-    matrix[0][0] = cos_pitch*cos_yaw;                              matrix[0][1] = -cos_pitch*sin_yaw;                             matrix[0][2] = sin_pitch;
-    matrix[1][0] = sin_roll*sin_pitch*cos_yaw + cos_roll*sin_yaw;  matrix[1][1] = -sin_roll*sin_pitch*sin_yaw + cos_roll*cos_yaw; matrix[1][2] = -sin_roll*cos_pitch;
-    matrix[2][0] = -cos_roll*sin_pitch*cos_yaw + sin_roll*sin_yaw; matrix[2][1] = cos_roll*sin_pitch*sin_yaw + sin_roll*cos_yaw;  matrix[2][2] = cos_roll*cos_pitch;
-
-    rx = matrix[0][0] * x + matrix[0][1] * y + matrix[0][2] * z;
-    ry = matrix[1][0] * x + matrix[1][1] * y + matrix[1][2] * z;
-    rz = matrix[2][0] * x + matrix[2][1] * y + matrix[2][2] * z;
-}
-
-/**
- * @brief Transform global OSI ground truth coordinate to vehicle coordinate
- * system (origin of vehicle coordinate system: center rear axle).
- */
-void HelloWorldSensor::transformCoordinateGlobalToVehicle(double &rx, double &ry, double &rz,
-                                        double ego_x, double ego_y, double ego_z,
-                                        double ego_yaw, double ego_pitch, double ego_roll,
-                                        double ego_bbcenter_to_rear_x, double ego_bbcenter_to_rear_y, double ego_bbcenter_to_rear_z)
-{
-    /* subtract global ego vehicle position from global coordinate */
-    rx = rx-ego_x;
-    ry = ry-ego_y;
-    rz = rz-ego_z;
-
-    /* rotate by negative ego vehicle orientation */
-    rotatePointXYZ(rx, ry, rz,
-                   -ego_yaw, -ego_pitch, -ego_roll,
-                   rx, ry, rz);
-
-    /* subtract center of rear axle position */
-    rx = rx-ego_bbcenter_to_rear_x;
-    ry = ry-ego_bbcenter_to_rear_y;
-    rz = rz-ego_bbcenter_to_rear_z;
-}
-
-/**
- * @brief Transform coordinate from vehicle coordinate system to
- * virtual/physical sensor coordinate system.
- */
-void HelloWorldSensor::transformCoordinateVehicleToSensor(double &rx, double &ry, double &rz,
-                                        double mounting_position_x, double mounting_position_y, double mounting_position_z,
-                                        double mounting_position_yaw, double mounting_position_pitch, double mounting_position_roll)
-{
-    /* subtract virtual/physical sensor mounting position */
-    rx = rx-mounting_position_x;
-    ry = ry-mounting_position_y;
-    rz = rz-mounting_position_z;
-
-    /* rotate by negative virtual/physical sensor mounting orientation */
-    rotatePointXYZ(rx, ry, rz,
-                   -mounting_position_yaw, -mounting_position_pitch, -mounting_position_roll,
-                   rx, ry, rz);
-}
-
-fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
+fmi2Status OSMP::DoCalc(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
 {
 
     osi3::SensorView current_in;
-    osi3::SensorData current_out;
     double time = current_communication_point + communication_step_size;
     NormalLog("OSI", "Calculating Sensor at %f for %f (step size %f)", current_communication_point, time, communication_step_size);
     if (GetFmiSensorViewIn(current_in))
     {
-        double ego_x = 0;
-        double ego_y = 0;
-        double ego_z = 0;
-        double ego_yaw = 0;
-        double ego_pitch = 0;
-        double ego_roll = 0;
-        double ego_bb_center_to_rear_x=0;
-        double ego_bb_center_to_rear_y=0;
-        double ego_bb_center_to_rear_z=0;
-        osi3::Identifier ego_id = current_in.global_ground_truth().host_vehicle_id();
-        NormalLog("OSI", "Looking for EgoVehicle with ID: %llu", ego_id.value());
-        for_each(current_in.global_ground_truth().moving_object().begin(),
-                 current_in.global_ground_truth().moving_object().end(),
-                 [this, ego_id, &ego_x, &ego_y, &ego_z, &ego_yaw, &ego_pitch, &ego_roll, &ego_bb_center_to_rear_x, &ego_bb_center_to_rear_y, &ego_bb_center_to_rear_z](const osi3::MovingObject& obj) {
-                     NormalLog("OSI","MovingObject with ID %llu is EgoVehicle: %d",obj.id().value(), obj.id().value() == ego_id.value());
-                     if (obj.id().value() == ego_id.value()) {
-                         NormalLog("OSI","Found EgoVehicle with ID: %llu",obj.id().value());
-                         ego_x = obj.base().position().x();
-                         ego_y = obj.base().position().y();
-                         ego_z = obj.base().position().z();
-                         ego_yaw = obj.base().orientation().yaw();
-                         ego_pitch = obj.base().orientation().pitch();
-                         ego_roll = obj.base().orientation().roll();
-                         ego_bb_center_to_rear_x = obj.vehicle_attributes().bbcenter_to_rear().x();
-                         ego_bb_center_to_rear_y = obj.vehicle_attributes().bbcenter_to_rear().y();
-                         ego_bb_center_to_rear_z = obj.vehicle_attributes().bbcenter_to_rear().z();
-                     }
-                 });
-        NormalLog("OSI", "Current Ego Position: %f,%f,%f", ego_x, ego_y, ego_z);
-
-        /* Clear Output */
-        current_out.Clear();
-        current_out.mutable_version()->CopyFrom(osi3::InterfaceVersion::descriptor()->file()->options().GetExtension(osi3::current_interface_version));
-        /* Adjust Timestamps and Ids */
-        current_out.mutable_timestamp()->set_seconds((long long int)floor(time));
-        const double nano_seconds = 1000000000.0;
-        current_out.mutable_timestamp()->set_nanos((int)((time - floor(time)) * nano_seconds));
-        /* Copy of SensorView */
-        current_out.add_sensor_view()->CopyFrom(current_in);
-
-        int i = 0;
-        const double range_factor = 1.1;
-        double actual_range = FmiNominalRange() * range_factor;
-        for_each(current_in.global_ground_truth().moving_object().begin(),
-                 current_in.global_ground_truth().moving_object().end(),
-                 [this,&i,&current_in,&current_out,ego_id,ego_x,ego_y,ego_z,ego_yaw,ego_pitch,ego_roll,ego_bb_center_to_rear_x,ego_bb_center_to_rear_y,ego_bb_center_to_rear_z,actual_range](const osi3::MovingObject& veh) {
-                     if (veh.id().value() != ego_id.value()) {
-                         double rel_x, rel_y, rel_z;
-                         rel_x = veh.base().position().x();
-                         rel_y = veh.base().position().y();
-                         rel_z = veh.base().position().z();
-                         /* transform object coordinate to vehicle coordinate system */
-                         transformCoordinateGlobalToVehicle(rel_x, rel_y, rel_z,
-                                                            ego_x, ego_y, ego_z,
-                                                            ego_yaw, ego_pitch, ego_roll,
-                                                            ego_bb_center_to_rear_x, ego_bb_center_to_rear_y, ego_bb_center_to_rear_z);
-                         /* transform vehicle-relative coordinate to (virtual) sensor-relative coordinate */
-                         transformCoordinateVehicleToSensor(rel_x, rel_y, rel_z,
-                                                            current_out.mounting_position().position().x(), current_out.mounting_position().position().y(), current_out.mounting_position().position().z(),
-                                                            current_out.mounting_position().orientation().yaw(), current_out.mounting_position().orientation().pitch(), current_out.mounting_position().orientation().roll());
-                         double distance = sqrt(rel_x*rel_x + rel_y*rel_y + rel_z*rel_z);
-                         if ((distance <= actual_range) && (rel_x/distance > 0.866025)) {
-                             osi3::DetectedMovingObject *obj = current_out.mutable_moving_object()->Add();
-                             obj->mutable_header()->add_ground_truth_id()->CopyFrom(veh.id());
-                             obj->mutable_header()->mutable_tracking_id()->set_value(i);
-                             obj->mutable_header()->set_existence_probability(cos((2.0*distance-actual_range)/actual_range));
-                             obj->mutable_header()->set_measurement_state(osi3::DetectedItemHeader_MeasurementState_MEASUREMENT_STATE_MEASURED);
-                             obj->mutable_header()->add_sensor_id()->CopyFrom(current_in.sensor_id());
-                             obj->mutable_base()->mutable_position()->set_x(rel_x);
-                             obj->mutable_base()->mutable_position()->set_y(rel_y);
-                             obj->mutable_base()->mutable_position()->set_z(rel_z);
-                             obj->mutable_base()->mutable_dimension()->set_length(veh.base().dimension().length());
-                             obj->mutable_base()->mutable_dimension()->set_width(veh.base().dimension().width());
-                             obj->mutable_base()->mutable_dimension()->set_height(veh.base().dimension().height());
-                             obj->mutable_base()->mutable_orientation()->set_yaw(veh.base().orientation().yaw()-ego_yaw-current_out.mounting_position().orientation().yaw());
-                             obj->mutable_base()->mutable_orientation()->set_pitch(veh.base().orientation().pitch()-ego_pitch-current_out.mounting_position().orientation().pitch());
-                             obj->mutable_base()->mutable_orientation()->set_roll(veh.base().orientation().roll()-ego_roll-current_out.mounting_position().orientation().roll());
-
-                             osi3::DetectedMovingObject::CandidateMovingObject* candidate = obj->add_candidate();
-                             candidate->set_type(veh.type());
-                             candidate->mutable_vehicle_classification()->CopyFrom(veh.vehicle_classification());
-                             candidate->set_probability(1);
-
-                             NormalLog("OSI","Output Vehicle %d[%llu] Probability %f Relative Position: %f,%f,%f (%f,%f,%f)",i,veh.id().value(),obj->header().existence_probability(),rel_x,rel_y,rel_z,obj->base().position().x(),obj->base().position().y(),obj->base().position().z());
-                             i++;
-                         } else {
-                             NormalLog("OSI","Ignoring Vehicle %d[%llu] Outside Sensor Scope Relative Position: %f,%f,%f (%f,%f,%f)",i,veh.id().value(),veh.base().position().x()-ego_x,veh.base().position().y()-ego_y,veh.base().position().z()-ego_z,veh.base().position().x(),veh.base().position().y(),veh.base().position().z());
-                         }
-                     }
-                     else
-                     {
-                         NormalLog("OSI","Ignoring EGO Vehicle %d[%llu] Relative Position: %f,%f,%f (%f,%f,%f)",i,veh.id().value(),veh.base().position().x()-ego_x,veh.base().position().y()-ego_y,veh.base().position().z()-ego_z,veh.base().position().x(),veh.base().position().y(),veh.base().position().z());
-                     }
-                 });
-        NormalLog("OSI", "Mapped %d vehicles to output", i);
+        osi3::SensorData current_out = my_sensor_model_.Step(current_in, time);
         /* Serialize */
         SetFmiSensorDataOut(current_out);
         SetFmiValid(1);
@@ -450,24 +292,24 @@ fmi2Status HelloWorldSensor::DoCalc(fmi2Real current_communication_point, fmi2Re
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::DoTerm()
+fmi2Status OSMP::DoTerm()
 {
     return fmi2OK;
 }
 
-void HelloWorldSensor::DoFree() {}
+void OSMP::DoFree() {}
 
 /*
  * Generic C++ Wrapper Code
  */
 
-HelloWorldSensor::HelloWorldSensor(fmi2String theinstance_name,
-                                   fmi2Type thefmu_type,
-                                   fmi2String thefmu_guid,
-                                   fmi2String thefmu_resource_location,
-                                   const fmi2CallbackFunctions* thefunctions,
-                                   fmi2Boolean thevisible,
-                                   fmi2Boolean thelogging_on)
+OSMP::OSMP(fmi2String theinstance_name,
+           fmi2Type thefmu_type,
+           fmi2String thefmu_guid,
+           fmi2String thefmu_resource_location,
+           const fmi2CallbackFunctions* thefunctions,
+           fmi2Boolean thevisible,
+           fmi2Boolean thelogging_on)
     : instance_name_(theinstance_name),
       fmu_type_(thefmu_type),
       fmu_guid_(thefmu_guid),
@@ -487,7 +329,7 @@ HelloWorldSensor::HelloWorldSensor(fmi2String theinstance_name,
     logging_categories_.insert("OSI");
 }
 
-fmi2Status HelloWorldSensor::SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories, const fmi2String categories[])
+fmi2Status OSMP::SetDebugLogging(fmi2Boolean thelogging_on, size_t n_categories, const fmi2String categories[])
 {
     FmiVerboseLog("fmi2SetDebugLogging(%s)", thelogging_on != 0 ? "true" : "false");
     logging_on_ = thelogging_on != 0;
@@ -520,15 +362,15 @@ fmi2Status HelloWorldSensor::SetDebugLogging(fmi2Boolean thelogging_on, size_t n
     return fmi2OK;
 }
 
-fmi2Component HelloWorldSensor::Instantiate(fmi2String instance_name,
-                                            fmi2Type fmu_type,
-                                            fmi2String fmu_guid,
-                                            fmi2String fmu_resource_location,
-                                            const fmi2CallbackFunctions* functions,
-                                            fmi2Boolean visible,
-                                            fmi2Boolean logging_on)
+fmi2Component OSMP::Instantiate(fmi2String instance_name,
+                                fmi2Type fmu_type,
+                                fmi2String fmu_guid,
+                                fmi2String fmu_resource_location,
+                                const fmi2CallbackFunctions* functions,
+                                fmi2Boolean visible,
+                                fmi2Boolean logging_on)
 {
-    auto* myc = new HelloWorldSensor(instance_name, fmu_type, fmu_guid, fmu_resource_location, functions, visible, logging_on);
+    auto* myc = new OSMP(instance_name, fmu_type, fmu_guid, fmu_resource_location, functions, visible, logging_on);
 
     if (myc == nullptr)
     {
@@ -568,38 +410,38 @@ fmi2Component HelloWorldSensor::Instantiate(fmi2String instance_name,
     return (fmi2Component)myc;
 }
 
-fmi2Status HelloWorldSensor::SetupExperiment(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time)
+fmi2Status OSMP::SetupExperiment(fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time)
 {
     FmiVerboseLog("fmi2SetupExperiment(%d,%g,%g,%d,%g)", tolerance_defined, tolerance, start_time, stop_time_defined, stop_time);
     return DoStart(tolerance_defined, tolerance, start_time, stop_time_defined, stop_time);
 }
 
-fmi2Status HelloWorldSensor::EnterInitializationMode()
+fmi2Status OSMP::EnterInitializationMode()
 {
     FmiVerboseLog("fmi2EnterInitializationMode()");
     return DoEnterInitializationMode();
 }
 
-fmi2Status HelloWorldSensor::ExitInitializationMode()
+fmi2Status OSMP::ExitInitializationMode()
 {
     FmiVerboseLog("fmi2ExitInitializationMode()");
     simulation_started_ = true;
     return DoExitInitializationMode();
 }
 
-fmi2Status HelloWorldSensor::DoStep(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
+fmi2Status OSMP::DoStep(fmi2Real current_communication_point, fmi2Real communication_step_size, fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi_2_component)
 {
     FmiVerboseLog("fmi2DoStep(%g,%g,%d)", current_communication_point, communication_step_size, no_set_fmu_state_prior_to_current_pointfmi_2_component);
     return DoCalc(current_communication_point, communication_step_size, no_set_fmu_state_prior_to_current_pointfmi_2_component);
 }
 
-fmi2Status HelloWorldSensor::Terminate()
+fmi2Status OSMP::Terminate()
 {
     FmiVerboseLog("fmi2Terminate()");
     return DoTerm();
 }
 
-fmi2Status HelloWorldSensor::Reset()
+fmi2Status OSMP::Reset()
 {
     FmiVerboseLog("fmi2Reset()");
 
@@ -608,13 +450,13 @@ fmi2Status HelloWorldSensor::Reset()
     return DoInit();
 }
 
-void HelloWorldSensor::FreeInstance()
+void OSMP::FreeInstance()
 {
     FmiVerboseLog("fmi2FreeInstance()");
     DoFree();
 }
 
-fmi2Status HelloWorldSensor::GetReal(const fmi2ValueReference vr[], size_t nvr, fmi2Real value[])
+fmi2Status OSMP::GetReal(const fmi2ValueReference vr[], size_t nvr, fmi2Real value[])
 {
     FmiVerboseLog("fmi2GetReal(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -631,7 +473,7 @@ fmi2Status HelloWorldSensor::GetReal(const fmi2ValueReference vr[], size_t nvr, 
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::GetInteger(const fmi2ValueReference vr[], size_t nvr, fmi2Integer value[])
+fmi2Status OSMP::GetInteger(const fmi2ValueReference vr[], size_t nvr, fmi2Integer value[])
 {
     FmiVerboseLog("fmi2GetInteger(...)");
     bool need_refresh = !simulation_started_;
@@ -655,7 +497,7 @@ fmi2Status HelloWorldSensor::GetInteger(const fmi2ValueReference vr[], size_t nv
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::GetBoolean(const fmi2ValueReference vr[], size_t nvr, fmi2Boolean value[])
+fmi2Status OSMP::GetBoolean(const fmi2ValueReference vr[], size_t nvr, fmi2Boolean value[])
 {
     FmiVerboseLog("fmi2GetBoolean(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -672,7 +514,7 @@ fmi2Status HelloWorldSensor::GetBoolean(const fmi2ValueReference vr[], size_t nv
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::GetString(const fmi2ValueReference vr[], size_t nvr, fmi2String value[])
+fmi2Status OSMP::GetString(const fmi2ValueReference vr[], size_t nvr, fmi2String value[])
 {
     FmiVerboseLog("fmi2GetString(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -689,7 +531,7 @@ fmi2Status HelloWorldSensor::GetString(const fmi2ValueReference vr[], size_t nvr
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::SetReal(const fmi2ValueReference vr[], size_t nvr, const fmi2Real value[])
+fmi2Status OSMP::SetReal(const fmi2ValueReference vr[], size_t nvr, const fmi2Real value[])
 {
     FmiVerboseLog("fmi2SetReal(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -706,7 +548,7 @@ fmi2Status HelloWorldSensor::SetReal(const fmi2ValueReference vr[], size_t nvr, 
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::SetInteger(const fmi2ValueReference vr[], size_t nvr, const fmi2Integer value[])
+fmi2Status OSMP::SetInteger(const fmi2ValueReference vr[], size_t nvr, const fmi2Integer value[])
 {
     FmiVerboseLog("fmi2SetInteger(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -723,7 +565,7 @@ fmi2Status HelloWorldSensor::SetInteger(const fmi2ValueReference vr[], size_t nv
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::SetBoolean(const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[])
+fmi2Status OSMP::SetBoolean(const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[])
 {
     FmiVerboseLog("fmi2SetBoolean(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -740,7 +582,7 @@ fmi2Status HelloWorldSensor::SetBoolean(const fmi2ValueReference vr[], size_t nv
     return fmi2OK;
 }
 
-fmi2Status HelloWorldSensor::SetString(const fmi2ValueReference vr[], size_t nvr, const fmi2String value[])
+fmi2Status OSMP::SetString(const fmi2ValueReference vr[], size_t nvr, const fmi2String value[])
 {
     FmiVerboseLog("fmi2SetString(...)");
     for (size_t i = 0; i < nvr; i++)
@@ -775,7 +617,7 @@ FMI2_Export const char* fmi2GetVersion()
 
 FMI2_Export fmi2Status fmi2SetDebugLogging(fmi2Component c, fmi2Boolean logging_on, size_t n_categories, const fmi2String categories[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->SetDebugLogging(logging_on, n_categories, categories);
 }
 
@@ -790,25 +632,25 @@ FMI2_Export fmi2Component fmi2Instantiate(fmi2String instance_name,
                                           fmi2Boolean visible,
                                           fmi2Boolean logging_on)
 {
-    return HelloWorldSensor::Instantiate(instance_name, fmu_type, fmu_guid, fmu_resource_location, functions, visible, logging_on);
+    return OSMP::Instantiate(instance_name, fmu_type, fmu_guid, fmu_resource_location, functions, visible, logging_on);
 }
 
 FMI2_Export fmi2Status
 fmi2SetupExperiment(fmi2Component c, fmi2Boolean tolerance_defined, fmi2Real tolerance, fmi2Real start_time, fmi2Boolean stop_time_defined, fmi2Real stop_time)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->SetupExperiment(tolerance_defined, tolerance, start_time, stop_time_defined, stop_time);
 }
 
 FMI2_Export fmi2Status fmi2EnterInitializationMode(fmi2Component c)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->EnterInitializationMode();
 }
 
 FMI2_Export fmi2Status fmi2ExitInitializationMode(fmi2Component c)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->ExitInitializationMode();
 }
 
@@ -817,25 +659,25 @@ FMI2_Export fmi2Status fmi2DoStep(fmi2Component c,
                                   fmi2Real communication_step_size,
                                   fmi2Boolean no_set_fmu_state_prior_to_current_pointfmi2_component)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->DoStep(current_communication_point, communication_step_size, no_set_fmu_state_prior_to_current_pointfmi2_component);
 }
 
 FMI2_Export fmi2Status fmi2Terminate(fmi2Component c)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->Terminate();
 }
 
 FMI2_Export fmi2Status fmi2Reset(fmi2Component c)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->Reset();
 }
 
 FMI2_Export void fmi2FreeInstance(fmi2Component c)
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     myc->FreeInstance();
     delete myc;
 }
@@ -845,49 +687,49 @@ FMI2_Export void fmi2FreeInstance(fmi2Component c)
  */
 FMI2_Export fmi2Status fmi2GetReal(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, fmi2Real value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->GetReal(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2GetInteger(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, fmi2Integer value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->GetInteger(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2GetBoolean(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, fmi2Boolean value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->GetBoolean(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2GetString(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, fmi2String value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->GetString(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2SetReal(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, const fmi2Real value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->SetReal(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2SetInteger(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, const fmi2Integer value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->SetInteger(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2SetBoolean(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, const fmi2Boolean value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->SetBoolean(vr, nvr, value);
 }
 
 FMI2_Export fmi2Status fmi2SetString(fmi2Component c, const fmi2ValueReference vr[], size_t nvr, const fmi2String value[])
 {
-    auto* myc = (HelloWorldSensor*)c;
+    auto* myc = (OSMP*)c;
     return myc->SetString(vr, nvr, value);
 }
 

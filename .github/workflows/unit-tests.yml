@@ -4,7 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  cpp-linter:
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Model
@@ -12,36 +13,47 @@ jobs:
       with:
         submodules: true
 
-    - name: Cache Dependencies
-      id: cache-depends
-      uses: actions/cache@v2
+    - name: Check unit tests exist
+      id: check_files
+      uses: andstor/file-existence-action@v2
+      with:
+        files: "test/unit"
+
+    - name: Cache Protobuf
+      id: cache-protobuf
+      uses: actions/cache@v3
       with:
         path: protobuf-21.12
-        key: ${{ runner.os }}-v1-depends
+        key: ${{ runner.os }}-protobuf
 
     - name: Download ProtoBuf
-      if: steps.cache-depends.outputs.cache-hit != 'true'
+      if: steps.cache-protobuf.outputs.cache-hit != 'true' && steps.check_files.outputs.files_exists == 'true'
       run: curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v21.12/protobuf-all-21.12.tar.gz && tar xzvf protobuf-all-21.12.tar.gz
 
     - name: Build ProtoBuf
-      if: steps.cache-depends.outputs.cache-hit != 'true'
+      if: steps.cache-protobuf.outputs.cache-hit != 'true' && steps.check_files.outputs.files_exists == 'true'
       working-directory: protobuf-21.12
       run: ./configure DIST_LANG=cpp --prefix=/usr && make
 
     - name: Install ProtoBuf
+      if: steps.check_files.outputs.files_exists == 'true'
       working-directory: protobuf-21.12
       run: sudo make install && sudo ldconfig
 
     - name: Prepare C++ Build
+      if: steps.check_files.outputs.files_exists == 'true'
       run: mkdir build
 
     - name: Configure CMake
+      if: steps.check_files.outputs.files_exists == 'true'
       working-directory: build
       run: cmake -DCMAKE_PREFIX_PATH:PATH=${DEPS_DIR}/protobuf/install -DCMAKE_EXPORT_COMPILE_COMMANDS=on ..
       
     - name: Build C++
+      if: steps.check_files.outputs.files_exists == 'true'
       working-directory: build
       run: cmake --build .
 
     - name: Run Unit Tests
-      run: build/test/Google_Tests_run
+      if: steps.check_files.outputs.files_exists == 'true'
+      run: build/test/unit/Google_Tests_run

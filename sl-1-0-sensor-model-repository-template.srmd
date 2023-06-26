@@ -1,0 +1,59 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<srmd:SimulationResourceMetaData
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://apps.pmsf.net/STMD/SimulationResourceMetaData SRMD.xsd"
+        xmlns:srmd="http://apps.pmsf.net/STMD/SimulationResourceMetaData"
+        version="0.5" name="Sensor Model XXX Meta-Data">
+    <Classification
+            xmlns="http://apps.pmsf.net/SSPTraceability/SSPTraceabilityCommon" type="de.setlevel.srmd.model-meta-data">
+        <!-- Mandatory Model Type related information -->
+        <ClassificationEntry keyword="model.type">sensor</ClassificationEntry>
+        <!-- Optional original Sensor related information if applicable for model type -->
+        <ClassificationEntry keyword="sensor.manufacturer">Some Manufacturer Inc.</ClassificationEntry>
+        <ClassificationEntry keyword="sensor.family">Some Family</ClassificationEntry>
+        <ClassificationEntry keyword="sensor.name">Sensor 2000</ClassificationEntry>
+        <ClassificationEntry keyword="sensor.version"></ClassificationEntry>
+        <ClassificationEntry keyword="sensor.manufacturer.partnumber"></ClassificationEntry>
+        <ClassificationEntry keyword="sensor.type">Lidar</ClassificationEntry>
+        <ClassificationEntry keyword="sensor.technology">Lidar</ClassificationEntry>
+        <ClassificationEntry keyword="sensor.technology.variant"></ClassificationEntry>
+        <!-- Model related information -->
+        <ClassificationEntry keyword="model.manufacturer">Persival GmbH</ClassificationEntry>
+        <ClassificationEntry keyword="model.family">Perception Sensor Models</ClassificationEntry>
+        <ClassificationEntry keyword="model.name">Sensor Model Repository Template</ClassificationEntry>
+        <ClassificationEntry keyword="model.version">1.0</ClassificationEntry>
+        <ClassificationEntry keyword="model.releasedate">10-02-23</ClassificationEntry>
+        <ClassificationEntry keyword="model.status">Released</ClassificationEntry>
+        <ClassificationEntry keyword="model.guid"></ClassificationEntry>
+        <ClassificationEntry keyword="model.purpose">Template Repository for OpenMSL</ClassificationEntry>
+        <ClassificationEntry keyword="model.use-restrictions">Legal or contractual restrictions on the use and
+            distribution of the model that have to be respected
+        </ClassificationEntry>
+        <ClassificationEntry keyword="model.modelling-approach"></ClassificationEntry>
+        <ClassificationEntry keyword="model.preconditions"></ClassificationEntry>
+        <ClassificationEntry keyword="model.validity-range">Not validated, yet</ClassificationEntry>
+        <ClassificationEntry keyword="model.specification">-</ClassificationEntry>
+        <ClassificationEntry keyword="model.verification.status">false</ClassificationEntry>
+        <ClassificationEntry keyword="model.verification.report">-</ClassificationEntry>
+        <ClassificationEntry keyword="model.validation.concept">-</ClassificationEntry>
+        <ClassificationEntry keyword="model.validation.status">false</ClassificationEntry>
+        <ClassificationEntry keyword="model.validation.platform">-</ClassificationEntry>
+        <ClassificationEntry keyword="model.validation.report">-</ClassificationEntry>
+        <ClassificationEntry keyword="model.limitations">-</ClassificationEntry>
+        <ClassificationEntry keyword="model.limitations">-</ClassificationEntry>
+        <!-- Model implementation and integration related information -->
+        <ClassificationEntry keyword="model.implementation.format">OSMP 1.0/OSI 3.1.2/FMI 2.0
+        </ClassificationEntry>
+        <ClassificationEntry keyword="model.implementation.preconditions"></ClassificationEntry>
+        <ClassificationEntry keyword="model.implementation.performance-characteristics"></ClassificationEntry>
+        <ClassificationEntry keyword="model.integration.requirements">See REEDME.md in Model folder
+        </ClassificationEntry>
+    </Classification>
+    <!-- Model ISO-11010-X Classification related information -->
+    <Classification
+            xmlns="http://apps.pmsf.net/SSPTraceability/SSPTraceabilityCommon" type="de.setlevel.srmd.ISO-11010-X">
+        <ClassificationEntry keyword="part"></ClassificationEntry>
+        <ClassificationEntry keyword="plant"></ClassificationEntry>
+        <ClassificationEntry keyword="controller"></ClassificationEntry>
+    </Classification>
+</srmd:SimulationResourceMetaData>
