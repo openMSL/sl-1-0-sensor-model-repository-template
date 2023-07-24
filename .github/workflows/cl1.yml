@@ -25,7 +25,6 @@ jobs:
               repo: context.repo.repo,
               key: ${{ runner.os }}-model-fmu,
             })
-            }
             console.log("Clear completed")
 
   build_model:
