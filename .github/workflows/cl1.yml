@@ -4,6 +4,23 @@ on:
   workflow_call:
 
 jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear cache
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log("About to clear")
+            const caches = await github.rest.actions.getActionsCacheList({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            for (const cache of caches.data.actions_caches) {
+              console.log(cache)
+            }
+            console.log("Clear completed")
+
   build_model:
     name: Build Model
     uses: ./.github/workflows/build.yml
