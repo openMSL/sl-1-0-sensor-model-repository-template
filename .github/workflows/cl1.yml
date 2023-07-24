@@ -20,6 +20,11 @@ jobs:
             for (const cache of caches.data.actions_caches) {
               console.log(cache)
             }
+            github.rest.actions.deleteActionsCacheByKey({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              key: "${{ runner.os }}-model-fmu",
+            })
             console.log("Clear completed")
 
   build_model:
