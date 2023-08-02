@@ -122,7 +122,9 @@ When you clone this template to implement your own model, delete this entire sec
 #### General Simulation Credibility
 
 * [Credible Simulation Process Framework](https://gitlab.setlevel.de/open/processes_and_traceability/credible_simulation_process_framework) from the German research project [SET Level](https://setlevel.de/) of the [PEGASUS](https://pegasus-family.de/)  project family
-* [Credibility-Assessment-Framework](https://github.com/virtual-vehicle/Credibility-Assessment-Framework) incl. [Credibility Development Kit](https://github.com/virtual-vehicle/Credibility-Assessment-Framework/tree/main/Credibility-Development-Kit) from the European research project [UPSIM](https://upsim-project.eu/) incl. corresponding [publication](https://ecp.ep.liu.se/index.php/modelica/article/view/572/542)
+* [Credibility-Assessment-Framework](https://github.com/virtual-vehicle/Credibility-Assessment-Framework) incl. [Credibility Development Kit](https://github.com/virtual-vehicle/Credibility-Assessment-Framework/tree/main/Credibility-Development-Kit) 
+from the European research project [UPSIM](https://upsim-project.eu/) incl. corresponding [publication](https://ecp.ep.liu.se/index.php/modelica/article/view/572/542)
+
 
 #### Sensor Model Test Frameworks
 
@@ -159,8 +161,8 @@ When you clone this template to implement your own model, delete this entire sec
 
 ##### Presentations on Simulation Credibility and Sensor Model Validation
 
-- [Weber, Rosenberger: Simulation Credibility Layers – Toward a Holistic Assessment, SET Level Final Event (October 2022)](https://setlevel.de/assets/s4v2-simulation-credibility-layers-.pdf)
-- [Schunk, Rosenberger: Validation of Test Infrastructure - From Cause Trees to a Validated System Simulation, VVM Half Time Event (March 2022)](https://www.vvm-projekt.de/fileadmin/user_upload/Mid-Term/Presentations/VVM_HZE_S2_P6_20220315_ValidationTestInfrastructure.pdf)
+* [Weber, Rosenberger: Simulation Credibility Layers – Toward a Holistic Assessment, SET Level Final Event (October 2022)](https://setlevel.de/assets/s4v2-simulation-credibility-layers-.pdf)
+* [Schunk, Rosenberger: Validation of Test Infrastructure - From Cause Trees to a Validated System Simulation, VVM Half Time Event (March 2022)](https://www.vvm-projekt.de/fileadmin/user_upload/Mid-Term/Presentations/VVM_HZE_S2_P6_20220315_ValidationTestInfrastructure.pdf)
 
 ### Collection of Sensor Model Candidates for OpenMSL
 
@@ -195,10 +197,10 @@ When you clone this template to implement your own model, delete this entire sec
 
 #### Other Models
 
-- Camera?
-- Ultrasonic?
-- Thermal Imaging?
-- ???
+* Camera?
+* Ultrasonic?
+* Thermal Imaging?
+* ???
 
 #### Sources for Already Contained Models
 
