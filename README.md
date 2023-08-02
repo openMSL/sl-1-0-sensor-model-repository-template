@@ -112,9 +112,9 @@ IEEEDataPort,
 [https://ieee-dataport.org/sites/default/files/analysis/27/IEEE%20Citation%20Guidelines.pdf](https://ieee-dataport.org/sites/default/files/analysis/27/IEEE%20Citation%20Guidelines.pdf).
 [Accessed Jan. 09, 2023]
 
-## State of the Art
+## State-of-the-Art
 
-This section is a state of the art collection for the sensor model sub-library.
+This section is a state-of-the-art collection for the sensor model sub-library.
 When you clone this template to implement your own model, delete this entire section from the readme.
 
 ### Sensor Model Validation and Verification
