@@ -1,12 +1,12 @@
-# 004 Tracefile Analysis
+# 003 Output OSI Fields
 
-This test checks if an object inside the field of view of the sensor is detected by the model.
+This test checks if all required OSI fields are filled by the model in the output SensorData.
 
 ## System Structure Definition
 
 The system consists of an OSMP binary trace file player, the model itself and a trace file writer.
 The trace file player will read the given SensorView trace file as an input for the sensor model.
-The output of the sensor model is written into a binary SensorData trace file for the subsequent analysis.
+The output of the sensor model is connected to the [OpenMSL OSI Field Checker](https://github.com/openMSL/sl-1-5-sensor-model-testing/tree/main/src/osi-field-checker).
 
 <img alt="System Structure" src="system_structure.png" width="600">
 
@@ -21,9 +21,8 @@ The x-coordinates of the objects in this scenario are:
 
 ## Metric
 
-The object is expected to be inside the field of view of the sensor at all times.
-In the analyze.py script the average number of detected moving objects over all simulation time steps is calculated.
+Existence of all fields specified in the osi_check.txt.
 
 ## Pass/Fail Criterion
 
-The test fails, if it differs from the expectation value of 1.0.
+The test fails, if a required field is not filled in the model output SensorData.
