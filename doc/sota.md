@@ -20,8 +20,8 @@ When you clone this template to implement your own model, delete this entire sec
 ### Sensor Model Verification
 
 * SET Level Model Verification
-    * Object Based Generic Perception Model
-    * Reflection Based Radar Object Model
+  * Object Based Generic Perception Model
+  * Reflection Based Radar Object Model
 
 ### Sensor Model Validation
 
