@@ -11,6 +11,12 @@ What inputs does the model need and what outputs does it generate?
 < Eye-catcher Image >
 <img src="doc/img/model_video.gif" width="800" />
 
+## State of the Art
+
+Describe and reference the state of the art for your specific model.
+The state of the art can be put into a separate file in the doc folder.
+[This example](doc/sota.md) contains the state of the art for sensor modeling and model validation as well as potential candidates for future models on OpenMSL.
+
 ## Modeling Approach
 
 Put details about the inner workings of the model here.
