@@ -6,8 +6,15 @@
 //
 
 #pragma once
-
+#include "OSMPConfig.h"
 #include "osi_sensordata.pb.h"
+#include <cstdarg>
+#include <fstream>
+#include <iostream>
+#include <set>
+#include <string>
+
+using namespace std;
 
 class MySensorModel
 {
@@ -85,8 +92,8 @@ class MySensorModel
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
         if (private_log_file.is_open())
         {
-            private_log_file << "OSMPDummySensor"
-                             << "::" << instanceName << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
+            private_log_file << "MySensorModel"
+                             << "::" << "template" << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
 #endif
@@ -113,7 +120,7 @@ class MySensorModel
 #if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
         va_list ap;
         va_start(ap, format);
-        internal_log(category, format, ap);
+        InternalLog(category, format, ap);
         va_end(ap);
 #endif
     }

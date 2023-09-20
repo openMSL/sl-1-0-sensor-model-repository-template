@@ -47,7 +47,7 @@
 using namespace std;
 
 #ifdef PRIVATE_LOG_PATH
-ofstream COSMPDummySensor::private_log_file;
+ofstream OSMP::private_log_file;
 #endif
 
 /*

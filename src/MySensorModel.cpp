@@ -13,6 +13,10 @@
 #include "osi_sensordata.pb.h"
 #include "osi_sensorview.pb.h"
 
+#ifdef PRIVATE_LOG_PATH
+ofstream MySensorModel::private_log_file;
+#endif
+
 void MySensorModel::Init(double nominal_range_in)
 {
     nominal_range_ = nominal_range_in;
