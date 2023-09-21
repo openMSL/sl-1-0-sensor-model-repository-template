@@ -6,7 +6,7 @@ CheckOptions:
   - key:             readability-identifier-naming.AbstractClassCases
     value:           CamelCase
   - key:             readability-identifier-naming.AbstractClassPrefix
-    value:           I
+    value:           ''
   - key:             readability-identifier-naming.AbstractClassSuffix
     value:           ''
   - key:             readability-identifier-naming.ClassCase
@@ -14,13 +14,13 @@ CheckOptions:
   - key:             readability-identifier-naming.ClassConstantCase
     value:           CamelCase
   - key:             readability-identifier-naming.ClassConstantPrefix
-    value:           k
+    value:           ''
   - key:             readability-identifier-naming.ClassConstantSuffix
     value:           ''
   - key:             readability-identifier-naming.ClassMemberCase
     value:           lower_case
   - key:             readability-identifier-naming.ClassMemberPrefix
-    value:           g_
+    value:           ''
   - key:             readability-identifier-naming.ClassMemberSuffix
     value:           ''
   - key:             readability-identifier-naming.ClassMethodCase
@@ -74,7 +74,7 @@ CheckOptions:
   - key:             readability-identifier-naming.EnumConstantCase
     value:           aNy_CasE
   - key:             readability-identifier-naming.EnumConstantPrefix
-    value:           k
+    value:           ''
   - key:             readability-identifier-naming.EnumConstantSuffix
     value:           ''
   - key:             readability-identifier-naming.EnumPrefix
@@ -90,7 +90,7 @@ CheckOptions:
   - key:             readability-identifier-naming.GlobalConstantCase
     value:           CamelCase
   - key:             readability-identifier-naming.GlobalConstantPrefix
-    value:           k
+    value:           ''
   - key:             readability-identifier-naming.GlobalConstantSuffix
     value:           ''
   - key:             readability-identifier-naming.GlobalFunctionCase
@@ -102,11 +102,11 @@ CheckOptions:
   - key:             readability-identifier-naming.GlobalVariableCase
     value:           lower_case
   - key:             readability-identifier-naming.GlobalVariablePrefix
-    value:           g_
+    value:           ''
   - key:             readability-identifier-naming.GlobalVariableSuffix
     value:           ''
   - key:             readability-identifier-naming.IgnoreFailedSplit
-    value:           '0'
+    value:           ''
   - key:             readability-identifier-naming.InlineNamespaceCase
     value:           lower_case
   - key:             readability-identifier-naming.InlineNamespacePrefix
