@@ -1,7 +1,7 @@
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(LINK_WITH_SHARED_OSI OFF CACHE BOOL "Link FMU with shared OSI library instead of statically linking")
-set(PUBLIC_LOGGING OFF CACHE BOOL "Enable logging via FMI logger")
+set(PUBLIC_LOGGING ON CACHE BOOL "Enable logging via FMI logger")
 set(PRIVATE_LOGGING ON CACHE BOOL "Enable private logging to file")
 if(WIN32)
 	set(PRIVATE_LOG_PATH "C:/TEMP/sl-1-0-sensor-model-repository-template.log" CACHE FILEPATH "Path to write private log file to")
