@@ -11,10 +11,6 @@ set(OSIVERSION "${OSI_VERSION_MAJOR}.${OSI_VERSION_MINOR}.${OSI_VERSION_PATCH}")
 set(OSMPVERSION "1.4.0" CACHE STRING "OSMP Version String")
 set(MODELVERSION "0.5.0" CACHE STRING "Model Version String")
 
-set(OSMPVERSION "1.4.0" CACHE STRING "OSMP Version String")
-
-set(MODELVERSION "1.0.0" CACHE STRING "Model Version String")
-
 include_directories(lib/fmi2/headers)
 
 set(FMU_INSTALL_DIR "${CMAKE_BINARY_DIR}" CACHE PATH "Target directory for generated FMU")
