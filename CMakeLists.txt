@@ -10,7 +10,8 @@ get_directory_property(OSI_VERSION_PATCH DIRECTORY lib/open-simulation-interface
 # set(OSIVERSION "${OSI_VERSION_MAJOR}.${OSI_VERSION_MINOR}.${OSI_VERSION_PATCH}")
 # CMOSI bugfix, CMOSI interface expects OSI 3.0.0, although supporting 3.5.0
 set(OSIVERSION "3.0.0")
-set(OSMPVERSION "1.0.0")
+set(OSMPVERSION "1.0.0" CACHE STRING "OSMP Version String")
+set(MODELVERSION "0.0.1" CACHE STRING "Model Version String")
 
 include_directories(lib/fmi2/headers)
 
