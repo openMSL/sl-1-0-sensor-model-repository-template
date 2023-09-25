@@ -7,6 +7,7 @@
 
 #pragma once
 #include "OSMPConfig.h"
+#include "fmi2Functions.h"
 #include "osi_sensordata.pb.h"
 #include <cstdarg>
 #include <fstream>
@@ -19,7 +20,10 @@ using namespace std;
 class MySensorModel
 {
   public:
-    void Init(double nominal_range_in);
+    void Init(double nominal_range_in,string theinstance_name,
+        fmi2CallbackFunctions thefunctions,
+         bool thelogging_on);
+
     osi3::SensorData Step(osi3::SensorView current_in, double time);
 
     static void RotatePointXYZ(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz);
@@ -47,6 +51,11 @@ class MySensorModel
                                                    double mounting_position_roll);
 
   private:
+    string instance_name_;
+    bool logging_on_;
+    set<string> logging_categories_;
+    fmi2CallbackFunctions functions_;
+
     double nominal_range_;
 
     /* Private File-based Logging just for Debugging */
@@ -98,8 +107,8 @@ class MySensorModel
         }
 #endif
 #ifdef PUBLIC_LOGGING
-        if (loggingOn && loggingCategories.count(category))
-            functions.logger(functions.componentEnvironment, instanceName.c_str(), fmi2OK, category, buffer);
+        if (logging_on_ && logging_categories_.count(category))
+            functions_.logger(functions_.componentEnvironment, instance_name_.c_str(), fmi2OK, category, buffer);
 #endif
 #endif
     }

@@ -17,8 +17,18 @@
 ofstream MySensorModel::private_log_file;
 #endif
 
-void MySensorModel::Init(double nominal_range_in)
+void MySensorModel::Init(double nominal_range_in, string theinstance_name,
+        fmi2CallbackFunctions thefunctions,
+         bool thelogging_on)
 {
+    logging_categories_.clear();
+    logging_categories_.insert("FMI");
+    logging_categories_.insert("OSMP");
+    logging_categories_.insert("OSI");
+    instance_name_ = theinstance_name;
+    functions_ = thefunctions;
+    logging_on_ = thelogging_on;
+
     nominal_range_ = nominal_range_in;
 }
 

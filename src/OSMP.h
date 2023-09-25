@@ -178,8 +178,8 @@ class OSMP
         }
 #endif
 #ifdef PUBLIC_LOGGING
-        if (loggingOn && loggingCategories.count(category))
-            functions.logger(functions.componentEnvironment, instanceName.c_str(), fmi2OK, category, buffer);
+        if (logging_on_ && logging_categories_.count(category))
+            functions_.logger(functions_.componentEnvironment, instance_name_.c_str(), fmi2OK, category, buffer);
 #endif
 #endif
     }

@@ -262,7 +262,7 @@ fmi2Status OSMP::DoExitInitializationMode()
     }
 
     // initialize sensor model
-    my_sensor_model_.Init(FmiNominalRange());
+    my_sensor_model_.Init(FmiNominalRange(),instance_name_, functions_, logging_on_);
 
     return fmi2OK;
 }
