@@ -6,13 +6,23 @@
 //
 
 #pragma once
+#include <cstdarg>
+#include <fstream>
+#include <iostream>
+#include <set>
+#include <string>
 
+#include "OSMPConfig.h"
+#include "fmi2Functions.h"
 #include "osi_sensordata.pb.h"
+
+using namespace std;
 
 class MySensorModel
 {
   public:
-    void Init(double nominal_range_in);
+    void Init(double nominal_range_in, string theinstance_name, fmi2CallbackFunctions thefunctions, bool thelogging_on);
+
     osi3::SensorData Step(osi3::SensorView current_in, double time);
 
     static void RotatePointXYZ(double x, double y, double z, double yaw, double pitch, double roll, double& rx, double& ry, double& rz);
@@ -40,6 +50,11 @@ class MySensorModel
                                                    double mounting_position_roll);
 
   private:
+    string instance_name_;
+    bool logging_on_;
+    set<string> logging_categories_;
+    fmi2CallbackFunctions functions_;
+
     double nominal_range_;
 
     /* Private File-based Logging just for Debugging */
@@ -55,7 +70,9 @@ class MySensorModel
         va_start(ap, format);
         char buffer[1024];
         if (!private_log_file.is_open())
+        {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
+        }
         if (private_log_file.is_open())
         {
 #ifdef _WIN32
@@ -82,17 +99,23 @@ class MySensorModel
 #endif
 #ifdef PRIVATE_LOG_PATH
         if (!private_log_file.is_open())
+        {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
+        }
         if (private_log_file.is_open())
         {
-            private_log_file << "OSMPDummySensor"
-                             << "::" << instanceName << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
+            private_log_file << "MySensorModel"
+                             << "::"
+                             << "template"
+                             << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
 #endif
 #ifdef PUBLIC_LOGGING
-        if (loggingOn && loggingCategories.count(category))
-            functions.logger(functions.componentEnvironment, instanceName.c_str(), fmi2OK, category, buffer);
+        if (logging_on_ && (logging_categories_.count(category) != 0U))
+        {
+            functions_.logger(functions_.componentEnvironment, instance_name_.c_str(), fmi2OK, category, buffer);
+        }
 #endif
 #endif
     }
@@ -113,7 +136,7 @@ class MySensorModel
 #if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
         va_list ap;
         va_start(ap, format);
-        internal_log(category, format, ap);
+        InternalLog(category, format, ap);
         va_end(ap);
 #endif
     }

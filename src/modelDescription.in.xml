@@ -5,7 +5,7 @@
   guid="@FMUGUID@"
   description="Demonstration C++ Sensor FMU for OSI Sensor Model Packaging within OpenMSL"
   author="Persival GmbH"
-  version="@OSMPVERSION@"
+  version="@MODELVERSION@"
   generationTool="Based on OSMPDummySensor"
   generationDateAndTime="@FMUTIMESTAMP@"
   variableNamingConvention="structured">

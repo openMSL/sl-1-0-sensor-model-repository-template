@@ -1,12 +1,23 @@
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(LINK_WITH_SHARED_OSI OFF CACHE BOOL "Link FMU with shared OSI library instead of statically linking")
-set(PUBLIC_LOGGING OFF CACHE BOOL "Enable logging via FMI logger")
-set(PRIVATE_LOGGING OFF CACHE BOOL "Enable private logging to file")
+set(PUBLIC_LOGGING ON CACHE BOOL "Enable logging via FMI logger")
+set(PRIVATE_LOGGING ON CACHE BOOL "Enable private logging to file")
+if(WIN32)
+	set(PRIVATE_LOG_PATH "C:/TEMP/sl-1-0-sensor-model-repository-template.log" CACHE FILEPATH "Path to write private log file to")
+else()
+	set(PRIVATE_LOG_PATH "/tmp/sl-1-0-sensor-model-repository-template.log" CACHE FILEPATH "Path to write private log file to")
+endif()
+if(PRIVATE_LOGGING)
+	file(TO_NATIVE_PATH ${PRIVATE_LOG_PATH} PRIVATE_LOG_PATH_NATIVE)
+	string(REPLACE "\\" "\\\\" PRIVATE_LOG_PATH ${PRIVATE_LOG_PATH_NATIVE})
+endif()
+set(VERBOSE_FMI_LOGGING OFF CACHE BOOL "Enable detailed FMI function logging")
 
 string(TIMESTAMP FMUTIMESTAMP UTC)
 string(MD5 FMUGUID modelDescription.in.xml)
 configure_file(modelDescription.in.xml modelDescription.xml @ONLY)
+configure_file(OSMPConfig.in.h OSMPConfig.h)
 
 find_package(Protobuf 2.6.1 REQUIRED)
 add_library(sl-1-0-sensor-model-repository-template SHARED
@@ -21,6 +32,8 @@ if(LINK_WITH_SHARED_OSI)
 else()
 	target_link_libraries(sl-1-0-sensor-model-repository-template open_simulation_interface_pic)
 endif()
+
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 if(WIN32)
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -51,6 +64,7 @@ add_custom_command(TARGET sl-1-0-sensor-model-repository-template
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/modelDescription.xml" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/OSMP.cpp" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/OSMP.h" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
+		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/OSMPConfig.h" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/MySensorModel.cpp" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/MySensorModel.h" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/sources/"
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/../sl-1-0-sensor-model-repository-template.srmd" "${CMAKE_CURRENT_BINARY_DIR}/buildfmu/extra/net.pmsf.ssp.srmd/resourceMetaData.srmd"

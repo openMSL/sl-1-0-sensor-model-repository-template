@@ -9,6 +9,7 @@
 #ifndef FMU_SHARED_OBJECT
 #define FMI2_FUNCTION_PREFIX OSMPDummySensor_
 #endif
+#include "OSMPConfig.h"
 #include "fmi2Functions.h"
 
 /*
@@ -168,17 +169,23 @@ class OSMP
 #endif
 #ifdef PRIVATE_LOG_PATH
         if (!private_log_file.is_open())
+        {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
+        }
         if (private_log_file.is_open())
         {
-            private_log_file << "OSMPDummySensor"
-                             << "::" << instanceName << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
+            private_log_file << "OSMP"
+                             << "::"
+                             << "model"
+                             << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
 #endif
 #ifdef PUBLIC_LOGGING
-        if (loggingOn && loggingCategories.count(category))
-            functions.logger(functions.componentEnvironment, instanceName.c_str(), fmi2OK, category, buffer);
+        if (logging_on_ && (logging_categories_.count(category) != 0U))
+        {
+            functions_.logger(functions_.componentEnvironment, instance_name_.c_str(), fmi2OK, category, buffer);
+        }
 #endif
 #endif
     }
@@ -199,7 +206,7 @@ class OSMP
 #if defined(PRIVATE_LOG_PATH) || defined(PUBLIC_LOGGING)
         va_list ap;
         va_start(ap, format);
-        internal_log(category, format, ap);
+        InternalLog(category, format, ap);
         va_end(ap);
 #endif
     }
