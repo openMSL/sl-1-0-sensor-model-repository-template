@@ -169,17 +169,23 @@ class OSMP
 #endif
 #ifdef PRIVATE_LOG_PATH
         if (!private_log_file.is_open())
+        {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
+        }
         if (private_log_file.is_open())
         {
             private_log_file << "OSMP"
-                             << "::" << "model" << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
+                             << "::"
+                             << "model"
+                             << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
 #endif
 #ifdef PUBLIC_LOGGING
-        if (logging_on_ && logging_categories_.count(category))
+        if (logging_on_ && (logging_categories_.count(category) != 0U))
+        {
             functions_.logger(functions_.componentEnvironment, instance_name_.c_str(), fmi2OK, category, buffer);
+        }
 #endif
 #endif
     }
@@ -228,30 +234,12 @@ class OSMP
     MySensorModel my_sensor_model_;
 
     /* Simple Accessors */
-    fmi2Boolean FmiValid()
-    {
-        return boolean_vars_[FMI_BOOLEAN_VALID_IDX];
-    }
-    void SetFmiValid(fmi2Boolean value)
-    {
-        boolean_vars_[FMI_BOOLEAN_VALID_IDX] = value;
-    }
-    fmi2Integer FmiCount()
-    {
-        return integer_vars_[FMI_INTEGER_COUNT_IDX];
-    }
-    void SetFmiCount(fmi2Integer value)
-    {
-        integer_vars_[FMI_INTEGER_COUNT_IDX] = value;
-    }
-    fmi2Real FmiNominalRange()
-    {
-        return real_vars_[FMI_REAL_NOMINAL_RANGE_IDX];
-    }
-    void SetFmiNominalRange(fmi2Real value)
-    {
-        real_vars_[FMI_REAL_NOMINAL_RANGE_IDX] = value;
-    }
+    fmi2Boolean FmiValid() { return boolean_vars_[FMI_BOOLEAN_VALID_IDX]; }
+    void SetFmiValid(fmi2Boolean value) { boolean_vars_[FMI_BOOLEAN_VALID_IDX] = value; }
+    fmi2Integer FmiCount() { return integer_vars_[FMI_INTEGER_COUNT_IDX]; }
+    void SetFmiCount(fmi2Integer value) { integer_vars_[FMI_INTEGER_COUNT_IDX] = value; }
+    fmi2Real FmiNominalRange() { return real_vars_[FMI_REAL_NOMINAL_RANGE_IDX]; }
+    void SetFmiNominalRange(fmi2Real value) { real_vars_[FMI_REAL_NOMINAL_RANGE_IDX] = value; }
 
     /* Protocol Buffer Accessors */
     bool GetFmiSensorViewConfig(osi3::SensorViewConfiguration& data);

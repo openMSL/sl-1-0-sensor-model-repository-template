@@ -6,23 +6,22 @@
 //
 
 #pragma once
-#include "OSMPConfig.h"
-#include "fmi2Functions.h"
-#include "osi_sensordata.pb.h"
 #include <cstdarg>
 #include <fstream>
 #include <iostream>
 #include <set>
 #include <string>
 
+#include "OSMPConfig.h"
+#include "fmi2Functions.h"
+#include "osi_sensordata.pb.h"
+
 using namespace std;
 
 class MySensorModel
 {
   public:
-    void Init(double nominal_range_in,string theinstance_name,
-        fmi2CallbackFunctions thefunctions,
-         bool thelogging_on);
+    void Init(double nominal_range_in, string theinstance_name, fmi2CallbackFunctions thefunctions, bool thelogging_on);
 
     osi3::SensorData Step(osi3::SensorView current_in, double time);
 
@@ -71,7 +70,9 @@ class MySensorModel
         va_start(ap, format);
         char buffer[1024];
         if (!private_log_file.is_open())
+        {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
+        }
         if (private_log_file.is_open())
         {
 #ifdef _WIN32
@@ -98,17 +99,23 @@ class MySensorModel
 #endif
 #ifdef PRIVATE_LOG_PATH
         if (!private_log_file.is_open())
+        {
             private_log_file.open(PRIVATE_LOG_PATH, ios::out | ios::app);
+        }
         if (private_log_file.is_open())
         {
             private_log_file << "MySensorModel"
-                             << "::" << "template" << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
+                             << "::"
+                             << "template"
+                             << "<" << ((void*)this) << ">:" << category << ": " << buffer << endl;
             private_log_file.flush();
         }
 #endif
 #ifdef PUBLIC_LOGGING
-        if (logging_on_ && logging_categories_.count(category))
+        if (logging_on_ && (logging_categories_.count(category) != 0U))
+        {
             functions_.logger(functions_.componentEnvironment, instance_name_.c_str(), fmi2OK, category, buffer);
+        }
 #endif
 #endif
     }
