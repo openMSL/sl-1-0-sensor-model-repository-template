@@ -80,7 +80,7 @@ jobs:
           key: ${{ runner.os }}-model-fmu-${{ github.sha }}
 
       - name: Install FMPy
-        run: python -m pip install fmpy[complete]
+        run: python -m pip install fmpy==0.3.16
 
       - name: Run FMPy Validate
         working-directory: /tmp/model_fmu
