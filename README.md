@@ -9,7 +9,7 @@ What inputs does the model need and what outputs does it generate?
 <br><br>
 
 < Eye-catcher Image >
-<img src="doc/img/model_video.gif" width="800" />
+<img src="doc/img/model_video.gif" alt="Eye-catcher Image" width="800" />
 
 ## State of the Art
 
