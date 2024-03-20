@@ -9,7 +9,7 @@ jobs:
     name: Generate Behavior Test Paths
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Generate matrix with all behavior tests
         id: set-matrix
         working-directory: test/behavior
@@ -32,55 +32,55 @@ jobs:
         run: echo ${{ github.workspace }}/${{ matrix.path }}
 
       - name: Checkout Model
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
       - name: Cache Protobuf
         id: cache-protobuf
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: protobuf-21.12
           key: ${{ runner.os }}-protobuf
 
       - name: Cache Model FMU
         id: cache-model-fmu
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/model_fmu
           key: ${{ runner.os }}-model-fmu-${{ github.sha }}
 
       - name: Cache Tracefile Player FMU
         id: cache-tracefile-player-fmu
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/tracefile_player_fmu
           key: ${{ runner.os }}-tracefile-player-fmu
 
       - name: Cache Tracefile Writer FMU
         id: cache-tracefile-writer-fmu
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/tracefile_writer_fmu
           key: ${{ runner.os }}-tracefile-writer-fmu
 
       - name: Cache esmini FMU
         id: cache-esmini-fmu
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/esmini_fmu
           key: ${{ runner.os }}-esmini-fmu
 
       - name: Cache OSI Field Checker
         id: cache-osi-field-checker
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/osi-field-checker
           key: ${{ runner.os }}-osi-field-checker
 
       - name: Cache OpenMCx
         id: cache-openmcx
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: openmcx
           key: ${{ runner.os }}-openmcx
@@ -116,7 +116,7 @@ jobs:
 
       - name: Archive Trace File
         if: steps.check-for-trace-files.outputs.found_trace == 1
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.check-for-trace-files.outputs.trace_file_name }}
           path: ./test/behavior/${{ matrix.path }}/output/${{ steps.check-for-trace-files.outputs.trace_file_name }}
