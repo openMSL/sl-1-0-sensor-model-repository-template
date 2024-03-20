@@ -20,7 +20,7 @@ jobs:
 
   run_behavior_test:
     needs: [generate_behavior_test_paths]
-    name: behavior Test
+    name: Behavior Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
