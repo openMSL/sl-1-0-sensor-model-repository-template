@@ -18,9 +18,9 @@ jobs:
     name: FMU Compliance Checker
     uses: ./.github/workflows/fmu_checker.yml
 
-#  cpp-linter:
-#    name: C++ Linter
-#    uses: ./.github/workflows/cpp-linter.yml
+  cpp-linter:
+    name: C++ Linter
+    uses: ./.github/workflows/cpp-linter.yml
 
   markdown-linter:
     name: Markdown Linter
