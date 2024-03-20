@@ -11,14 +11,14 @@ jobs:
     steps:
     - name: Cache Model FMU
       id: cache-model-fmu
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: /tmp/model_fmu
         key: ${{ runner.os }}-model-fmu-${{ github.sha }}
 
     - name: Cache Protobuf
       id: cache-protobuf
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: protobuf-21.12
         key: ${{ runner.os }}-protobuf
@@ -38,7 +38,7 @@ jobs:
 
     - name: Cache FMUComplianceChecker
       id: cache-fmu-checker
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: /tmp/FMUComplianceChecker
         key: ${{ runner.os }}-fmu-checker
@@ -74,7 +74,7 @@ jobs:
     steps:
       - name: Cache Model FMU
         id: cache-model-fmu
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/model_fmu
           key: ${{ runner.os }}-model-fmu-${{ github.sha }}
