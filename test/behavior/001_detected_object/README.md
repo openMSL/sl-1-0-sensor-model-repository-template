@@ -1,4 +1,4 @@
-# 004 Tracefile Analysis
+# 001 Detected Object
 
 This test checks if an object inside the field of view of the sensor is detected by the model.
 
