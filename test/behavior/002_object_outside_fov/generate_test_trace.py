@@ -20,6 +20,11 @@ sensor_view.version.version_patch = 0
 sensor_view.timestamp.seconds = 0
 sensor_view.timestamp.nanos = 0
 
+sensor_view.sensor_id.value = 0
+sensor_view.mounting_position.position.x = 0.0
+sensor_view.mounting_position.position.y = 0.0
+sensor_view.mounting_position.position.z = 0.0
+
 # Generate GroundTruth inside SensorView
 sv_ground_truth = sensor_view.global_ground_truth
 sv_ground_truth.version.version_major = 3
