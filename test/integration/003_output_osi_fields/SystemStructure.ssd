@@ -101,7 +101,7 @@
                             <ssv:ParameterSet version="1.0" name="Parameter-Set">
                                 <ssv:Parameters>
                                     <ssv:Parameter name="trace_path" description="">
-                                        <ssv:String value="./test/behavior/001_detected_object/output/"/>
+                                        <ssv:String value="./test/integration/003_output_osi_fields/output/"/>
                                     </ssv:Parameter>
                                     <ssv:Parameter name="protobuf_version" description="">
                                         <ssv:String value="2112"/>
