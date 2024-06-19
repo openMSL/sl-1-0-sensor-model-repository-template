@@ -71,12 +71,12 @@ jobs:
           path: /tmp/esmini_fmu
           key: ${{ runner.os }}-esmini-fmu
 
-      - name: Cache OSI Field Checker
-        id: cache-osi-field-checker
-        uses: actions/cache@v4
+      - name: Cache osi-validation
+        id: cache-osi-validation
+        uses: actions/cache@v3
         with:
-          path: /tmp/osi-field-checker
-          key: ${{ runner.os }}-osi-field-checker
+          path: /tmp/osi-validation
+          key: ${{ runner.os }}-osi-validation
 
       - name: Cache OpenMCx
         id: cache-openmcx
