@@ -107,7 +107,7 @@
                                         <ssv:String value="2112"/>
                                     </ssv:Parameter>
                                     <ssv:Parameter name="custom_name" description="">
-                                        <ssv:String value="001_detected_object"/>
+                                        <ssv:String value="003_output_osi_fields"/>
                                     </ssv:Parameter>
                                     <ssv:Parameter name="type" description="">
                                         <ssv:String value="sd"/>
