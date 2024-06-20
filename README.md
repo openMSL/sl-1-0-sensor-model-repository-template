@@ -31,10 +31,10 @@ What parameters are used internally?
 Which parameters can be set by the user?
 Each parameter should have a short description as shown in the following example.
 
-| Parameter                      | Description                                                         |
-| ------------------------------ | ------------------------------------------------------------------- |
-| `no_of_beams_vertical`         | Number of beams in vertical direction, e.g. layers, of the lidar    |
-| `no_of_beams_horizontal`       | Number of beams per layer of the lidar                              |
+| Parameter                | Description                                                      |
+|--------------------------|------------------------------------------------------------------|
+| `no_of_beams_vertical`   | Number of beams in vertical direction, e.g. layers, of the lidar |
+| `no_of_beams_horizontal` | Number of beams per layer of the lidar                           |
 
 ## Interface
 
@@ -43,24 +43,29 @@ All required field of the interface shall be named in a list as shown in the fol
 
 ### Input: Required Fields in OSI3::SensorView
 
-* `sensor_view.mounting_position`
-* `sensor_view.global_ground_truth.timestamp`
-* `sensor_view.global_ground_truth.host_vehicle_id`
-* `sensor_view.global_ground_truth.stationary_object.id`
-* `sensor_view.global_ground_truth.stationary_object.base.position`
-* `sensor_view.global_ground_truth.stationary_object.base.orientation`
-* `sensor_view.global_ground_truth.stationary_object.base.dimension`
+| OSI Message                                                      | Required / Optional |
+|------------------------------------------------------------------|---------------------|
+| `sensor_view.mounting_position`                                  | required            |
+| `sensor_view.global_ground_truth.timestamp`                      | required            |
+| `sensor_view.global_ground_truth.host_vehicle_id`                | required            |
+| `sensor_view.global_ground_truth.moving_object.id`               | required            |
+| `sensor_view.global_ground_truth.moving_object.base.position`    | required            |
+| `sensor_view.global_ground_truth.moving_object.base.orientation` | required            |
+| `sensor_view.global_ground_truth.moving_object.base.dimension`   | required            |
 
 ### Output: Fields in OSI3::SensorData Filled by the Sensor Model
 
-* `sensor_data.timestamp`
-* `sensor_data.moving_object.header.ground_truth_id`
-* `sensor_data.moving_object.header.tracking_id`
-* `sensor_data.moving_object.header.existence_probability`
-* `sensor_data.moving_object.header.measurement_state`
-* `sensor_data.moving_object.header.sensor_id`
-* `sensor_data.moving_object.base.position`
-* `sensor_data.moving_object.base.dimension`
+| OSI Message                                              | Required / Optional |
+|----------------------------------------------------------|---------------------|
+| `sensor_data.timestamp`                                  | required            |
+| `sensor_data.moving_object.header.ground_truth_id`       | required            |
+| `sensor_data.moving_object.header.tracking_id`           | required            |
+| `sensor_data.moving_object.header.existence_probability` | required            |
+| `sensor_data.moving_object.header.measurement_state`     | required            |
+| `sensor_data.moving_object.header.sensor_id`             | required            |
+| `sensor_data.moving_object.base.position`                | required            |
+| `sensor_data.moving_object.base.dimension`               | required            |
+| `sensor_data.moving_object.base.orientation`             | required            |
 
 ## Build Instructions
 

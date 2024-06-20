@@ -75,6 +75,9 @@ osi3::SensorData MySensorModel::Step(osi3::SensorView current_in, double time)
     current_out.mutable_timestamp()->set_nanos((int)((time - std::floor(time)) * nano_seconds));
     /* Copy of SensorView */
     current_out.add_sensor_view()->CopyFrom(current_in);
+    /* Set Sensor ID and mounting position */
+    current_out.mutable_sensor_id()->set_value(current_in.sensor_id().value());
+    current_out.mutable_mounting_position()->CopyFrom(current_in.mounting_position());
 
     int i = 0;
     const double range_factor = 1.1;

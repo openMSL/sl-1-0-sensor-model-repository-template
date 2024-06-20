@@ -20,6 +20,12 @@ sensor_view.version.version_patch = 0
 sensor_view.timestamp.seconds = 0
 sensor_view.timestamp.nanos = 0
 
+sensor_view.sensor_id.value = 0
+sensor_view.host_vehicle_id.value = 7
+sensor_view.mounting_position.position.x = 0.0
+sensor_view.mounting_position.position.y = 0.0
+sensor_view.mounting_position.position.z = 0.0
+
 # Generate GroundTruth inside SensorView
 sv_ground_truth = sensor_view.global_ground_truth
 sv_ground_truth.version.version_major = 3
@@ -36,6 +42,14 @@ ego_vehicle.id.value = 7
 ego_vehicle.type = 2
 ego_vehicle.vehicle_classification.type = 2
 
+ego_vehicle.base.position.x = 0.0
+ego_vehicle.base.position.y = 0.0
+ego_vehicle.base.position.z = 0.0
+
+ego_vehicle.base.orientation.yaw = 0.0
+ego_vehicle.base.orientation.pitch = 0.0
+ego_vehicle.base.orientation.roll = 0.0
+
 ego_vehicle.base.dimension.length = 5
 ego_vehicle.base.dimension.width = 2
 ego_vehicle.base.dimension.height = 1.5
@@ -47,19 +61,21 @@ ego_vehicle.vehicle_attributes.bbcenter_to_rear.z = -0.5
 # Add moving object
 moving_object = sv_ground_truth.moving_object.add()
 moving_object.id.value = 13
+moving_object.type = 2
+moving_object.vehicle_classification.type = 2
+moving_object.vehicle_attributes.bbcenter_to_rear.x = -1.5
+moving_object.vehicle_attributes.bbcenter_to_rear.y = 0.0
+moving_object.vehicle_attributes.bbcenter_to_rear.z = -0.5
+
+moving_object.base.dimension.length = 5
+moving_object.base.dimension.width = 2
+moving_object.base.dimension.height = 1.5
 
 # Generate 10 OSI messages for 9 seconds
 for i in range(10):
     # Increment the time
     sensor_view.timestamp.seconds += 1
     sv_ground_truth.timestamp.seconds += 1
-
-    moving_object.type = 2
-    moving_object.vehicle_classification.type = 2
-
-    moving_object.base.dimension.length = 5
-    moving_object.base.dimension.width = 2
-    moving_object.base.dimension.height = 1.5
 
     moving_object.base.position.x = 400.0
     moving_object.base.position.y = 0.0
