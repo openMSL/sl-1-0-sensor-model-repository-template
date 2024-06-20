@@ -73,7 +73,7 @@ jobs:
 
       - name: Cache osi-validation
         id: cache-osi-validation
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/osi-validation
           key: ${{ runner.os }}-osi-validation
@@ -94,13 +94,13 @@ jobs:
 
       - name: Check if analysis script exists
         id: check_analysis_script
-        uses: andstor/file-existence-action@v3
+        uses: andstor/file-existence-action@v4
         with:
           files: test/behavior/${{ matrix.path }}/analyze.py
 
       - name: Check if trace file generator exists
         id: check_trace_generator
-        uses: andstor/file-existence-action@v3
+        uses: andstor/file-existence-action@v4
         with:
           files: test/behavior/${{ matrix.path }}/generate_test_trace.py
 
