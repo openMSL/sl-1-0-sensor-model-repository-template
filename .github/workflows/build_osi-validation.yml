@@ -23,11 +23,6 @@ jobs:
           GIT_CLONE_PROTECTION_ACTIVE: false
         run: git clone https://github.com/OpenSimulationInterface/osi-validation.git
 
-      - name: Checkout Branch
-        if: steps.cache-osi-validation.outputs.cache-hit != 'true'
-        working-directory: /tmp/osi-validation
-        run: git checkout 78-false-warning-for-conditional-rules
-
       - name: Update Submodules
         if: steps.cache-osi-validation.outputs.cache-hit != 'true'
         working-directory: /tmp/osi-validation
