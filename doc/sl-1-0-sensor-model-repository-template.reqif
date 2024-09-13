@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:configuration="http://eclipse.org/rmf/pror/toolextensions/1.0">
   <THE-HEADER>
-    <REQ-IF-HEADER IDENTIFIER="rmf-400582d0-0a70-407a-8d31-fa356fb7cdb7">
+    <REQ-IF-HEADER IDENTIFIER="rmf-ccaf41f1-29ac-4fb1-b0e0-a87f8b0a344a">
       <COMMENT>Created by: lukas</COMMENT>
       <CREATION-TIME>2024-08-27T10:45:39.923+02:00</CREATION-TIME>
       <REQ-IF-TOOL-ID>ProR (http://pror.org)</REQ-IF-TOOL-ID>
@@ -263,19 +263,19 @@
             <SPEC-OBJECT-TYPE-REF>_vMk5RGRQEe-zn9WWeP5kSw</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_lzUr0GUJEe--n8r4BbMJRw" LAST-CHANGE="2024-09-04T09:51:35.849+02:00">
+        <SPEC-OBJECT IDENTIFIER="_lzUr0GUJEe--n8r4BbMJRw" LAST-CHANGE="2024-09-04T10:24:48.172+02:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="smt_001">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>_u_IbcGUGEe--n8r4BbMJRw</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
             </ATTRIBUTE-VALUE-STRING>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="OSMP FMU packaging">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="FMU packaging">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>_F5cbEGUHEe--n8r4BbMJRw</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
             </ATTRIBUTE-VALUE-STRING>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="The sensor model has to be packaged as an OSMP FMU.">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The sensor model has to be packaged as an FMU.">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>_vMk5RWRQEe-zn9WWeP5kSw</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -2078,7 +2078,7 @@
             <SPEC-OBJECT-TYPE-REF>_vMk5RGRQEe-zn9WWeP5kSw</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_W-daAGqTEe-Z76LPrFtfhg" LAST-CHANGE="2024-09-04T09:58:55.224+02:00">
+        <SPEC-OBJECT IDENTIFIER="_W-daAGqTEe-Z76LPrFtfhg" LAST-CHANGE="2024-09-04T11:09:35.149+02:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="smt_005">
               <DEFINITION>
@@ -2090,7 +2090,7 @@
                 <ATTRIBUTE-DEFINITION-STRING-REF>_F5cbEGUHEe--n8r4BbMJRw</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
             </ATTRIBUTE-VALUE-STRING>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="The sensor model shall by customizable via FMI parameters">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The sensor model shall be customizable via FMI parameters.">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>_vMk5RWRQEe-zn9WWeP5kSw</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -2247,7 +2247,6 @@
               <configuration:Column label="Comment" width="220"/>
               <configuration:Column label="Source" width="206"/>
               <configuration:Column label="Testcase" width="514"/>
-              <configuration:Column label="CL" width="59"/>
               <configuration:Column label="Author" width="66"/>
               <configuration:Column label="Status" width="92"/>
             </configuration:columns>
