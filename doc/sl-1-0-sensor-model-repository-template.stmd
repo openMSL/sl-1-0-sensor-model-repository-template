@@ -1,277 +1,430 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<stmd:SimulationTaskMetaData xmlns:stmd="http://apps.pmsf.net/STMD/SimulationTaskMetaData" xmlns:stc="http://apps.pmsf.net/SSPTraceability/SSPTraceabilityCommon" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://apps.pmsf.net/STMD/SimulationTaskMetaData https://raw.githubusercontent.com/PMSFIT/SSPTraceability/v1.0-beta2/STMD.xsd" version="0.1.0" name="sl-1-0-sensor-model-repository-template" GUID="13f9b6c1-f92b-4e23-bf2a-824780e6f478" description="OpenMSL Sensor Model Template" author="Clemens Linnhoff" fileversion="1.0" generationTool="SETLabs STMD Writer" generationDateAndTime="2024-09-23T09:08:03.698Z">
-  <stmd:GeneralInformation>
-    <stc:DerivationChain>
-      <stc:DerivationChainEntry GUID="2c34d92b-6782-4097-991b-a2507826f948"/>
-      <stc:DerivationChainEntry GUID="f8f74fa0-10e1-4c06-9a2b-f60b286e7c1a"/>
-      <stc:DerivationChainEntry GUID="71c615bc-ba57-4173-b130-a8c5adbe5030"/>
-    </stc:DerivationChain>
-  </stmd:GeneralInformation>
-  <stmd:RequirementsPhase>
-    <stmd:DefineModelRequirements>
-      <stc:Input>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_m_001_001" description="Azimuth field of view" master="smt_m_001_001" source="sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>Objects shall only be detected inside an azimuth field of view of +- 30°.</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_m_001_002" description="Maximum range" master="smt_m_001_002" source="sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>Objects shall only be detected to a maximum detection range of 1.1 times the nominal range.</stc:Content>
-        </stc:Resource>
-      </stc:Input>
-      <stc:Output>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_002"/>
-      </stc:Output>
-    </stmd:DefineModelRequirements>
-    <stmd:DefineParameterRequirements>
-      <stc:Input>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_p_001" description="FMI Parameters" master="smt_p_001" source="sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The sensor model shall be customizable via FMI parameters.</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_p_002" description="Parameters" master="smt_p_002" source="sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The sensor model shall have the following parameters:
-            - Nominal Range in m</stc:Content>
-        </stc:Resource>
-      </stc:Input>
-      <stc:Output>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_002"/>
-      </stc:Output>
-    </stmd:DefineParameterRequirements>
-    <stmd:DefineSimulationEnvironmentRequirements>
-      <stc:Input>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_se_001" description="Ubuntu 22.04" master="smt_se_001" source="sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The source code has to be buildable and run on Ubuntu 22.04.</stc:Content>
-        </stc:Resource>
-      </stc:Input>
-      <stc:Output>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_se_001"/>
-      </stc:Output>
-    </stmd:DefineSimulationEnvironmentRequirements>
-    <stmd:DefineSimulationIntegrationRequirements>
-      <stc:Input>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_si_001" description="FMU packaging" master="smt_si_001" source="./sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The sensor model has to be packaged as an FMU.</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_si_002" description="Input interface" master="smt_si_002" source="./sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The provided input interface is OSI SensorView version 3.7.0.</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_si_003" description="Input OSI fields" master="smt_si_003" source="./sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The sensor model shall only require the following OSI fields:
-- SensorView
-    - timestamp
-    - mounting_position
-    - sensor_id
-    - global_ground_truth (GroundTruth)
-        - host_vehicle_id
-        - moving_object (MovingObject)
-            - id
-            - base (BaseMoving)
-                - orientation (Orientation3d)
-                - position (Vector3d)
-                - dimension (Dimension3d)</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_si_004" description="Output interface" master="smt_si_004" source="./sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The provided output interface is OSI SensorData version 3.7.0.</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="requirement" type="application/reqif" id="req_si_005" description="Output OSI fields" master="smt_si_005" source="./sl-1-0-sensor-model-repository-template.reqif">
-          <stc:Content>The following OSI fields has to be filled by the sensor model:
-- SensorData
-    - timestamp
-    - moving_object (MovingObject)
-        - header
-            - ground_truth_id
-            - tracking_id
-            - existance_probability
-            - measurement_state
-            - sensor_id
-        - base (BaseMoving)
-            - orientation (Orientation3d)
-            - position (Vector3d)
-            - dimension (Dimension3d)</stc:Content>
-        </stc:Resource>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#smt_001"/>
-      </stc:Input>
-      <stc:Output>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_002"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_002"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#smt_si_003"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#smt_si_004"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#smt_si_005"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_003"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_004"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_005"/>
-      </stc:Output>
-    </stmd:DefineSimulationIntegrationRequirements>
-  </stmd:RequirementsPhase>
-  <stmd:DesignPhase>
-    <stmd:DefineModelDesignSpecification>
-      <stc:Input>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_002"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_002"/>
-      </stc:Input>
-      <stc:Output>
-        <stc:Resource kind="specification" type="application/txt" id="design_m_001" description="Azimuth field of view">
-          <stc:Content>Only objects within +- 30° azimuth in sensor coordinates shall be considered in the model.</stc:Content>
-        </stc:Resource>
-        <stc:Resource kind="specification" type="application/txt" id="design_m_002" description="Maximum range">
-          <stc:Content>The maximum distance of objects to consider shall be set to 1.1 times the input nominal_range parameter. All object beyond this distance shall be neglected.</stc:Content>
-        </stc:Resource>
-      </stc:Output>
-      <stc:Links>
-        <stc:Link xlink:type="extended" xlink:title="Azimuth field of view">
-          <stc:Locator xlink:type="locator" xlink:href="#req_m_001_001" xlink:label="label_0" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="#design_m_001" xlink:label="label_1" xlink:role="design-specification"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_0" xlink:arcrole="derived-from"/>
-        </stc:Link>
-        <stc:Link xlink:type="extended" xlink:title="Maximum range">
-          <stc:Locator xlink:type="locator" xlink:href="#req_m_001_002" xlink:label="label_0" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="#design_m_002" xlink:label="label_1" xlink:role="design-specification"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_0" xlink:arcrole="derived-from"/>
-        </stc:Link>
-      </stc:Links>
-    </stmd:DefineModelDesignSpecification>
-    <stmd:DefineParameterDesignSpecification>
-      <stc:Input>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#standard_FMI"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_002"/>
-      </stc:Input>
-      <stc:Output>
-        <stc:Resource kind="specification" type="application/txt" id="design_p_001" description="FMI Parameters">
-          <stc:Content>Parameters that the user can set are defined as FMI parameters in the modelDescription.</stc:Content>
-        </stc:Resource>
-      </stc:Output>
-      <stc:Links>
-        <stc:Link xlink:type="extended" xlink:title="FMI Parameters">
-          <stc:Locator xlink:type="locator" xlink:href="#standard_FMI" xlink:label="label_0" xlink:role="standard"/>
-          <stc:Locator xlink:type="locator" xlink:href="#req_p_001" xlink:label="label_1" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="#design_p_001" xlink:label="label_2" xlink:role="design-specification"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_1" xlink:arcrole="derived-from"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_2" xlink:arcrole="describes"/>
-        </stc:Link>
-      </stc:Links>
-    </stmd:DefineParameterDesignSpecification>
-    <stmd:DefineSimulationIntegrationDesignSpecification>
-      <stc:Input>
-        <stc:Resource kind="document" type="text/html" id="standard_OSMP" description="OSI Sensor Model Packaging" source="https://opensimulationinterface.github.io/osi-antora-generator/asamosi/latest/sensor-model/osi-sensor-model-packaging_spec.html"/>
-        <stc:Resource kind="document" type="text/pdf" id="standard_FMI" description="FMI Standard" source="https://github.com/modelica/fmi-standard/releases/download/v2.0.4/FMI-Specification-2.0.4.pdf"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#smt_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_002"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_001"/>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_002"/>
-      </stc:Input>
-      <stc:Output>
-        <stc:Resource kind="specification" type="application/txt" id="design_si_001" description="Packaging">
-          <stc:Content>To facilitate the requirements to package the model as an FMU and to use ASAM OSI as input and output, the model will be packages according to the OSMP specification.</stc:Content>
-        </stc:Resource>
-      </stc:Output>
-      <stc:Links>
-        <stc:Link xlink:type="extended" xlink:title="">
-          <stc:Locator xlink:type="locator" xlink:href="#req_si_001" xlink:label="label_0" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="#design_si_001" xlink:label="label_1" xlink:role="design-specification"/>
-          <stc:Locator xlink:type="locator" xlink:href="#req_si_002" xlink:label="label_2" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="#standard_OSMP" xlink:label="label_3" xlink:role="standard"/>
-          <stc:Locator xlink:type="locator" xlink:href="#standard_FMI" xlink:label="label_4" xlink:role="standard"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_1" xlink:arcrole="describes"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_2" xlink:to="label_1" xlink:arcrole="describes"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_3" xlink:to="label_1" xlink:arcrole="derived-from"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_4" xlink:to="label_3" xlink:arcrole="derived-from"/>
-        </stc:Link>
-      </stc:Links>
-    </stmd:DefineSimulationIntegrationDesignSpecification>
-  </stmd:DesignPhase>
-  <stmd:ImplementationPhase>
-    <stmd:IntegrateSimulation>
-      <stc:Input>
-        <stc:ResourceReference xlink:type="simple" xlink:href="#design_001"/>
-      </stc:Input>
-      <stc:Procedure>
-        <stc:Resource kind="method" type="application/txt" id="imp_001" description="Build model and package as FMU"/>
-      </stc:Procedure>
-      <stc:Output>
-        <stc:Resource kind="model" type="application/fmu" id="imp_002" description="Sensor model packaged as FMU."/>
-      </stc:Output>
-      <stc:Rationale>
-        <stc:Resource kind="rationale" type="text/xml" id="credibility-implementation">
-          <stc:Content>
-            <cdk:Credibility>
-              <cdk:Evidence level="1">
-                <cdk:Metric packageUri="./Credibility-Assessment-Framework/Credibility-Development-Kit/metrics/requirements/level_1" function="checkCmakeBuild">
-                  <cdk:Test id="imp_t_001">
-                    <cdk:FunctionArgument name="cmakeOutput" method="file" content="./rationales/requirements/credibility/level_1/cmake_output.txt" type="application/txt"/>
-                  </cdk:Test>
-                </cdk:Metric>
-                <cdk:Metric packageUri="./Credibility-Assessment-Framework/Credibility-Development-Kit/metrics/requirements/level_1" function="checkFmuCompliance">
-                  <cdk:Test id="imp_t_002">
-                    <cdk:FunctionArgument name="output_file" method="file" content="./rationales/requirements/credibility/level_1/fmpy_validate_output.txt" type="application/txt"/>
-                  </cdk:Test>
-                </cdk:Metric>
-              </cdk:Evidence>
-              <cdk:Evidence level="2">
-                <cdk:Metric packageUri="./Credibility-Assessment-Framework/Credibility-Development-Kit/metrics/requirements/level_2" function="smokeTest">
-                  <cdk:Test id="imp_t_003">
-                    <cdk:FunctionArgument name="openmcxOutput" method="file" content="./rationales/requirements/credibility/level_2/openmcx_output.txt" type="application/txt"/>
-                    <cdk:FunctionArgument name="ssdInput" method="file" content="./test/integration/001_smoke_test_tracefile/SystemStructure.ssd" type="application/ssd"/>
-                  </cdk:Test>
-                </cdk:Metric>
-              </cdk:Evidence>
-            </cdk:Credibility>
-          </stc:Content>
-          <stc:Classification type="credibility_assessment"/>
-        </stc:Resource>
-      </stc:Rationale>
-      <stc:Links>
-        <stc:Link xlink:type="extended" xlink:title="">
-          <stc:Locator xlink:type="locator" xlink:href="#req_si_001" xlink:label="label_0" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="#req_si_002" xlink:label="label_1" xlink:role="requirement"/>
-          <stc:Locator xlink:type="locator" xlink:href="imp_t_001" xlink:label="label_2" xlink:role="test-case"/>
-          <stc:Locator xlink:type="locator" xlink:href="imp_t_002" xlink:label="label_3" xlink:role="test-case"/>
-          <stc:Locator xlink:type="locator" xlink:href="imp_t_003" xlink:label="label_4" xlink:role="test-case"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_2" xlink:arcrole="is-validated-by"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_3" xlink:arcrole="is-validated-by"/>
-          <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_4" xlink:arcrole="is-validated-by"/>
-        </stc:Link>
-      </stc:Links>
-    </stmd:IntegrateSimulation>
-  </stmd:ImplementationPhase>
-  <stc:Classification type="vocabulary">
-    <stc:ClassificationEntry keyword="analysis" xlink:type="simple" xlink:href="https://pmsfit.github.io/SSPTraceability/master/#_analysisphase"/>
-    <stc:ClassificationEntry keyword="functional-requirement" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Functional+Requirement"/>
-    <stc:ClassificationEntry keyword="requirement" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Requirement"/>
-    <stc:ClassificationEntry keyword="extended-requirement" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Extended+Requirement"/>
-    <stc:ClassificationEntry keyword="design-specification" xlink:type="simple" xlink:href="https://dbpedia.org/page/Design_specification"/>
-    <stc:ClassificationEntry keyword="data-sheet" xlink:type="simple" xlink:href="https://dbpedia.org/page/Datasheet"/>
-    <stc:ClassificationEntry keyword="regulation" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/NCIT_C68821"/>
-    <stc:ClassificationEntry keyword="constraint" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Design+Constraint"/>
-    <stc:ClassificationEntry keyword="test-case" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Test+Case"/>
-    <stc:ClassificationEntry keyword="standard" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/NCIT_C81893"/>
-    <stc:ClassificationEntry keyword="source-code-repository" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/APOLLO_SV_00000522"/>
-    <stc:ClassificationEntry keyword="vendor-documentation" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/NCIT_C115742"/>
-    <stc:ClassificationEntry keyword="scientific-publication" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/NCIT_C19026"/>
-    <stc:ClassificationEntry keyword="constrains" xlink:type="simple" xlink:href="http://open-services.net/ns/rm#constrains"/>
-    <stc:ClassificationEntry keyword="constrained-by" xlink:type="simple" xlink:href="http://open-services.net/ns/rm#constrainedBy"/>
-    <stc:ClassificationEntry keyword="derived-from" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Derive"/>
-    <stc:ClassificationEntry keyword="satisfies" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Satisfy"/>
-    <stc:ClassificationEntry keyword="is-satisfied-by" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000363"/>
-    <stc:ClassificationEntry keyword="has-implementation" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000234"/>
-    <stc:ClassificationEntry keyword="has-assumption" xlink:type="simple" xlink:href="https://dbpedia.org/page/Tacit_assumption"/>
-    <stc:ClassificationEntry keyword="is-implementation-of" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000233"/>
-    <stc:ClassificationEntry keyword="verifies" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Verify"/>
-    <stc:ClassificationEntry keyword="specifies" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/NCIT_C25685"/>
-    <stc:ClassificationEntry keyword="is-specified-by" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000339"/>
-    <stc:ClassificationEntry keyword="describes" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000563"/>
-    <stc:ClassificationEntry keyword="is-model-of" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000632"/>
-    <stc:ClassificationEntry keyword="manual" xlink:type="simple" xlink:href="http://semanticscience.org/resource/SIO_000161"/>
-    <stc:ClassificationEntry keyword="requires" xlink:type="simple" xlink:href="http://purl.org/dc/terms/requires"/>
-    <stc:ClassificationEntry keyword="software-script" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/IAO_0000595"/>
-    <stc:ClassificationEntry keyword="subsystem" xlink:type="simple" xlink:href="https://docs.nomagic.com/display/SYSMLP190/Subsystem"/>
-    <stc:ClassificationEntry keyword="implementation" xlink:type="simple" xlink:href="http://dbpedia.org/resource/Implementation"/>
-    <stc:ClassificationEntry keyword="parameter" xlink:type="simple" xlink:href="http://dbpedia.org/resource/Parameter_(computer_programming)"/>
-    <stc:ClassificationEntry keyword="test-result" xlink:type="simple" xlink:href="http://www.ebi.ac.uk/efo/EFO_0000720"/>
-    <stc:ClassificationEntry keyword="is-validated-by" xlink:type="simple" xlink:href="http://purl.obolibrary.org/obo/SO_0000789"/>
-  </stc:Classification>
+<stmd:SimulationTaskMetaData xmlns:stmd="http://apps.pmsf.net/STMD/SimulationTaskMetaData"
+                             xmlns:stc="http://apps.pmsf.net/SSPTraceability/SSPTraceabilityCommon"
+                             xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xsi:schemaLocation="http://apps.pmsf.net/STMD/SimulationTaskMetaData https://raw.githubusercontent.com/PMSFIT/SSPTraceability/v1.0-beta2/STMD.xsd"
+                             version="0.1.0" name="sl-1-0-sensor-model-repository-template"
+                             GUID="13f9b6c1-f92b-4e23-bf2a-824780e6f478" description="OpenMSL Sensor Model Template"
+                             author="Clemens Linnhoff" fileversion="1.0" generationTool="SETLabs STMD Writer"
+                             generationDateAndTime="2024-09-30T15:44:39.507Z">
+    <stmd:GeneralInformation>
+        <stc:DerivationChain>
+            <stc:DerivationChainEntry GUID="2c34d92b-6782-4097-991b-a2507826f948"/>
+            <stc:DerivationChainEntry GUID="f8f74fa0-10e1-4c06-9a2b-f60b286e7c1a"/>
+            <stc:DerivationChainEntry GUID="71c615bc-ba57-4173-b130-a8c5adbe5030"/>
+        </stc:DerivationChain>
+    </stmd:GeneralInformation>
+    <stmd:RequirementsPhase>
+        <stmd:DefineModelRequirements>
+            <stc:Input>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_m_001_001"
+                              description="Azimuth field of view" master="smt_m_001_001"
+                              source="sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>Objects shall only be detected inside an azimuth field of view of +- 30°.</stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_m_001_002" description="Maximum range"
+                              master="smt_m_001_002" source="sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>Objects shall only be detected to a maximum detection range of 1.1 times the nominal
+                        range.
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Input>
+            <stc:Output>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_002"/>
+            </stc:Output>
+        </stmd:DefineModelRequirements>
+        <stmd:DefineParameterRequirements>
+            <stc:Input>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_p_001" description="FMI Parameters"
+                              master="smt_p_001" source="sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The sensor model shall be customizable via FMI parameters.</stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_p_002" description="Parameters"
+                              master="smt_p_002" source="sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The sensor model shall have the following parameters:
+                        - Nominal Range in m
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Input>
+            <stc:Output>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_002"/>
+            </stc:Output>
+        </stmd:DefineParameterRequirements>
+        <stmd:DefineSimulationEnvironmentRequirements>
+            <stc:Input>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_se_001" description="Ubuntu 22.04"
+                              master="smt_se_001" source="sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The source code has to be buildable and run on Ubuntu 22.04.</stc:Content>
+                </stc:Resource>
+            </stc:Input>
+            <stc:Output>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_se_001"/>
+            </stc:Output>
+        </stmd:DefineSimulationEnvironmentRequirements>
+        <stmd:DefineSimulationIntegrationRequirements>
+            <stc:Input>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_si_001" description="FMU packaging"
+                              master="smt_si_001" source="./sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The sensor model has to be packaged as an FMU.</stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_si_002" description="Input interface"
+                              master="smt_si_002" source="./sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The provided input interface is OSI SensorView version 3.7.0.</stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_si_003" description="Input OSI fields"
+                              master="smt_si_003" source="./sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The sensor model shall only require the following OSI fields:
+                        - SensorView
+                        - timestamp
+                        - mounting_position
+                        - sensor_id
+                        - global_ground_truth (GroundTruth)
+                        - host_vehicle_id
+                        - moving_object (MovingObject)
+                        - id
+                        - base (BaseMoving)
+                        - orientation (Orientation3d)
+                        - position (Vector3d)
+                        - dimension (Dimension3d)
+                    </stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_si_004" description="Output interface"
+                              master="smt_si_004" source="./sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The provided output interface is OSI SensorData version 3.7.0.</stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="requirement" type="application/reqif" id="req_si_005"
+                              description="Output OSI fields" master="smt_si_005"
+                              source="./sl-1-0-sensor-model-repository-template.reqif">
+                    <stc:Content>The following OSI fields has to be filled by the sensor model:
+                        - SensorData
+                        - timestamp
+                        - moving_object (MovingObject)
+                        - header
+                        - ground_truth_id
+                        - tracking_id
+                        - existance_probability
+                        - measurement_state
+                        - sensor_id
+                        - base (BaseMoving)
+                        - orientation (Orientation3d)
+                        - position (Vector3d)
+                        - dimension (Dimension3d)
+                    </stc:Content>
+                </stc:Resource>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#smt_001"/>
+            </stc:Input>
+            <stc:Output>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_002"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_002"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#smt_si_003"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#smt_si_004"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#smt_si_005"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_003"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_004"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_005"/>
+            </stc:Output>
+        </stmd:DefineSimulationIntegrationRequirements>
+    </stmd:RequirementsPhase>
+    <stmd:DesignPhase>
+        <stmd:DefineModelDesignSpecification>
+            <stc:Input>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_002"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_002"/>
+            </stc:Input>
+            <stc:Output>
+                <stc:Resource kind="specification" type="application/txt" id="design_m_001"
+                              description="Azimuth field of view">
+                    <stc:Content>Only objects within +- 30° azimuth in sensor coordinates shall be considered in the
+                        model.
+                    </stc:Content>
+                </stc:Resource>
+                <stc:Resource kind="specification" type="application/txt" id="design_m_002" description="Maximum range">
+                    <stc:Content>The maximum distance of objects to consider shall be set to 1.1 times the input
+                        nominal_range parameter. All object beyond this distance shall be neglected.
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Output>
+            <stc:Links>
+                <stc:Link xlink:type="extended" xlink:title="Azimuth field of view">
+                    <stc:Locator xlink:type="locator" xlink:href="#req_m_001_001" xlink:label="label_0"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#design_m_001" xlink:label="label_1"
+                                 xlink:role="design-specification"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_0" xlink:arcrole="derived-from"/>
+                </stc:Link>
+                <stc:Link xlink:type="extended" xlink:title="Maximum range">
+                    <stc:Locator xlink:type="locator" xlink:href="#req_m_001_002" xlink:label="label_0"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#design_m_002" xlink:label="label_1"
+                                 xlink:role="design-specification"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_0" xlink:arcrole="derived-from"/>
+                </stc:Link>
+            </stc:Links>
+        </stmd:DefineModelDesignSpecification>
+        <stmd:DefineParameterDesignSpecification>
+            <stc:Input>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#standard_FMI"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_p_002"/>
+            </stc:Input>
+            <stc:Output>
+                <stc:Resource kind="specification" type="application/txt" id="design_p_001"
+                              description="FMI Parameters">
+                    <stc:Content>Parameters that the user can set are defined as FMI parameters in the
+                        modelDescription.
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Output>
+            <stc:Links>
+                <stc:Link xlink:type="extended" xlink:title="FMI Parameters">
+                    <stc:Locator xlink:type="locator" xlink:href="#standard_FMI" xlink:label="label_0"
+                                 xlink:role="standard"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#req_p_001" xlink:label="label_1"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#design_p_001" xlink:label="label_2"
+                                 xlink:role="design-specification"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_1" xlink:arcrole="derived-from"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_2" xlink:arcrole="describes"/>
+                </stc:Link>
+            </stc:Links>
+        </stmd:DefineParameterDesignSpecification>
+        <stmd:DefineSimulationIntegrationDesignSpecification>
+            <stc:Input>
+                <stc:Resource kind="document" type="text/html" id="standard_OSMP"
+                              description="OSI Sensor Model Packaging"
+                              source="https://opensimulationinterface.github.io/osi-antora-generator/asamosi/latest/sensor-model/osi-sensor-model-packaging_spec.html"/>
+                <stc:Resource kind="document" type="text/pdf" id="standard_FMI" description="FMI Standard"
+                              source="https://github.com/modelica/fmi-standard/releases/download/v2.0.4/FMI-Specification-2.0.4.pdf"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#smt_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_002"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#req_si_002"/>
+            </stc:Input>
+            <stc:Output>
+                <stc:Resource kind="specification" type="application/txt" id="design_si_001" description="Packaging">
+                    <stc:Content>To facilitate the requirements to package the model as an FMU and to use ASAM OSI as
+                        input and output, the model will be packages according to the OSMP specification.
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Output>
+            <stc:Links>
+                <stc:Link xlink:type="extended" xlink:title="">
+                    <stc:Locator xlink:type="locator" xlink:href="#req_si_001" xlink:label="label_0"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#design_si_001" xlink:label="label_1"
+                                 xlink:role="design-specification"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#req_si_002" xlink:label="label_2"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#standard_OSMP" xlink:label="label_3"
+                                 xlink:role="standard"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#standard_FMI" xlink:label="label_4"
+                                 xlink:role="standard"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_1" xlink:arcrole="describes"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_2" xlink:to="label_1" xlink:arcrole="describes"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_3" xlink:to="label_1" xlink:arcrole="derived-from"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_4" xlink:to="label_3" xlink:arcrole="derived-from"/>
+                </stc:Link>
+            </stc:Links>
+        </stmd:DefineSimulationIntegrationDesignSpecification>
+    </stmd:DesignPhase>
+    <stmd:ImplementationPhase>
+        <stmd:ImplementModel>
+            <stc:Input>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#design_m_001"/>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#design_m_002"/>
+            </stc:Input>
+            <stc:Output>
+                <stc:Resource kind="model" type="application/txt" id="imp_m_001" description="Filter FOV">
+                    <stc:Content>Filter ground truth moving objects by azimuth angle and range.</stc:Content>
+                </stc:Resource>
+            </stc:Output>
+            <stc:Links>
+                <stc:Link xlink:type="extended" xlink:title="">
+                    <stc:Locator xlink:type="locator" xlink:href="#design_m_001" xlink:label="label_0"
+                                 xlink:role="design-specification"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#design_m_002" xlink:label="label_1"
+                                 xlink:role="design-specification"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#imp_m_001" xlink:label="label_2"
+                                 xlink:role="implementation"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_2"
+                             xlink:arcrole="is-implementation-of"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_2"
+                             xlink:arcrole="is-implementation-of"/>
+                </stc:Link>
+            </stc:Links>
+        </stmd:ImplementModel>
+        <stmd:ImplementParameter>
+            <stc:Input>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#design_p_001"/>
+            </stc:Input>
+            <stc:Output>
+                <stc:Resource kind="model" type="application/xml" id="imp_p_001"
+                              description="FMI parameter in modelDecsription">
+                    <stc:Content>Real parameter nominalrange is added to modelDescription ot parameterize the nominal
+                        range of the sensor.
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Output>
+            <stc:Links>
+                <stc:Link xlink:type="extended" xlink:title="">
+                    <stc:Locator xlink:type="locator" xlink:href="#design_p_001" xlink:label="label_0"
+                                 xlink:role="design-specification"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#imp_p_001" xlink:label="label_1"
+                                 xlink:role="implementation"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_1"
+                             xlink:arcrole="is-implementation-of"/>
+                </stc:Link>
+            </stc:Links>
+        </stmd:ImplementParameter>
+        <stmd:IntegrateSimulation>
+            <stc:Input>
+                <stc:ResourceReference xlink:type="simple" xlink:href="#design_001"/>
+            </stc:Input>
+            <stc:Procedure>
+                <stc:Resource kind="method" type="application/txt" id="imp_si_001"
+                              description="Build model and package as FMU"/>
+            </stc:Procedure>
+            <stc:Output>
+                <stc:Resource kind="model" type="application/fmu" id="imp_si_002"
+                              description="Sensor model packaged as FMU."/>
+            </stc:Output>
+            <stc:Rationale>
+                <stc:Resource kind="rationale" type="text/xml" id="credibility-implementation">
+                    <stc:Content>
+                        <cdk:Credibility>
+                            <cdk:Evidence level="1">
+                                <cdk:Metric
+                                        packageUri="./Credibility-Assessment-Framework/Credibility-Development-Kit/metrics/requirements/level_1"
+                                        function="checkCmakeBuild">
+                                    <cdk:Test id="imp_t_001">
+                                        <cdk:FunctionArgument name="cmakeOutput" method="file"
+                                                              content="./rationales/requirements/credibility/level_1/cmake_output.txt"
+                                                              type="application/txt"></cdk:FunctionArgument>
+                                    </cdk:Test>
+                                </cdk:Metric>
+                                <cdk:Metric
+                                        packageUri="./Credibility-Assessment-Framework/Credibility-Development-Kit/metrics/requirements/level_1"
+                                        function="checkFmuCompliance">
+                                    <cdk:Test id="imp_t_002">
+                                        <cdk:FunctionArgument name="output_file" method="file"
+                                                              content="./rationales/requirements/credibility/level_1/fmpy_validate_output.txt"
+                                                              type="application/txt"></cdk:FunctionArgument>
+                                    </cdk:Test>
+                                </cdk:Metric>
+                            </cdk:Evidence>
+                            <cdk:Evidence level="2">
+                                <cdk:Metric
+                                        packageUri="./Credibility-Assessment-Framework/Credibility-Development-Kit/metrics/requirements/level_2"
+                                        function="smokeTest">
+                                    <cdk:Test id="imp_t_003">
+                                        <cdk:FunctionArgument name="openmcxOutput" method="file"
+                                                              content="./rationales/requirements/credibility/level_2/openmcx_output.txt"
+                                                              type="application/txt"></cdk:FunctionArgument>
+                                        <cdk:FunctionArgument name="ssdInput" method="file"
+                                                              content="./test/integration/001_smoke_test_tracefile/SystemStructure.ssd"
+                                                              type="application/ssd"></cdk:FunctionArgument>
+                                    </cdk:Test>
+                                </cdk:Metric>
+                            </cdk:Evidence>
+                        </cdk:Credibility>
+                    </stc:Content>
+                    <stc:Classification type="credibility_assessment"/>
+                </stc:Resource>
+            </stc:Rationale>
+            <stc:Links>
+                <stc:Link xlink:type="extended" xlink:title="">
+                    <stc:Locator xlink:type="locator" xlink:href="#req_si_001" xlink:label="label_0"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="#req_si_002" xlink:label="label_1"
+                                 xlink:role="requirement"/>
+                    <stc:Locator xlink:type="locator" xlink:href="imp_t_001" xlink:label="label_2"
+                                 xlink:role="test-case"/>
+                    <stc:Locator xlink:type="locator" xlink:href="imp_t_002" xlink:label="label_3"
+                                 xlink:role="test-case"/>
+                    <stc:Locator xlink:type="locator" xlink:href="imp_t_003" xlink:label="label_4"
+                                 xlink:role="test-case"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_2" xlink:arcrole="is-validated-by"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_0" xlink:to="label_3" xlink:arcrole="is-validated-by"/>
+                    <stc:Arc xlink:type="arc" xlink:from="label_1" xlink:to="label_4" xlink:arcrole="is-validated-by"/>
+                </stc:Link>
+            </stc:Links>
+        </stmd:IntegrateSimulation>
+    </stmd:ImplementationPhase>
+    <stc:Classification type="vocabulary">
+        <stc:ClassificationEntry keyword="analysis" xlink:type="simple"
+                                 xlink:href="https://pmsfit.github.io/SSPTraceability/master/#_analysisphase"/>
+        <stc:ClassificationEntry keyword="functional-requirement" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Functional+Requirement"/>
+        <stc:ClassificationEntry keyword="requirement" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Requirement"/>
+        <stc:ClassificationEntry keyword="extended-requirement" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Extended+Requirement"/>
+        <stc:ClassificationEntry keyword="design-specification" xlink:type="simple"
+                                 xlink:href="https://dbpedia.org/page/Design_specification"/>
+        <stc:ClassificationEntry keyword="data-sheet" xlink:type="simple"
+                                 xlink:href="https://dbpedia.org/page/Datasheet"/>
+        <stc:ClassificationEntry keyword="regulation" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/NCIT_C68821"/>
+        <stc:ClassificationEntry keyword="constraint" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Design+Constraint"/>
+        <stc:ClassificationEntry keyword="test-case" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Test+Case"/>
+        <stc:ClassificationEntry keyword="standard" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/NCIT_C81893"/>
+        <stc:ClassificationEntry keyword="source-code-repository" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/APOLLO_SV_00000522"/>
+        <stc:ClassificationEntry keyword="vendor-documentation" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/NCIT_C115742"/>
+        <stc:ClassificationEntry keyword="scientific-publication" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/NCIT_C19026"/>
+        <stc:ClassificationEntry keyword="constrains" xlink:type="simple"
+                                 xlink:href="http://open-services.net/ns/rm#constrains"/>
+        <stc:ClassificationEntry keyword="constrained-by" xlink:type="simple"
+                                 xlink:href="http://open-services.net/ns/rm#constrainedBy"/>
+        <stc:ClassificationEntry keyword="derived-from" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Derive"/>
+        <stc:ClassificationEntry keyword="satisfies" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Satisfy"/>
+        <stc:ClassificationEntry keyword="is-satisfied-by" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000363"/>
+        <stc:ClassificationEntry keyword="has-implementation" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000234"/>
+        <stc:ClassificationEntry keyword="has-assumption" xlink:type="simple"
+                                 xlink:href="https://dbpedia.org/page/Tacit_assumption"/>
+        <stc:ClassificationEntry keyword="is-implementation-of" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000233"/>
+        <stc:ClassificationEntry keyword="verifies" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Verify"/>
+        <stc:ClassificationEntry keyword="specifies" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/NCIT_C25685"/>
+        <stc:ClassificationEntry keyword="is-specified-by" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000339"/>
+        <stc:ClassificationEntry keyword="describes" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000563"/>
+        <stc:ClassificationEntry keyword="is-model-of" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000632"/>
+        <stc:ClassificationEntry keyword="manual" xlink:type="simple"
+                                 xlink:href="http://semanticscience.org/resource/SIO_000161"/>
+        <stc:ClassificationEntry keyword="requires" xlink:type="simple" xlink:href="http://purl.org/dc/terms/requires"/>
+        <stc:ClassificationEntry keyword="software-script" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/IAO_0000595"/>
+        <stc:ClassificationEntry keyword="subsystem" xlink:type="simple"
+                                 xlink:href="https://docs.nomagic.com/display/SYSMLP190/Subsystem"/>
+        <stc:ClassificationEntry keyword="implementation" xlink:type="simple"
+                                 xlink:href="http://dbpedia.org/resource/Implementation"/>
+        <stc:ClassificationEntry keyword="parameter" xlink:type="simple"
+                                 xlink:href="http://dbpedia.org/resource/Parameter_(computer_programming)"/>
+        <stc:ClassificationEntry keyword="test-result" xlink:type="simple"
+                                 xlink:href="http://www.ebi.ac.uk/efo/EFO_0000720"/>
+        <stc:ClassificationEntry keyword="is-validated-by" xlink:type="simple"
+                                 xlink:href="http://purl.obolibrary.org/obo/SO_0000789"/>
+    </stc:Classification>
 </stmd:SimulationTaskMetaData>
