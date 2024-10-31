@@ -35,6 +35,37 @@
                 <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_001"/>
                 <stc:ResourceReference xlink:type="simple" xlink:href="#req_m_001_002"/>
             </stc:Output>
+            <stc:Rationale>
+                <stc:Resource kind="rationale" type="text/xml" id="credibility-model-requirements">
+                    <stc:Content>
+                        <cdk:Credibility>
+                            <cdk:Processing>
+                                <cdk:Prerequisites source="./gaiax-ci/processing_functions/prerequisites/install_node_utilities.sh" />
+                            </cdk:Processing>
+                            <cdk:Evidence level="1">
+                                <cdk:Metric
+                                        module="./gaiax-ci/quality_metrics/node_metrics/level_1"
+                                        function="checkSingleSemantic"
+                                        interpreter="nodejs"
+                                        interpreterVersion="18.17.0">
+                                    <cdk:Test id="requirement_check_001">
+                                        <cdk:FunctionArgument
+                                                name="x509Certificate"
+                                                method="file"
+                                                type="application/x-x509-ca-cert"
+                                                content="./data/cert_ahmann.crt"/>
+                                        <cdk:FunctionArgument
+                                                name="signedExpertStatement"
+                                                method="file"
+                                                type="application/json"
+                                                content="./data/expertStatement_req_m_01.json" />
+                                    </cdk:Test>
+                                </cdk:Metric>
+                            </cdk:Evidence>
+                        </cdk:Credibility>
+                    </stc:Content>
+                </stc:Resource>
+            </stc:Rationale>
         </stmd:DefineModelRequirements>
         <stmd:DefineParameterRequirements>
             <stc:Input>

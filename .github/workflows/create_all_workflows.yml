@@ -1,0 +1,36 @@
+name: create-workflows
+on:
+  push:
+jobs:
+    create-all-workflows:
+        runs-on: ubuntu-20.04
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+              with: 
+                submodules: true
+                token: ${{ secrets.WRITE_WORKFLOW }}
+            - name: Get gaiax-ci
+              run: git clone https://github.com/virtual-vehicle/gaiax-ci.git
+            - name: install prerequisites
+              run: |
+                npm install yaml --prefix ./workflow_utils
+                npm install ./gaiax-ci/workflow_utils/stmd-crud --prefix ./workflow_utils/stmd-crud
+            - name: create new workflow
+              env:          
+                GithubBranch: ${{ github.ref_name }}
+                GithubRepoName: ${{ github.event.repository.name }}
+                GithubOwner: ${{ github.repository_owner }}
+              run: node ./gaiax-ci/workflow_utils/parse_to_yaml.js -f "./doc/sl-1-0-sensor-model-repository-template.stmd" -o ./.github/workflows/
+            - name: push workflows
+              run: |
+                git config --global user.name "Automated Test Pipeline"
+                git config --global user.email "openmsl@users.noreply.github.com"
+
+                git add ./.github/workflows
+                git commit -m "Generated new automated all workflow, based on STMD [actions skip]"
+                git push -f
+                
+            - name: display result
+              run: |
+                echo "Successfully created new workflows" >> $GITHUB_STEP_SUMMARY
