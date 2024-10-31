@@ -31,7 +31,7 @@ jobs:
 
                 git add ./.github/workflows
                 git commit -s -m "Generated new automated all workflow, based on STMD [actions skip]"
-                git push
+                git push -f
                 
             - name: display result
               run: |
