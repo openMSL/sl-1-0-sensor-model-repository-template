@@ -23,8 +23,6 @@ jobs:
                 GithubOwner: ${{ github.repository_owner }}
               run: node ./gaiax-ci/workflow_utils/parse_to_yaml.js -f "./doc/sl-1-0-sensor-model-repository-template.stmd" -o ./.github/workflows/
             - name: push workflows
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                 git config --global user.name "Automated Test Pipeline"
                 git config --global user.email "openmsl@users.noreply.github.com"
