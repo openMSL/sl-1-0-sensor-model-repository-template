@@ -9,7 +9,6 @@ jobs:
               uses: actions/checkout@v4
               with: 
                 submodules: true
-                token: ${{ secrets.WRITE_WORKFLOW }}
             - name: Get gaiax-ci
               run: git clone https://github.com/virtual-vehicle/gaiax-ci.git
             - name: install prerequisites
@@ -23,6 +22,8 @@ jobs:
                 GithubOwner: ${{ github.repository_owner }}
               run: node ./gaiax-ci/workflow_utils/parse_to_yaml.js -f "./doc/sl-1-0-sensor-model-repository-template.stmd" -o ./.github/workflows/
             - name: push workflows
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                 git config --global user.name "Automated Test Pipeline"
                 git config --global user.email "openmsl@users.noreply.github.com"
