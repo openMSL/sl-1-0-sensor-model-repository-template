@@ -15,7 +15,7 @@ jobs:
             - name: install prerequisites
               run: |
                 npm install yaml --prefix ./gaiax-ci/workflow_utils
-                npm install ./gaiax-ci/workflow_utils/stmd-crud --prefix ./workflow_utils/stmd-crud
+                npm install ./gaiax-ci/workflow_utils/stmd-crud --prefix ./gaiax-ci/workflow_utils/stmd-crud
             - name: create new workflow
               env:          
                 GithubBranch: ${{ github.ref_name }}
