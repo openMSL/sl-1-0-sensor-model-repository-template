@@ -9,6 +9,7 @@ jobs:
               uses: actions/checkout@v4
               with: 
                 submodules: true
+                token: ${{ secrets.WRITE_WORKFLOW }}
             - name: Get gaiax-ci
               run: git clone https://github.com/virtual-vehicle/gaiax-ci.git
             - name: install prerequisites
