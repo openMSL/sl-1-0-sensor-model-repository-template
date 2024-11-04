@@ -1,10 +1,6 @@
 name: process-phase-testing-pipelines
 on:
-  workflow_run:
-    workflows:
-      - create-workflows
-    types:
-      - completed
+  push:
 jobs:
   run-all-workflows:
     runs-on: ubuntu-20.04
