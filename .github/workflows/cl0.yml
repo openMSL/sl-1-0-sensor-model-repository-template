@@ -10,6 +10,11 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v4
-    - uses: enarx/spdx@master
+    - uses: enarx/spdx@c3e8116ed31c31b3c2e58a26ba5cac407510ca37
       with:
-        licenses: Apache-2.0 BSD-3-Clause BSD-2-Clause MIT MPL-2.0
+        licenses: |-
+          Apache-2.0
+          BSD-3-Clause
+          BSD-2-Clause
+          MIT
+          MPL-2.0
