@@ -1,0 +1,48 @@
+name: process-phase-testing-pipelines
+on:
+  push:
+jobs:
+  run-all-workflows:
+    runs-on: ubuntu-20.04
+    needs:
+      - No_0_RequirementsPhase_DefineModelRequirements
+      - No_1_ImplementationPhase_IntegrateSimulation
+    steps:
+      - name: checkout simulation data
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.WRITE_WORKFLOW }}
+      - name: install prerequisites
+        run: >
+          npm install yaml --prefix ./workflow_utils
+
+          npm install ./workflow_utils/stmd-crud --prefix
+          ./workflow_utils/stmd-crud
+      - name: make output folder
+        run: mkdir -p ./.github/outputs
+      - env:
+          GithubBranch: ${{github.ref_name}}
+          GithubRepoName: ${{github.event.repository.name}}
+          GithubOwner: ${{github.repository_owner}}
+          No_0_RequirementsPhase_DefineModelRequirements: ${{needs.No_0_RequirementsPhase_DefineModelRequirements.outputs.summary}}
+          No_1_ImplementationPhase_IntegrateSimulation: ${{needs.No_1_ImplementationPhase_IntegrateSimulation.outputs.summary}}
+          allActionList: No_0_RequirementsPhase_DefineModelRequirements,No_1_ImplementationPhase_IntegrateSimulation,
+        run: node ./workflow_utils/results.js -s -o summary.md && cat summary.md >>
+          $GITHUB_STEP_SUMMARY
+      - name: push results
+        run: |
+          git config --global user.name "Add results"
+          git config --global user.email "setlabs@users.noreply.github.com"
+
+          git add ./.github/outputs
+          git commit -m "Add results [actions skip]"
+          git push
+  No_0_RequirementsPhase_DefineModelRequirements:
+    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/No.0.RequirementsPhase.DefineModelRequirements.yaml@84-add-stmd-file-according-to-cmp
+    secrets:
+      WRITE_WORKFLOW: ${{secrets.WRITE_WORKFLOW}}
+  No_1_ImplementationPhase_IntegrateSimulation:
+    uses: openMSL/sl-1-0-sensor-model-repository-template/.github/workflows/No.1.ImplementationPhase.IntegrateSimulation.yaml@84-add-stmd-file-according-to-cmp
+    secrets:
+      WRITE_WORKFLOW: ${{secrets.WRITE_WORKFLOW}}

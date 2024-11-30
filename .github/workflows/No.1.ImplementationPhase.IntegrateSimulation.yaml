@@ -1,0 +1,29 @@
+name: No_1_ImplementationPhase_IntegrateSimulation
+on:
+  workflow_call:
+    outputs:
+      summary:
+        value: ${{jobs.No_1_ImplementationPhase_IntegrateSimulation.outputs.summary}}
+    secrets:
+      WRITE_WORKFLOW:
+        required: true
+jobs:
+  No_1_ImplementationPhase_IntegrateSimulation:
+    runs-on: ubuntu-20.04
+    outputs:
+      summary: ${{steps.outputStep.outputs.summary}}
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.WRITE_WORKFLOW }}
+      - name: set STMD Folder path
+        run: echo 'STMDFOLDERPATH=/home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc' >> $GITHUB_ENV && echo $STMDFOLDERPATH
+      - name: show report
+        run: cat No.1.ImplementationPhase.IntegrateSimulation.cdkResult.json
+      - name: send to outputs
+        id: outputStep
+        run: echo "summary=$(cat
+          No.1.ImplementationPhase.IntegrateSimulation.cdkResult.json)" >>
+          $GITHUB_OUTPUT

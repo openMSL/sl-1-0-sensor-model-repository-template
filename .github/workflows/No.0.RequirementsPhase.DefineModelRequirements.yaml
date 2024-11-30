@@ -1,0 +1,44 @@
+name: No_0_RequirementsPhase_DefineModelRequirements
+on:
+  workflow_call:
+    outputs:
+      summary:
+        value: ${{jobs.No_0_RequirementsPhase_DefineModelRequirements.outputs.summary}}
+    secrets:
+      WRITE_WORKFLOW:
+        required: true
+jobs:
+  No_0_RequirementsPhase_DefineModelRequirements:
+    runs-on: ubuntu-20.04
+    outputs:
+      summary: ${{steps.outputStep.outputs.summary}}
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.WRITE_WORKFLOW }}
+      - name: set STMD Folder path
+        run: echo 'STMDFOLDERPATH=/home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc' >> $GITHUB_ENV && echo $STMDFOLDERPATH
+      - name: install prerequisites
+        run: sudo chmod +x /home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc/gaiax-ci/processing_functions/prerequisites/install_node_utilities.sh && sudo /home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc/gaiax-ci/processing_functions/prerequisites/install_node_utilities.sh
+      - name: activate NodeJS version 18.17.0 for metric
+          ./gaiax-ci/quality_metrics/node_metrics/level_1/checkSingleSemantic
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.0
+      - name: Remove node_modules, reset libs
+        run: |
+            npm ls --parseable --depth=0 | tail -n +2 | awk -F'/' '{print $NF}' | xargs -r npm uninstall
+            
+      - name: install node module
+        run: npm install --prefix /home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/gaiax-ci/quality_metrics/node_metrics/level_1 /home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/gaiax-ci/quality_metrics/node_metrics/level_1
+      - name: requirement_check_001
+        run: res=$(node -e 'const {wrapper} = require("/home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc/workflow_utils/wrapper/fcnWrapperNode"); let nodeResult = wrapper("./gaiax-ci/quality_metrics/node_metrics/level_1", "checkSingleSemantic", ["x509Certificate","signedExpertStatement"], ["./data/cert_ahmann.crt","./data/expertStatement_req_m_01.json"], ["file","file"], "/home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc", {"level":"1","id":"requirement_check_001"}); process.stdout.write(JSON.stringify(nodeResult));') && echo $res && node /home/runner/work/sl-1-0-sensor-model-repository-template/sl-1-0-sensor-model-repository-template/doc/workflow_utils/results.js -p "$res" -o No.0.RequirementsPhase.DefineModelRequirements.cdkResult.json
+      - name: show report
+        run: cat No.0.RequirementsPhase.DefineModelRequirements.cdkResult.json
+      - name: send to outputs
+        id: outputStep
+        run: echo "summary=$(cat
+          No.0.RequirementsPhase.DefineModelRequirements.cdkResult.json)" >>
+          $GITHUB_OUTPUT
