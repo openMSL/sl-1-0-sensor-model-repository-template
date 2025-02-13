@@ -63,15 +63,15 @@
                 implementation="CoSimulation" name="sl-5-6-osi-trace-file-writer"
                 description="Write binary OSI SensorData trace files">
                 <ssd:Connectors>
-                    <ssd:Connector name="OSMPSensorViewIn.size" kind="input">
+                    <ssd:Connector name="OSIIn.size" kind="input">
                         <ssc:Integer />
                         <ssd:ConnectorGeometry x="0.0" y="0.241525" />
                     </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorViewIn.base.hi" kind="input">
+                    <ssd:Connector name="OSIIn.base.hi" kind="input">
                         <ssc:Integer />
                         <ssd:ConnectorGeometry x="0.0" y="0.503125" />
                     </ssd:Connector>
-                    <ssd:Connector name="OSMPSensorViewIn.base.lo" kind="input">
+                    <ssd:Connector name="OSIIn.base.lo" kind="input">
                         <ssc:Integer />
                         <ssd:ConnectorGeometry x="0.0" y="0.765254" />
                     </ssd:Connector>
@@ -107,14 +107,14 @@
         </ssd:Elements>
         <ssd:Connections>
             <ssd:Connection startElement="" startConnector="OSMPSensorViewOut.base.hi"
-                endElement="sl-5-6-osi-trace-file-writer" endConnector="OSMPSensorViewIn.base.hi"
+                endElement="sl-5-6-osi-trace-file-writer" endConnector="OSIIn.base.hi"
                 suppressUnitConversion="false" />
             <ssd:Connection startElement="" startConnector="OSMPSensorViewOut.size"
-                endElement="sl-5-6-osi-trace-file-writer" endConnector="OSMPSensorViewIn.size"
+                endElement="sl-5-6-osi-trace-file-writer" endConnector="OSIIn.size"
                 suppressUnitConversion="false" />
             <ssd:Connection startElement=""
                 startConnector="OSMPSensorViewOut.base.lo" endElement="sl-5-6-osi-trace-file-writer"
-                endConnector="OSMPSensorViewIn.base.lo" suppressUnitConversion="false" />
+                endConnector="OSIIn.base.lo" suppressUnitConversion="false" />
         </ssd:Connections>
         <ssd:SystemGeometry x1="-619.0" y1="-590.0" x2="744.0" y2="119.0" />
     </ssd:System>
