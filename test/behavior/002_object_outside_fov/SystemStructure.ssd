@@ -167,7 +167,7 @@
                 <!-- sequential execution of component steps -->
                 <!-- synchronization time step size of 0.001 -->
                 <!-- simulation will end when the stopTime is reached -->
-                <mc:Task stepType="sequential" deltaTime="0.1" endType="end_time" />
+                <mc:Task stepType="sequential" deltaTime="1.0" endType="end_time" />
             </ssc:Annotation>
         </ssd:Annotations>
     </ssd:DefaultExperiment>
