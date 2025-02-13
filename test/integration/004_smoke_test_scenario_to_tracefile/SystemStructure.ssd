@@ -106,13 +106,13 @@
             </ssd:Component>
         </ssd:Elements>
         <ssd:Connections>
-            <ssd:Connection startElement="" startConnector="OSMPSensorViewOut.base.hi"
+            <ssd:Connection startElement="esmini" startConnector="OSMPSensorViewOut.base.hi"
                 endElement="sl-5-6-osi-trace-file-writer" endConnector="OSIIn.base.hi"
                 suppressUnitConversion="false" />
-            <ssd:Connection startElement="" startConnector="OSMPSensorViewOut.size"
+            <ssd:Connection startElement="esmini" startConnector="OSMPSensorViewOut.size"
                 endElement="sl-5-6-osi-trace-file-writer" endConnector="OSIIn.size"
                 suppressUnitConversion="false" />
-            <ssd:Connection startElement=""
+            <ssd:Connection startElement="esmini"
                 startConnector="OSMPSensorViewOut.base.lo" endElement="sl-5-6-osi-trace-file-writer"
                 endConnector="OSIIn.base.lo" suppressUnitConversion="false" />
         </ssd:Connections>
