@@ -28,7 +28,7 @@ jobs:
       - name: Update Submodules
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
         working-directory: esmini
-        run: git submodule update --init --recursive 
+        run: git submodule update --init --recursive
 
       - name: Fetch Dependencies
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
@@ -68,7 +68,7 @@ jobs:
       - name: Copy esmini FMU
         if: steps.cache-esmini-fmu.outputs.cache-hit != 'true'
         working-directory: esmini/OSMP_FMU/build
-        run: cp EsminiOsiSource.fmu /tmp/esmini_fmu/EsminiOsiSource.fmu
+        run: cp esmini.fmu /tmp/esmini_fmu/esmini.fmu
 
       - name: Commit ID
         working-directory: /tmp/esmini_fmu
