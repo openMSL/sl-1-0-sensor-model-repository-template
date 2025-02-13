@@ -1,5 +1,6 @@
 cmake_policy(SET CMP0048 NEW)
 cmake_minimum_required(VERSION 3.12)
+set(CMAKE_TLS_VERIFY FALSE)
 
 project(HelloWorldSensor)
 
